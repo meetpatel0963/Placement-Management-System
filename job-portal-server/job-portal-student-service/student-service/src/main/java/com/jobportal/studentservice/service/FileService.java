@@ -14,6 +14,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
+import java.util.Optional;
 
 @Service
 public class FileService {
@@ -24,40 +25,48 @@ public class FileService {
     @Autowired
     private GridFsOperations operations;
 
-    public String addFile(MultipartFile upload) throws IOException {
+    public Optional<String> addFile(MultipartFile upload) {
 
         //define additional metadata
         DBObject metadata = new BasicDBObject();
         metadata.put("fileSize", upload.getSize());
+        Object fileID;
 
-        //store in database which returns the objectID
-        Object fileID = template.store(upload.getInputStream(), upload.getOriginalFilename(), upload.getContentType(), metadata);
-
-        //return as a string
-        return fileID.toString();
-    }
-
-    public File downloadFile(String id) throws IOException {
-
-        //search file
-        GridFSFile gridFSFile = template.findOne( new Query(Criteria.where("_id").is(id)) );
-
-
-        //convert uri to byteArray
-        //save data to LoadFile class
-        File loadFile = new File();
-
-        if (gridFSFile != null && gridFSFile.getMetadata() != null) {
-            loadFile.setFilename( gridFSFile.getFilename() );
-
-            loadFile.setFileType( gridFSFile.getMetadata().get("_contentType").toString() );
-
-            loadFile.setFileSize( gridFSFile.getMetadata().get("fileSize").toString() );
-
-            loadFile.setFile( IOUtils.toByteArray(operations.getResource(gridFSFile).getInputStream()) );
+        try {
+            //store in database which returns the objectID
+            fileID = template.store(upload.getInputStream(), upload.getOriginalFilename(), upload.getContentType(), metadata);
+        } catch(IOException e) {
+            return null;
         }
 
-        return loadFile;
+        //return as a string
+        return Optional.ofNullable(fileID.toString());
+    }
+
+    public Optional<File> downloadFile(String id) {
+        File loadFile = new File();
+
+        try{
+            //search file
+            GridFSFile gridFSFile = template.findOne( new Query(Criteria.where("_id").is(id)) );
+
+            //convert uri to byteArray
+            //save data to LoadFile class
+
+            if (gridFSFile != null && gridFSFile.getMetadata() != null) {
+                loadFile.setFilename(gridFSFile.getFilename());
+
+                loadFile.setFileType(gridFSFile.getMetadata().get("_contentType").toString());
+
+                loadFile.setFileSize(gridFSFile.getMetadata().get("fileSize").toString());
+
+                loadFile.setFile(IOUtils.toByteArray(operations.getResource(gridFSFile).getInputStream()));
+            }
+        } catch(IOException e) {
+            return null;
+        }
+
+        return Optional.ofNullable(loadFile);
     }
 
 }

@@ -1,5 +1,5 @@
 /**
- * @fileoverview gRPC-Web generated client stub for com.jobportal.studentservice
+ * @fileoverview gRPC-Web generated client stub for com.jobportal.studentserviceproto
  * @enhanceable
  * @public
  */
@@ -18,7 +18,7 @@ grpc.web = require('grpc-web');
 const proto = {};
 proto.com = {};
 proto.com.jobportal = {};
-proto.com.jobportal.studentservice = require('./student_pb.js');
+proto.com.jobportal.studentserviceproto = require('./student_pb.js');
 
 /**
  * @param {string} hostname
@@ -28,7 +28,7 @@ proto.com.jobportal.studentservice = require('./student_pb.js');
  * @struct
  * @final
  */
-proto.com.jobportal.studentservice.StudentServiceClient =
+proto.com.jobportal.studentserviceproto.StudentServiceClient =
     function(hostname, credentials, options) {
   if (!options) options = {};
   options['format'] = 'text';
@@ -54,7 +54,7 @@ proto.com.jobportal.studentservice.StudentServiceClient =
  * @struct
  * @final
  */
-proto.com.jobportal.studentservice.StudentServicePromiseClient =
+proto.com.jobportal.studentserviceproto.StudentServicePromiseClient =
     function(hostname, credentials, options) {
   if (!options) options = {};
   options['format'] = 'text';
@@ -75,58 +75,58 @@ proto.com.jobportal.studentservice.StudentServicePromiseClient =
 /**
  * @const
  * @type {!grpc.web.MethodDescriptor<
- *   !proto.com.jobportal.studentservice.GetStudentContactRequest,
- *   !proto.com.jobportal.studentservice.GetStudentContactResponse>}
+ *   !proto.com.jobportal.studentserviceproto.GetStudentContactRequest,
+ *   !proto.com.jobportal.studentserviceproto.GetStudentContactResponse>}
  */
 const methodDescriptor_StudentService_getStudentContactDetails = new grpc.web.MethodDescriptor(
-  '/com.jobportal.studentservice.StudentService/getStudentContactDetails',
+  '/com.jobportal.studentserviceproto.StudentService/getStudentContactDetails',
   grpc.web.MethodType.UNARY,
-  proto.com.jobportal.studentservice.GetStudentContactRequest,
-  proto.com.jobportal.studentservice.GetStudentContactResponse,
+  proto.com.jobportal.studentserviceproto.GetStudentContactRequest,
+  proto.com.jobportal.studentserviceproto.GetStudentContactResponse,
   /**
-   * @param {!proto.com.jobportal.studentservice.GetStudentContactRequest} request
+   * @param {!proto.com.jobportal.studentserviceproto.GetStudentContactRequest} request
    * @return {!Uint8Array}
    */
   function(request) {
     return request.serializeBinary();
   },
-  proto.com.jobportal.studentservice.GetStudentContactResponse.deserializeBinary
+  proto.com.jobportal.studentserviceproto.GetStudentContactResponse.deserializeBinary
 );
 
 
 /**
  * @const
  * @type {!grpc.web.AbstractClientBase.MethodInfo<
- *   !proto.com.jobportal.studentservice.GetStudentContactRequest,
- *   !proto.com.jobportal.studentservice.GetStudentContactResponse>}
+ *   !proto.com.jobportal.studentserviceproto.GetStudentContactRequest,
+ *   !proto.com.jobportal.studentserviceproto.GetStudentContactResponse>}
  */
 const methodInfo_StudentService_getStudentContactDetails = new grpc.web.AbstractClientBase.MethodInfo(
-  proto.com.jobportal.studentservice.GetStudentContactResponse,
+  proto.com.jobportal.studentserviceproto.GetStudentContactResponse,
   /**
-   * @param {!proto.com.jobportal.studentservice.GetStudentContactRequest} request
+   * @param {!proto.com.jobportal.studentserviceproto.GetStudentContactRequest} request
    * @return {!Uint8Array}
    */
   function(request) {
     return request.serializeBinary();
   },
-  proto.com.jobportal.studentservice.GetStudentContactResponse.deserializeBinary
+  proto.com.jobportal.studentserviceproto.GetStudentContactResponse.deserializeBinary
 );
 
 
 /**
- * @param {!proto.com.jobportal.studentservice.GetStudentContactRequest} request The
+ * @param {!proto.com.jobportal.studentserviceproto.GetStudentContactRequest} request The
  *     request proto
  * @param {?Object<string, string>} metadata User defined
  *     call metadata
- * @param {function(?grpc.web.Error, ?proto.com.jobportal.studentservice.GetStudentContactResponse)}
+ * @param {function(?grpc.web.Error, ?proto.com.jobportal.studentserviceproto.GetStudentContactResponse)}
  *     callback The callback function(error, response)
- * @return {!grpc.web.ClientReadableStream<!proto.com.jobportal.studentservice.GetStudentContactResponse>|undefined}
+ * @return {!grpc.web.ClientReadableStream<!proto.com.jobportal.studentserviceproto.GetStudentContactResponse>|undefined}
  *     The XHR Node Readable Stream
  */
-proto.com.jobportal.studentservice.StudentServiceClient.prototype.getStudentContactDetails =
+proto.com.jobportal.studentserviceproto.StudentServiceClient.prototype.getStudentContactDetails =
     function(request, metadata, callback) {
   return this.client_.rpcCall(this.hostname_ +
-      '/com.jobportal.studentservice.StudentService/getStudentContactDetails',
+      '/com.jobportal.studentserviceproto.StudentService/getStudentContactDetails',
       request,
       metadata || {},
       methodDescriptor_StudentService_getStudentContactDetails,
@@ -135,17 +135,17 @@ proto.com.jobportal.studentservice.StudentServiceClient.prototype.getStudentCont
 
 
 /**
- * @param {!proto.com.jobportal.studentservice.GetStudentContactRequest} request The
+ * @param {!proto.com.jobportal.studentserviceproto.GetStudentContactRequest} request The
  *     request proto
  * @param {?Object<string, string>} metadata User defined
  *     call metadata
- * @return {!Promise<!proto.com.jobportal.studentservice.GetStudentContactResponse>}
+ * @return {!Promise<!proto.com.jobportal.studentserviceproto.GetStudentContactResponse>}
  *     Promise that resolves to the response
  */
-proto.com.jobportal.studentservice.StudentServicePromiseClient.prototype.getStudentContactDetails =
+proto.com.jobportal.studentserviceproto.StudentServicePromiseClient.prototype.getStudentContactDetails =
     function(request, metadata) {
   return this.client_.unaryCall(this.hostname_ +
-      '/com.jobportal.studentservice.StudentService/getStudentContactDetails',
+      '/com.jobportal.studentserviceproto.StudentService/getStudentContactDetails',
       request,
       metadata || {},
       methodDescriptor_StudentService_getStudentContactDetails);
@@ -155,58 +155,58 @@ proto.com.jobportal.studentservice.StudentServicePromiseClient.prototype.getStud
 /**
  * @const
  * @type {!grpc.web.MethodDescriptor<
- *   !proto.com.jobportal.studentservice.GetAllStudentsRequest,
- *   !proto.com.jobportal.studentservice.GetAllStudentsResponse>}
+ *   !proto.com.jobportal.studentserviceproto.GetAllStudentsRequest,
+ *   !proto.com.jobportal.studentserviceproto.GetAllStudentsResponse>}
  */
 const methodDescriptor_StudentService_getAllStudents = new grpc.web.MethodDescriptor(
-  '/com.jobportal.studentservice.StudentService/getAllStudents',
+  '/com.jobportal.studentserviceproto.StudentService/getAllStudents',
   grpc.web.MethodType.UNARY,
-  proto.com.jobportal.studentservice.GetAllStudentsRequest,
-  proto.com.jobportal.studentservice.GetAllStudentsResponse,
+  proto.com.jobportal.studentserviceproto.GetAllStudentsRequest,
+  proto.com.jobportal.studentserviceproto.GetAllStudentsResponse,
   /**
-   * @param {!proto.com.jobportal.studentservice.GetAllStudentsRequest} request
+   * @param {!proto.com.jobportal.studentserviceproto.GetAllStudentsRequest} request
    * @return {!Uint8Array}
    */
   function(request) {
     return request.serializeBinary();
   },
-  proto.com.jobportal.studentservice.GetAllStudentsResponse.deserializeBinary
+  proto.com.jobportal.studentserviceproto.GetAllStudentsResponse.deserializeBinary
 );
 
 
 /**
  * @const
  * @type {!grpc.web.AbstractClientBase.MethodInfo<
- *   !proto.com.jobportal.studentservice.GetAllStudentsRequest,
- *   !proto.com.jobportal.studentservice.GetAllStudentsResponse>}
+ *   !proto.com.jobportal.studentserviceproto.GetAllStudentsRequest,
+ *   !proto.com.jobportal.studentserviceproto.GetAllStudentsResponse>}
  */
 const methodInfo_StudentService_getAllStudents = new grpc.web.AbstractClientBase.MethodInfo(
-  proto.com.jobportal.studentservice.GetAllStudentsResponse,
+  proto.com.jobportal.studentserviceproto.GetAllStudentsResponse,
   /**
-   * @param {!proto.com.jobportal.studentservice.GetAllStudentsRequest} request
+   * @param {!proto.com.jobportal.studentserviceproto.GetAllStudentsRequest} request
    * @return {!Uint8Array}
    */
   function(request) {
     return request.serializeBinary();
   },
-  proto.com.jobportal.studentservice.GetAllStudentsResponse.deserializeBinary
+  proto.com.jobportal.studentserviceproto.GetAllStudentsResponse.deserializeBinary
 );
 
 
 /**
- * @param {!proto.com.jobportal.studentservice.GetAllStudentsRequest} request The
+ * @param {!proto.com.jobportal.studentserviceproto.GetAllStudentsRequest} request The
  *     request proto
  * @param {?Object<string, string>} metadata User defined
  *     call metadata
- * @param {function(?grpc.web.Error, ?proto.com.jobportal.studentservice.GetAllStudentsResponse)}
+ * @param {function(?grpc.web.Error, ?proto.com.jobportal.studentserviceproto.GetAllStudentsResponse)}
  *     callback The callback function(error, response)
- * @return {!grpc.web.ClientReadableStream<!proto.com.jobportal.studentservice.GetAllStudentsResponse>|undefined}
+ * @return {!grpc.web.ClientReadableStream<!proto.com.jobportal.studentserviceproto.GetAllStudentsResponse>|undefined}
  *     The XHR Node Readable Stream
  */
-proto.com.jobportal.studentservice.StudentServiceClient.prototype.getAllStudents =
+proto.com.jobportal.studentserviceproto.StudentServiceClient.prototype.getAllStudents =
     function(request, metadata, callback) {
   return this.client_.rpcCall(this.hostname_ +
-      '/com.jobportal.studentservice.StudentService/getAllStudents',
+      '/com.jobportal.studentserviceproto.StudentService/getAllStudents',
       request,
       metadata || {},
       methodDescriptor_StudentService_getAllStudents,
@@ -215,17 +215,17 @@ proto.com.jobportal.studentservice.StudentServiceClient.prototype.getAllStudents
 
 
 /**
- * @param {!proto.com.jobportal.studentservice.GetAllStudentsRequest} request The
+ * @param {!proto.com.jobportal.studentserviceproto.GetAllStudentsRequest} request The
  *     request proto
  * @param {?Object<string, string>} metadata User defined
  *     call metadata
- * @return {!Promise<!proto.com.jobportal.studentservice.GetAllStudentsResponse>}
+ * @return {!Promise<!proto.com.jobportal.studentserviceproto.GetAllStudentsResponse>}
  *     Promise that resolves to the response
  */
-proto.com.jobportal.studentservice.StudentServicePromiseClient.prototype.getAllStudents =
+proto.com.jobportal.studentserviceproto.StudentServicePromiseClient.prototype.getAllStudents =
     function(request, metadata) {
   return this.client_.unaryCall(this.hostname_ +
-      '/com.jobportal.studentservice.StudentService/getAllStudents',
+      '/com.jobportal.studentserviceproto.StudentService/getAllStudents',
       request,
       metadata || {},
       methodDescriptor_StudentService_getAllStudents);
@@ -235,58 +235,58 @@ proto.com.jobportal.studentservice.StudentServicePromiseClient.prototype.getAllS
 /**
  * @const
  * @type {!grpc.web.MethodDescriptor<
- *   !proto.com.jobportal.studentservice.GetStudentByIdRequest,
- *   !proto.com.jobportal.studentservice.GetStudentByIdResponse>}
+ *   !proto.com.jobportal.studentserviceproto.GetStudentByIdRequest,
+ *   !proto.com.jobportal.studentserviceproto.GetStudentByIdResponse>}
  */
 const methodDescriptor_StudentService_getStudentById = new grpc.web.MethodDescriptor(
-  '/com.jobportal.studentservice.StudentService/getStudentById',
+  '/com.jobportal.studentserviceproto.StudentService/getStudentById',
   grpc.web.MethodType.UNARY,
-  proto.com.jobportal.studentservice.GetStudentByIdRequest,
-  proto.com.jobportal.studentservice.GetStudentByIdResponse,
+  proto.com.jobportal.studentserviceproto.GetStudentByIdRequest,
+  proto.com.jobportal.studentserviceproto.GetStudentByIdResponse,
   /**
-   * @param {!proto.com.jobportal.studentservice.GetStudentByIdRequest} request
+   * @param {!proto.com.jobportal.studentserviceproto.GetStudentByIdRequest} request
    * @return {!Uint8Array}
    */
   function(request) {
     return request.serializeBinary();
   },
-  proto.com.jobportal.studentservice.GetStudentByIdResponse.deserializeBinary
+  proto.com.jobportal.studentserviceproto.GetStudentByIdResponse.deserializeBinary
 );
 
 
 /**
  * @const
  * @type {!grpc.web.AbstractClientBase.MethodInfo<
- *   !proto.com.jobportal.studentservice.GetStudentByIdRequest,
- *   !proto.com.jobportal.studentservice.GetStudentByIdResponse>}
+ *   !proto.com.jobportal.studentserviceproto.GetStudentByIdRequest,
+ *   !proto.com.jobportal.studentserviceproto.GetStudentByIdResponse>}
  */
 const methodInfo_StudentService_getStudentById = new grpc.web.AbstractClientBase.MethodInfo(
-  proto.com.jobportal.studentservice.GetStudentByIdResponse,
+  proto.com.jobportal.studentserviceproto.GetStudentByIdResponse,
   /**
-   * @param {!proto.com.jobportal.studentservice.GetStudentByIdRequest} request
+   * @param {!proto.com.jobportal.studentserviceproto.GetStudentByIdRequest} request
    * @return {!Uint8Array}
    */
   function(request) {
     return request.serializeBinary();
   },
-  proto.com.jobportal.studentservice.GetStudentByIdResponse.deserializeBinary
+  proto.com.jobportal.studentserviceproto.GetStudentByIdResponse.deserializeBinary
 );
 
 
 /**
- * @param {!proto.com.jobportal.studentservice.GetStudentByIdRequest} request The
+ * @param {!proto.com.jobportal.studentserviceproto.GetStudentByIdRequest} request The
  *     request proto
  * @param {?Object<string, string>} metadata User defined
  *     call metadata
- * @param {function(?grpc.web.Error, ?proto.com.jobportal.studentservice.GetStudentByIdResponse)}
+ * @param {function(?grpc.web.Error, ?proto.com.jobportal.studentserviceproto.GetStudentByIdResponse)}
  *     callback The callback function(error, response)
- * @return {!grpc.web.ClientReadableStream<!proto.com.jobportal.studentservice.GetStudentByIdResponse>|undefined}
+ * @return {!grpc.web.ClientReadableStream<!proto.com.jobportal.studentserviceproto.GetStudentByIdResponse>|undefined}
  *     The XHR Node Readable Stream
  */
-proto.com.jobportal.studentservice.StudentServiceClient.prototype.getStudentById =
+proto.com.jobportal.studentserviceproto.StudentServiceClient.prototype.getStudentById =
     function(request, metadata, callback) {
   return this.client_.rpcCall(this.hostname_ +
-      '/com.jobportal.studentservice.StudentService/getStudentById',
+      '/com.jobportal.studentserviceproto.StudentService/getStudentById',
       request,
       metadata || {},
       methodDescriptor_StudentService_getStudentById,
@@ -295,17 +295,17 @@ proto.com.jobportal.studentservice.StudentServiceClient.prototype.getStudentById
 
 
 /**
- * @param {!proto.com.jobportal.studentservice.GetStudentByIdRequest} request The
+ * @param {!proto.com.jobportal.studentserviceproto.GetStudentByIdRequest} request The
  *     request proto
  * @param {?Object<string, string>} metadata User defined
  *     call metadata
- * @return {!Promise<!proto.com.jobportal.studentservice.GetStudentByIdResponse>}
+ * @return {!Promise<!proto.com.jobportal.studentserviceproto.GetStudentByIdResponse>}
  *     Promise that resolves to the response
  */
-proto.com.jobportal.studentservice.StudentServicePromiseClient.prototype.getStudentById =
+proto.com.jobportal.studentserviceproto.StudentServicePromiseClient.prototype.getStudentById =
     function(request, metadata) {
   return this.client_.unaryCall(this.hostname_ +
-      '/com.jobportal.studentservice.StudentService/getStudentById',
+      '/com.jobportal.studentserviceproto.StudentService/getStudentById',
       request,
       metadata || {},
       methodDescriptor_StudentService_getStudentById);
@@ -315,58 +315,58 @@ proto.com.jobportal.studentservice.StudentServicePromiseClient.prototype.getStud
 /**
  * @const
  * @type {!grpc.web.MethodDescriptor<
- *   !proto.com.jobportal.studentservice.SaveStudentRequest,
- *   !proto.com.jobportal.studentservice.SaveStudentResponse>}
+ *   !proto.com.jobportal.studentserviceproto.SaveStudentRequest,
+ *   !proto.com.jobportal.studentserviceproto.SaveStudentResponse>}
  */
 const methodDescriptor_StudentService_saveStudent = new grpc.web.MethodDescriptor(
-  '/com.jobportal.studentservice.StudentService/saveStudent',
+  '/com.jobportal.studentserviceproto.StudentService/saveStudent',
   grpc.web.MethodType.UNARY,
-  proto.com.jobportal.studentservice.SaveStudentRequest,
-  proto.com.jobportal.studentservice.SaveStudentResponse,
+  proto.com.jobportal.studentserviceproto.SaveStudentRequest,
+  proto.com.jobportal.studentserviceproto.SaveStudentResponse,
   /**
-   * @param {!proto.com.jobportal.studentservice.SaveStudentRequest} request
+   * @param {!proto.com.jobportal.studentserviceproto.SaveStudentRequest} request
    * @return {!Uint8Array}
    */
   function(request) {
     return request.serializeBinary();
   },
-  proto.com.jobportal.studentservice.SaveStudentResponse.deserializeBinary
+  proto.com.jobportal.studentserviceproto.SaveStudentResponse.deserializeBinary
 );
 
 
 /**
  * @const
  * @type {!grpc.web.AbstractClientBase.MethodInfo<
- *   !proto.com.jobportal.studentservice.SaveStudentRequest,
- *   !proto.com.jobportal.studentservice.SaveStudentResponse>}
+ *   !proto.com.jobportal.studentserviceproto.SaveStudentRequest,
+ *   !proto.com.jobportal.studentserviceproto.SaveStudentResponse>}
  */
 const methodInfo_StudentService_saveStudent = new grpc.web.AbstractClientBase.MethodInfo(
-  proto.com.jobportal.studentservice.SaveStudentResponse,
+  proto.com.jobportal.studentserviceproto.SaveStudentResponse,
   /**
-   * @param {!proto.com.jobportal.studentservice.SaveStudentRequest} request
+   * @param {!proto.com.jobportal.studentserviceproto.SaveStudentRequest} request
    * @return {!Uint8Array}
    */
   function(request) {
     return request.serializeBinary();
   },
-  proto.com.jobportal.studentservice.SaveStudentResponse.deserializeBinary
+  proto.com.jobportal.studentserviceproto.SaveStudentResponse.deserializeBinary
 );
 
 
 /**
- * @param {!proto.com.jobportal.studentservice.SaveStudentRequest} request The
+ * @param {!proto.com.jobportal.studentserviceproto.SaveStudentRequest} request The
  *     request proto
  * @param {?Object<string, string>} metadata User defined
  *     call metadata
- * @param {function(?grpc.web.Error, ?proto.com.jobportal.studentservice.SaveStudentResponse)}
+ * @param {function(?grpc.web.Error, ?proto.com.jobportal.studentserviceproto.SaveStudentResponse)}
  *     callback The callback function(error, response)
- * @return {!grpc.web.ClientReadableStream<!proto.com.jobportal.studentservice.SaveStudentResponse>|undefined}
+ * @return {!grpc.web.ClientReadableStream<!proto.com.jobportal.studentserviceproto.SaveStudentResponse>|undefined}
  *     The XHR Node Readable Stream
  */
-proto.com.jobportal.studentservice.StudentServiceClient.prototype.saveStudent =
+proto.com.jobportal.studentserviceproto.StudentServiceClient.prototype.saveStudent =
     function(request, metadata, callback) {
   return this.client_.rpcCall(this.hostname_ +
-      '/com.jobportal.studentservice.StudentService/saveStudent',
+      '/com.jobportal.studentserviceproto.StudentService/saveStudent',
       request,
       metadata || {},
       methodDescriptor_StudentService_saveStudent,
@@ -375,17 +375,17 @@ proto.com.jobportal.studentservice.StudentServiceClient.prototype.saveStudent =
 
 
 /**
- * @param {!proto.com.jobportal.studentservice.SaveStudentRequest} request The
+ * @param {!proto.com.jobportal.studentserviceproto.SaveStudentRequest} request The
  *     request proto
  * @param {?Object<string, string>} metadata User defined
  *     call metadata
- * @return {!Promise<!proto.com.jobportal.studentservice.SaveStudentResponse>}
+ * @return {!Promise<!proto.com.jobportal.studentserviceproto.SaveStudentResponse>}
  *     Promise that resolves to the response
  */
-proto.com.jobportal.studentservice.StudentServicePromiseClient.prototype.saveStudent =
+proto.com.jobportal.studentserviceproto.StudentServicePromiseClient.prototype.saveStudent =
     function(request, metadata) {
   return this.client_.unaryCall(this.hostname_ +
-      '/com.jobportal.studentservice.StudentService/saveStudent',
+      '/com.jobportal.studentserviceproto.StudentService/saveStudent',
       request,
       metadata || {},
       methodDescriptor_StudentService_saveStudent);
@@ -395,58 +395,58 @@ proto.com.jobportal.studentservice.StudentServicePromiseClient.prototype.saveStu
 /**
  * @const
  * @type {!grpc.web.MethodDescriptor<
- *   !proto.com.jobportal.studentservice.UpdateStudentRequest,
- *   !proto.com.jobportal.studentservice.UpdateStudentResponse>}
+ *   !proto.com.jobportal.studentserviceproto.UpdateStudentRequest,
+ *   !proto.com.jobportal.studentserviceproto.UpdateStudentResponse>}
  */
 const methodDescriptor_StudentService_updateStudent = new grpc.web.MethodDescriptor(
-  '/com.jobportal.studentservice.StudentService/updateStudent',
+  '/com.jobportal.studentserviceproto.StudentService/updateStudent',
   grpc.web.MethodType.UNARY,
-  proto.com.jobportal.studentservice.UpdateStudentRequest,
-  proto.com.jobportal.studentservice.UpdateStudentResponse,
+  proto.com.jobportal.studentserviceproto.UpdateStudentRequest,
+  proto.com.jobportal.studentserviceproto.UpdateStudentResponse,
   /**
-   * @param {!proto.com.jobportal.studentservice.UpdateStudentRequest} request
+   * @param {!proto.com.jobportal.studentserviceproto.UpdateStudentRequest} request
    * @return {!Uint8Array}
    */
   function(request) {
     return request.serializeBinary();
   },
-  proto.com.jobportal.studentservice.UpdateStudentResponse.deserializeBinary
+  proto.com.jobportal.studentserviceproto.UpdateStudentResponse.deserializeBinary
 );
 
 
 /**
  * @const
  * @type {!grpc.web.AbstractClientBase.MethodInfo<
- *   !proto.com.jobportal.studentservice.UpdateStudentRequest,
- *   !proto.com.jobportal.studentservice.UpdateStudentResponse>}
+ *   !proto.com.jobportal.studentserviceproto.UpdateStudentRequest,
+ *   !proto.com.jobportal.studentserviceproto.UpdateStudentResponse>}
  */
 const methodInfo_StudentService_updateStudent = new grpc.web.AbstractClientBase.MethodInfo(
-  proto.com.jobportal.studentservice.UpdateStudentResponse,
+  proto.com.jobportal.studentserviceproto.UpdateStudentResponse,
   /**
-   * @param {!proto.com.jobportal.studentservice.UpdateStudentRequest} request
+   * @param {!proto.com.jobportal.studentserviceproto.UpdateStudentRequest} request
    * @return {!Uint8Array}
    */
   function(request) {
     return request.serializeBinary();
   },
-  proto.com.jobportal.studentservice.UpdateStudentResponse.deserializeBinary
+  proto.com.jobportal.studentserviceproto.UpdateStudentResponse.deserializeBinary
 );
 
 
 /**
- * @param {!proto.com.jobportal.studentservice.UpdateStudentRequest} request The
+ * @param {!proto.com.jobportal.studentserviceproto.UpdateStudentRequest} request The
  *     request proto
  * @param {?Object<string, string>} metadata User defined
  *     call metadata
- * @param {function(?grpc.web.Error, ?proto.com.jobportal.studentservice.UpdateStudentResponse)}
+ * @param {function(?grpc.web.Error, ?proto.com.jobportal.studentserviceproto.UpdateStudentResponse)}
  *     callback The callback function(error, response)
- * @return {!grpc.web.ClientReadableStream<!proto.com.jobportal.studentservice.UpdateStudentResponse>|undefined}
+ * @return {!grpc.web.ClientReadableStream<!proto.com.jobportal.studentserviceproto.UpdateStudentResponse>|undefined}
  *     The XHR Node Readable Stream
  */
-proto.com.jobportal.studentservice.StudentServiceClient.prototype.updateStudent =
+proto.com.jobportal.studentserviceproto.StudentServiceClient.prototype.updateStudent =
     function(request, metadata, callback) {
   return this.client_.rpcCall(this.hostname_ +
-      '/com.jobportal.studentservice.StudentService/updateStudent',
+      '/com.jobportal.studentserviceproto.StudentService/updateStudent',
       request,
       metadata || {},
       methodDescriptor_StudentService_updateStudent,
@@ -455,17 +455,17 @@ proto.com.jobportal.studentservice.StudentServiceClient.prototype.updateStudent 
 
 
 /**
- * @param {!proto.com.jobportal.studentservice.UpdateStudentRequest} request The
+ * @param {!proto.com.jobportal.studentserviceproto.UpdateStudentRequest} request The
  *     request proto
  * @param {?Object<string, string>} metadata User defined
  *     call metadata
- * @return {!Promise<!proto.com.jobportal.studentservice.UpdateStudentResponse>}
+ * @return {!Promise<!proto.com.jobportal.studentserviceproto.UpdateStudentResponse>}
  *     Promise that resolves to the response
  */
-proto.com.jobportal.studentservice.StudentServicePromiseClient.prototype.updateStudent =
+proto.com.jobportal.studentserviceproto.StudentServicePromiseClient.prototype.updateStudent =
     function(request, metadata) {
   return this.client_.unaryCall(this.hostname_ +
-      '/com.jobportal.studentservice.StudentService/updateStudent',
+      '/com.jobportal.studentserviceproto.StudentService/updateStudent',
       request,
       metadata || {},
       methodDescriptor_StudentService_updateStudent);
@@ -475,58 +475,58 @@ proto.com.jobportal.studentservice.StudentServicePromiseClient.prototype.updateS
 /**
  * @const
  * @type {!grpc.web.MethodDescriptor<
- *   !proto.com.jobportal.studentservice.DeleteStudentRequest,
- *   !proto.com.jobportal.studentservice.DeleteStudentResponse>}
+ *   !proto.com.jobportal.studentserviceproto.DeleteStudentRequest,
+ *   !proto.com.jobportal.studentserviceproto.DeleteStudentResponse>}
  */
 const methodDescriptor_StudentService_deleteStudent = new grpc.web.MethodDescriptor(
-  '/com.jobportal.studentservice.StudentService/deleteStudent',
+  '/com.jobportal.studentserviceproto.StudentService/deleteStudent',
   grpc.web.MethodType.UNARY,
-  proto.com.jobportal.studentservice.DeleteStudentRequest,
-  proto.com.jobportal.studentservice.DeleteStudentResponse,
+  proto.com.jobportal.studentserviceproto.DeleteStudentRequest,
+  proto.com.jobportal.studentserviceproto.DeleteStudentResponse,
   /**
-   * @param {!proto.com.jobportal.studentservice.DeleteStudentRequest} request
+   * @param {!proto.com.jobportal.studentserviceproto.DeleteStudentRequest} request
    * @return {!Uint8Array}
    */
   function(request) {
     return request.serializeBinary();
   },
-  proto.com.jobportal.studentservice.DeleteStudentResponse.deserializeBinary
+  proto.com.jobportal.studentserviceproto.DeleteStudentResponse.deserializeBinary
 );
 
 
 /**
  * @const
  * @type {!grpc.web.AbstractClientBase.MethodInfo<
- *   !proto.com.jobportal.studentservice.DeleteStudentRequest,
- *   !proto.com.jobportal.studentservice.DeleteStudentResponse>}
+ *   !proto.com.jobportal.studentserviceproto.DeleteStudentRequest,
+ *   !proto.com.jobportal.studentserviceproto.DeleteStudentResponse>}
  */
 const methodInfo_StudentService_deleteStudent = new grpc.web.AbstractClientBase.MethodInfo(
-  proto.com.jobportal.studentservice.DeleteStudentResponse,
+  proto.com.jobportal.studentserviceproto.DeleteStudentResponse,
   /**
-   * @param {!proto.com.jobportal.studentservice.DeleteStudentRequest} request
+   * @param {!proto.com.jobportal.studentserviceproto.DeleteStudentRequest} request
    * @return {!Uint8Array}
    */
   function(request) {
     return request.serializeBinary();
   },
-  proto.com.jobportal.studentservice.DeleteStudentResponse.deserializeBinary
+  proto.com.jobportal.studentserviceproto.DeleteStudentResponse.deserializeBinary
 );
 
 
 /**
- * @param {!proto.com.jobportal.studentservice.DeleteStudentRequest} request The
+ * @param {!proto.com.jobportal.studentserviceproto.DeleteStudentRequest} request The
  *     request proto
  * @param {?Object<string, string>} metadata User defined
  *     call metadata
- * @param {function(?grpc.web.Error, ?proto.com.jobportal.studentservice.DeleteStudentResponse)}
+ * @param {function(?grpc.web.Error, ?proto.com.jobportal.studentserviceproto.DeleteStudentResponse)}
  *     callback The callback function(error, response)
- * @return {!grpc.web.ClientReadableStream<!proto.com.jobportal.studentservice.DeleteStudentResponse>|undefined}
+ * @return {!grpc.web.ClientReadableStream<!proto.com.jobportal.studentserviceproto.DeleteStudentResponse>|undefined}
  *     The XHR Node Readable Stream
  */
-proto.com.jobportal.studentservice.StudentServiceClient.prototype.deleteStudent =
+proto.com.jobportal.studentserviceproto.StudentServiceClient.prototype.deleteStudent =
     function(request, metadata, callback) {
   return this.client_.rpcCall(this.hostname_ +
-      '/com.jobportal.studentservice.StudentService/deleteStudent',
+      '/com.jobportal.studentserviceproto.StudentService/deleteStudent',
       request,
       metadata || {},
       methodDescriptor_StudentService_deleteStudent,
@@ -535,22 +535,22 @@ proto.com.jobportal.studentservice.StudentServiceClient.prototype.deleteStudent 
 
 
 /**
- * @param {!proto.com.jobportal.studentservice.DeleteStudentRequest} request The
+ * @param {!proto.com.jobportal.studentserviceproto.DeleteStudentRequest} request The
  *     request proto
  * @param {?Object<string, string>} metadata User defined
  *     call metadata
- * @return {!Promise<!proto.com.jobportal.studentservice.DeleteStudentResponse>}
+ * @return {!Promise<!proto.com.jobportal.studentserviceproto.DeleteStudentResponse>}
  *     Promise that resolves to the response
  */
-proto.com.jobportal.studentservice.StudentServicePromiseClient.prototype.deleteStudent =
+proto.com.jobportal.studentserviceproto.StudentServicePromiseClient.prototype.deleteStudent =
     function(request, metadata) {
   return this.client_.unaryCall(this.hostname_ +
-      '/com.jobportal.studentservice.StudentService/deleteStudent',
+      '/com.jobportal.studentserviceproto.StudentService/deleteStudent',
       request,
       metadata || {},
       methodDescriptor_StudentService_deleteStudent);
 };
 
 
-module.exports = proto.com.jobportal.studentservice;
+module.exports = proto.com.jobportal.studentserviceproto;
 

@@ -39,10 +39,10 @@ message PersonalDetails {
 
 message EducationDetails {
   map<string, string> SSCDetails = 1;
-  map<string, string> HSCDetails = 3;
-  map<string, string> DiplomaDetails = 5;
-  map<string, string> UGDetails = 7;
-  map<string, string> PGDetails = 9;
+  map<string, string> HSCDetails = 2;
+  map<string, string> DiplomaDetails = 3;
+  map<string, string> UGDetails = 4;
+  map<string, string> PGDetails = 5;
 }
 
 message ContactDetails {

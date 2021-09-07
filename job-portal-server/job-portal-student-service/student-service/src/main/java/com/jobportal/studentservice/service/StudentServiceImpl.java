@@ -1,21 +1,21 @@
 package com.jobportal.studentservice.service;
 
 import com.google.protobuf.ByteString;
+import com.jobportal.studentservice.exception.InternalServerErrorException;
 import com.jobportal.studentservice.exception.ResourceNotFoundException;
-import com.jobportal.studentservice.model.ContactDetails;
-import com.jobportal.studentservice.model.EducationDetails;
-import com.jobportal.studentservice.model.JobDetails;
-import com.jobportal.studentservice.model.PersonalDetails;
-import com.jobportal.studentservice.model.Student;
+import com.jobportal.studentservice.model.*;
 import com.jobportal.studentservice.repository.StudentRepository;
 import com.jobportal.studentserviceproto.StudentServiceOuterClass;
 import io.grpc.stub.StreamObserver;
 import net.devh.boot.grpc.server.service.GrpcService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.mongodb.gridfs.GridFsTemplate;
 import org.springframework.web.bind.annotation.CrossOrigin;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 @GrpcService
 @CrossOrigin(origins = "http://localhost:8080")
@@ -23,6 +23,9 @@ public class StudentServiceImpl extends com.jobportal.studentserviceproto.Studen
 
     @Autowired
     private StudentRepository studentRepository;
+
+    @Autowired
+    private FileService fileService;
 
     public List<Student> findAllById(List<StudentServiceOuterClass.GetStudentContactRequest.StudentId> studentIds) {
         List<Student> students = new ArrayList<Student>();
@@ -36,21 +39,25 @@ public class StudentServiceImpl extends com.jobportal.studentserviceproto.Studen
 
     public StudentServiceOuterClass.Student getStudentDetailsFromModel(Student student) {
         PersonalDetails personalDetails = student.getPersonalDetails();
-        com.jobportal.studentservice.model.File profilePicture = student.getPersonalDetails().getProfilePicture();
         ContactDetails contactDetails = student.getContactDetails();
         EducationDetails educationDetails = student.getEducationDetails();
         JobDetails jobDetails = student.getJobDetails();
 
-        StudentServiceOuterClass.File studentProfilePicture = StudentServiceOuterClass.File.newBuilder()
-                .setFileName(profilePicture.getFilename())
-                .setFileType(profilePicture.getFileType())
-                .setFileSize(profilePicture.getFileSize())
-                .setFile(ByteString.copyFrom(profilePicture.getFile()))
+        String profilePictureId = personalDetails.getProfilePicture().getFileId();
+        File studentProfilePicture =
+                fileService.downloadFile(profilePictureId)
+                        .orElseThrow(() -> new InternalServerErrorException("Internal Server Error. Try Again!"));
+
+        StudentServiceOuterClass.File profilePicture = StudentServiceOuterClass.File.newBuilder()
+                .setFileName(studentProfilePicture.getFilename())
+                .setFileType(studentProfilePicture.getFileType())
+                .setFileSize(studentProfilePicture.getFileSize())
+                .setFile(ByteString.copyFrom(studentProfilePicture.getFile()))
                 .build();
 
         StudentServiceOuterClass.PersonalDetails studentPersonalDetails =
                 StudentServiceOuterClass.PersonalDetails.newBuilder()
-                        .setProfilePicture(studentProfilePicture)
+                        .setProfilePicture(profilePicture)
                         .setFirstName(personalDetails.getFirstName())
                         .setMiddleName(personalDetails.getMiddleName())
                         .setLastName(personalDetails.getLastName())
@@ -111,10 +118,27 @@ public class StudentServiceImpl extends com.jobportal.studentserviceproto.Studen
         StudentServiceOuterClass.ContactDetails contactDetails = student.getContactDetails();
         StudentServiceOuterClass.EducationDetails educationDetails = student.getEducationDetails();
         StudentServiceOuterClass.PersonalDetails personalDetails = student.getPersonalDetails();
+        StudentServiceOuterClass.File profilePicture = student.getPersonalDetails().getProfilePicture();
         StudentServiceOuterClass.JobDetails jobDetails = student.getJobDetails();
+
+        BASE64DecodedMultipartFile multipartFile =
+                new BASE64DecodedMultipartFile(
+                        profilePicture.getFile().toByteArray(),
+                        profilePicture.getFileName(),
+                        profilePicture.getFileType());
+
+        String fileId = fileService.addFile(multipartFile)
+                .orElseThrow(() -> new InternalServerErrorException("Internal Server Error. Try Again!"));
+
+        File studentProfilePicture = new File(
+                fileId,
+                profilePicture.getFileName(),
+                profilePicture.getFileType(),
+                profilePicture.getFileSize());
 
         PersonalDetails studentPersonalDetails =
                 new PersonalDetails(
+                        studentProfilePicture,
                         personalDetails.getFirstName(),
                         personalDetails.getMiddleName(),
                         personalDetails.getLastName(),
