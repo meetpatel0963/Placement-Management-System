@@ -13,21 +13,21 @@ import {
   UpdateStudentRequest,
 } from "./student_pb";
 
-const studentIdDB = "1";
+const studentIdDB = "61390090a520c44d60ae5dde";
 
 const studentHelper = (fileByteArray) => {
   const personalDetails = new PersonalDetails();
 
   const profilePicture = new File();
-  profilePicture.setFilename("profilePicture");
-  profilePicture.setFilesize("3243134");
+  profilePicture.setFilename("Test Update profilepicture");
+  profilePicture.setFilesize("1234567890");
   profilePicture.setFiletype("image/jpeg");
   profilePicture.setFile(fileByteArray);
 
   personalDetails.setProfilepicture(profilePicture);
-  personalDetails.setFirstname("Firstname");
-  personalDetails.setMiddlename("Middlename");
-  personalDetails.setLastname("Lastname");
+  personalDetails.setFirstname("Test");
+  personalDetails.setMiddlename("-");
+  personalDetails.setLastname("User");
   personalDetails.setFathername("Fathername");
   personalDetails.setGender("Gender");
   personalDetails.setCurrentaddressline1("Currentaddressline1");
@@ -60,8 +60,8 @@ const studentHelper = (fileByteArray) => {
   const jobDetails = new JobDetails();
   jobDetails.addSkills("Skill1");
   jobDetails.setExperiencetype("Experiencetype");
-  jobDetails.setExperienceperiodinyears(2);
-  jobDetails.setExperienceperiodinmonths(12);
+  jobDetails.setExperienceperiodinyears(5);
+  jobDetails.setExperienceperiodinmonths(10);
 
   const student = new Student();
   student.setPersonaldetails(personalDetails);
@@ -121,8 +121,8 @@ export const getStudentById = (client) => {
   });
 };
 
-export const updateStudent = (client) => {
-  const student = studentHelper();
+export const updateStudent = (client, fileByteArray) => {
+  const student = studentHelper(fileByteArray);
   student.setId(studentIdDB);
 
   const updateStudentRequest = new UpdateStudentRequest();

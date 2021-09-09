@@ -19,6 +19,7 @@ export const client = new StudentServiceClient(
 
 const App = () => {
   const [selectedFile, setSelectedFile] = useState(null);
+  const [fileArray, setFileArray] = useState("");
 
   useEffect(() => {
     // saveStudent(client);
@@ -44,7 +45,14 @@ const App = () => {
       if (evt.target.readyState === FileReader.DONE) {
         let arrayBuffer = evt.target.result,
           fileByteArray = new Uint8Array(arrayBuffer);
-        saveStudent(client, fileByteArray);
+        console.log(fileByteArray);
+        let arr = [];
+        fileByteArray.forEach((i) => {
+          arr.push(i);
+        });
+        setFileArray(JSON.stringify(arr));
+        // updateStudent(client, fileByteArray);
+        // saveStudent(client, fileByteArray);
       }
     };
   };
@@ -54,6 +62,7 @@ const App = () => {
       <form onSubmit={handleSubmit}>
         <input type="file" onChange={handleSelect} />
         <input type="submit" value="Submit" />
+        <p>{fileArray}</p>
       </form>
     </div>
   );

@@ -1,25 +1,18 @@
 package com.jobportal.studentservice.service;
 
 import com.google.protobuf.ByteString;
-import com.jobportal.studentservice.exception.InternalServerErrorException;
-import com.jobportal.studentservice.exception.ResourceNotFoundException;
 import com.jobportal.studentservice.model.*;
 import com.jobportal.studentservice.repository.StudentRepository;
 import com.jobportal.studentserviceproto.StudentServiceOuterClass;
-import io.grpc.stub.StreamObserver;
-import net.devh.boot.grpc.server.service.GrpcService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.mongodb.gridfs.GridFsTemplate;
-import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.stereotype.Service;
 
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
-@GrpcService
-@CrossOrigin(origins = "http://localhost:8080")
-public class StudentServiceImpl extends com.jobportal.studentserviceproto.StudentServiceGrpc.StudentServiceImplBase {
+@Service
+public class StudentService {
 
     @Autowired
     private StudentRepository studentRepository;
@@ -27,17 +20,7 @@ public class StudentServiceImpl extends com.jobportal.studentserviceproto.Studen
     @Autowired
     private FileService fileService;
 
-    public List<Student> findAllById(List<StudentServiceOuterClass.GetStudentContactRequest.StudentId> studentIds) {
-        List<Student> students = new ArrayList<Student>();
-        for(StudentServiceOuterClass.GetStudentContactRequest.StudentId studentId : studentIds) {
-            Student student = studentRepository.findById(studentId.getStudentId())
-                    .orElseThrow(() -> new ResourceNotFoundException("Student", "id", studentId.getStudentId()));
-            students.add(student);
-        }
-        return students;
-    }
-
-    public StudentServiceOuterClass.Student getStudentDetailsFromModel(Student student) {
+    public Optional<StudentServiceOuterClass.Student> getStudentDetailsFromModel(Student student) {
         PersonalDetails personalDetails = student.getPersonalDetails();
         ContactDetails contactDetails = student.getContactDetails();
         EducationDetails educationDetails = student.getEducationDetails();
@@ -45,8 +28,7 @@ public class StudentServiceImpl extends com.jobportal.studentserviceproto.Studen
 
         String profilePictureId = personalDetails.getProfilePicture().getFileId();
         File studentProfilePicture =
-                fileService.downloadFile(profilePictureId)
-                        .orElseThrow(() -> new InternalServerErrorException("Internal Server Error. Try Again!"));
+                fileService.findById(profilePictureId).orElse(personalDetails.getProfilePicture());
 
         StudentServiceOuterClass.File profilePicture = StudentServiceOuterClass.File.newBuilder()
                 .setFileName(studentProfilePicture.getFilename())
@@ -111,30 +93,24 @@ public class StudentServiceImpl extends com.jobportal.studentserviceproto.Studen
                 .setJobDetails(studentJobDetails)
                 .build();
 
-        return studentDetails;
+        return Optional.ofNullable(studentDetails);
     }
 
-    Student getStudentDetailsFromProto(StudentServiceOuterClass.Student student) {
+    Optional<Student> getStudentDetailsFromProto(StudentServiceOuterClass.Student student) {
         StudentServiceOuterClass.ContactDetails contactDetails = student.getContactDetails();
         StudentServiceOuterClass.EducationDetails educationDetails = student.getEducationDetails();
         StudentServiceOuterClass.PersonalDetails personalDetails = student.getPersonalDetails();
         StudentServiceOuterClass.File profilePicture = student.getPersonalDetails().getProfilePicture();
         StudentServiceOuterClass.JobDetails jobDetails = student.getJobDetails();
 
-        BASE64DecodedMultipartFile multipartFile =
-                new BASE64DecodedMultipartFile(
-                        profilePicture.getFile().toByteArray(),
-                        profilePicture.getFileName(),
-                        profilePicture.getFileType());
-
-        String fileId = fileService.addFile(multipartFile)
-                .orElseThrow(() -> new InternalServerErrorException("Internal Server Error. Try Again!"));
+        Optional<Student> _student = studentRepository.findById(student.getId());
 
         File studentProfilePicture = new File(
-                fileId,
+                _student.isPresent() ? _student.get().getPersonalDetails().getProfilePicture().getFileId() : "",
                 profilePicture.getFileName(),
                 profilePicture.getFileType(),
-                profilePicture.getFileSize());
+                profilePicture.getFileSize(),
+                profilePicture.getFile().toByteArray());
 
         PersonalDetails studentPersonalDetails =
                 new PersonalDetails(
@@ -188,19 +164,48 @@ public class StudentServiceImpl extends com.jobportal.studentserviceproto.Studen
                 studentJobDetails
         );
 
-        return studentDetails;
+        return Optional.ofNullable(studentDetails);
     }
 
-    @Override
-    public void getStudentContactDetails(StudentServiceOuterClass.GetStudentContactRequest request,
-                                         StreamObserver<StudentServiceOuterClass.GetStudentContactResponse> responseObserver) {
-        List<StudentServiceOuterClass.GetStudentContactRequest.StudentId> studentsIds = request.getStudentIdsList();
-        List<Student> students = findAllById(studentsIds);
+    public Optional<List<Student>> findAllById(List<StudentServiceOuterClass.GetStudentContactRequest.StudentId> studentIds) {
+        List<Student> students = new ArrayList<Student>();
+        for(StudentServiceOuterClass.GetStudentContactRequest.StudentId studentId : studentIds) {
+            Optional<Student> student = studentRepository.findById(studentId.getStudentId());
 
-        List<StudentServiceOuterClass.GetStudentContactResponse.StudentContactDetails> studentContactDetailsList =
-                new ArrayList<StudentServiceOuterClass.GetStudentContactResponse.StudentContactDetails>();
+            if(!student.isPresent()) {
+                return Optional.empty();
+            } else {
+                students.add(student.get());
+            }
+        }
+
+        return Optional.ofNullable(students);
+    }
+
+    public StudentServiceOuterClass.GetAllStudentsResponse getAllStudents(StudentServiceOuterClass.GetAllStudentsRequest request) {
+        List<Student> students = studentRepository.findAll();
+
+        List<StudentServiceOuterClass.Student> studentsList =
+                new ArrayList<StudentServiceOuterClass.Student>();
 
         for(Student student : students) {
+            Optional<StudentServiceOuterClass.Student> studentProto = getStudentDetailsFromModel(student);
+             studentsList.add(studentProto.get());
+        }
+
+        return StudentServiceOuterClass.GetAllStudentsResponse.newBuilder()
+                .addAllStudents(studentsList)
+                .build();
+    }
+
+    public StudentServiceOuterClass.GetStudentContactResponse getStudentContactDetails(StudentServiceOuterClass.GetStudentContactRequest request) {
+        List<StudentServiceOuterClass.GetStudentContactRequest.StudentId> studentsIds = request.getStudentIdsList();
+        Optional<List<Student>> students = findAllById(studentsIds);
+
+        List<StudentServiceOuterClass.GetStudentContactResponse.StudentContactDetails> studentContactDetailsList =
+                    new ArrayList<StudentServiceOuterClass.GetStudentContactResponse.StudentContactDetails>();
+
+        for (Student student : students.get()) {
             PersonalDetails studentPersonalDetails = student.getPersonalDetails();
             ContactDetails studentContactDetails = student.getContactDetails();
 
@@ -216,87 +221,81 @@ public class StudentServiceImpl extends com.jobportal.studentserviceproto.Studen
             studentContactDetailsList.add(studentDetails);
         }
 
-        StudentServiceOuterClass.GetStudentContactResponse studentResponse = StudentServiceOuterClass.GetStudentContactResponse.newBuilder()
+        return StudentServiceOuterClass.GetStudentContactResponse.newBuilder()
                 .addAllStudents(studentContactDetailsList)
                 .build();
-
-        responseObserver.onNext(studentResponse);
-        responseObserver.onCompleted();
     }
 
-    @Override
-    public void getAllStudents(StudentServiceOuterClass.GetAllStudentsRequest request, StreamObserver<StudentServiceOuterClass.GetAllStudentsResponse> responseObserver) {
-        List<Student> students = studentRepository.findAll();
+    public StudentServiceOuterClass.GetStudentByIdResponse getStudentById(StudentServiceOuterClass.GetStudentByIdRequest request) {
+        Optional<Student> student =
+                studentRepository.findById(request.getStudentId());
 
-        List<StudentServiceOuterClass.Student> studentsList =
-                new ArrayList<StudentServiceOuterClass.Student>();
+        Optional<StudentServiceOuterClass.Student> studentProto = getStudentDetailsFromModel(student.get());
 
-        for(Student student : students) {
-            studentsList.add(getStudentDetailsFromModel(student));
-        }
-
-        StudentServiceOuterClass.GetAllStudentsResponse allStudents = StudentServiceOuterClass.GetAllStudentsResponse.newBuilder()
-                .addAllStudents(studentsList)
-                .build();
-
-        responseObserver.onNext(allStudents);
-        responseObserver.onCompleted();
+        return StudentServiceOuterClass.GetStudentByIdResponse.newBuilder()
+                        .setStudent(studentProto.get())
+                        .build();
     }
 
-    @Override
-    public void getStudentById(StudentServiceOuterClass.GetStudentByIdRequest request, StreamObserver<StudentServiceOuterClass.GetStudentByIdResponse> responseObserver) {
-        Student student =
-                studentRepository.findById(request.getStudentId())
-                        .orElseThrow(() -> new ResourceNotFoundException("Student", "id", request.getStudentId()));
+    public StudentServiceOuterClass.SaveStudentResponse saveStudent(StudentServiceOuterClass.SaveStudentRequest request) {
+        Optional<Student> student = getStudentDetailsFromProto(request.getStudent());
 
-        StudentServiceOuterClass.GetStudentByIdResponse studentDetails = StudentServiceOuterClass.GetStudentByIdResponse.newBuilder()
-                .setStudent(getStudentDetailsFromModel(student))
-                .build();
+        File studentProfilePicture = student.get().getPersonalDetails().getProfilePicture();
 
-        responseObserver.onNext(studentDetails);
-        responseObserver.onCompleted();
-    }
+        BASE64DecodedMultipartFile multipartFile =
+                new BASE64DecodedMultipartFile(
+                        studentProfilePicture.getFile(),
+                        studentProfilePicture.getFilename(),
+                        studentProfilePicture.getFileType());
 
-    @Override
-    public void saveStudent(StudentServiceOuterClass.SaveStudentRequest request, StreamObserver<StudentServiceOuterClass.SaveStudentResponse> responseObserver) {
-        studentRepository.save(getStudentDetailsFromProto(request.getStudent()));
-        StudentServiceOuterClass.SaveStudentResponse message = StudentServiceOuterClass.SaveStudentResponse.newBuilder()
+        Optional<String> fileId = fileService.addFile(multipartFile);
+
+        student.get().getPersonalDetails().getProfilePicture().setFileId(fileId.get());
+        studentRepository.save(student.get());
+
+        return StudentServiceOuterClass.SaveStudentResponse.newBuilder()
                 .setMessage("New Student Added!")
                 .build();
-
-        responseObserver.onNext(message);
-        responseObserver.onCompleted();
     }
 
-    @Override
-    public void updateStudent(StudentServiceOuterClass.UpdateStudentRequest request, StreamObserver<StudentServiceOuterClass.UpdateStudentResponse> responseObserver) {
-        Student student = studentRepository.findById(request.getStudent().getId())
-                .orElseThrow(() -> new ResourceNotFoundException("Student", "id", request.getStudent().getId()));
+    public StudentServiceOuterClass.UpdateStudentResponse updateStudent(StudentServiceOuterClass.UpdateStudentRequest request) {
+        Optional<Student> student = studentRepository.findById(request.getStudent().getId());
 
-        Student newStudent = getStudentDetailsFromProto(request.getStudent());
+        Optional<Student> newStudent = getStudentDetailsFromProto(request.getStudent());
 
-        studentRepository.save(newStudent);
+        File studentProfilePicture =
+                newStudent.get().getPersonalDetails().getProfilePicture();
 
-        StudentServiceOuterClass.UpdateStudentResponse message = StudentServiceOuterClass.UpdateStudentResponse.newBuilder()
+        Optional<File> profilePicture =
+                fileService.findById(studentProfilePicture.getFileId());
+
+        if (studentProfilePicture.getFile() != null && studentProfilePicture.getFile() != profilePicture.get().getFile()) {
+            fileService.deleteFile(student.get().getPersonalDetails().getProfilePicture().getFileId());
+
+            BASE64DecodedMultipartFile multipartFile =
+                    new BASE64DecodedMultipartFile(
+                            studentProfilePicture.getFile(),
+                            studentProfilePicture.getFilename(),
+                            studentProfilePicture.getFileType());
+
+            Optional<String> fileId = fileService.addFile(multipartFile);
+            newStudent.get().getPersonalDetails().getProfilePicture().setFileId(fileId.get());
+            studentRepository.save(newStudent.get());
+        }
+
+        return StudentServiceOuterClass.UpdateStudentResponse.newBuilder()
                 .setMessage("Student Updated Successfully!")
                 .build();
-
-        responseObserver.onNext(message);
-        responseObserver.onCompleted();
     }
 
-    @Override
-    public void deleteStudent(StudentServiceOuterClass.DeleteStudentRequest request, StreamObserver<StudentServiceOuterClass.DeleteStudentResponse> responseObserver) {
-        Student student = studentRepository.findById(request.getStudentId())
-                .orElseThrow(() -> new ResourceNotFoundException("Student", "id", request.getStudentId()));
+    public StudentServiceOuterClass.DeleteStudentResponse deleteStudent(StudentServiceOuterClass.DeleteStudentRequest request) {
+        Optional<Student> student = studentRepository.findById(request.getStudentId());
 
-        studentRepository.delete(student);
+        fileService.deleteFile(student.get().getPersonalDetails().getProfilePicture().getFileId());
+        studentRepository.delete(student.get());
 
-        StudentServiceOuterClass.DeleteStudentResponse message = StudentServiceOuterClass.DeleteStudentResponse.newBuilder()
+        return StudentServiceOuterClass.DeleteStudentResponse.newBuilder()
                 .setMessage("Student Deleted Successfully!")
                 .build();
-
-        responseObserver.onNext(message);
-        responseObserver.onCompleted();
     }
 }

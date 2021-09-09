@@ -36,22 +36,18 @@ public class FileService {
             //store in database which returns the objectID
             fileID = template.store(upload.getInputStream(), upload.getOriginalFilename(), upload.getContentType(), metadata);
         } catch(IOException e) {
-            return null;
+            return Optional.empty();
         }
 
         //return as a string
         return Optional.ofNullable(fileID.toString());
     }
 
-    public Optional<File> downloadFile(String id) {
+    public Optional<File> findById(String id) {
         File loadFile = new File();
 
-        try{
-            //search file
-            GridFSFile gridFSFile = template.findOne( new Query(Criteria.where("_id").is(id)) );
-
-            //convert uri to byteArray
-            //save data to LoadFile class
+        try {
+            GridFSFile gridFSFile = template.findOne(new Query(Criteria.where("_id").is(id)));
 
             if (gridFSFile != null && gridFSFile.getMetadata() != null) {
                 loadFile.setFilename(gridFSFile.getFilename());
@@ -62,11 +58,17 @@ public class FileService {
 
                 loadFile.setFile(IOUtils.toByteArray(operations.getResource(gridFSFile).getInputStream()));
             }
+            else{
+                return Optional.empty();
+            }
         } catch(IOException e) {
-            return null;
+            return Optional.empty();
         }
 
-        return Optional.ofNullable(loadFile);
+        return Optional.of(loadFile);
     }
 
+    public void deleteFile(String id) {
+        template.delete(new Query(Criteria.where("_id").is(id)));
+    }
 }

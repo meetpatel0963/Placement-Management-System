@@ -27,12 +27,15 @@ public class Student {
     private PersonalDetails personalDetails;
 
     // Education Details
+    @Field("educationDetails")
     private EducationDetails educationDetails;
 
     // Contact Details
+    @Field("contactDetails")
     private ContactDetails contactDetails;
 
     // Job Details
+    @Field("jobDetails")
     private JobDetails jobDetails;
 
 }
