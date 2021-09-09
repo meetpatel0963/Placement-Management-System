@@ -226,15 +226,19 @@ public class StudentService {
                 .build();
     }
 
-    public StudentServiceOuterClass.GetStudentByIdResponse getStudentById(StudentServiceOuterClass.GetStudentByIdRequest request) {
+    public Optional<StudentServiceOuterClass.GetStudentByIdResponse> getStudentById(StudentServiceOuterClass.GetStudentByIdRequest request) {
         Optional<Student> student =
                 studentRepository.findById(request.getStudentId());
 
+        if(!student.isPresent()){
+            return Optional.empty();
+        }
+
         Optional<StudentServiceOuterClass.Student> studentProto = getStudentDetailsFromModel(student.get());
 
-        return StudentServiceOuterClass.GetStudentByIdResponse.newBuilder()
+        return Optional.of(StudentServiceOuterClass.GetStudentByIdResponse.newBuilder()
                         .setStudent(studentProto.get())
-                        .build();
+                        .build());
     }
 
     public StudentServiceOuterClass.SaveStudentResponse saveStudent(StudentServiceOuterClass.SaveStudentRequest request) {

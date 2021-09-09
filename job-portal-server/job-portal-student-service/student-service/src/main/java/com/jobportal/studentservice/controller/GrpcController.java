@@ -3,10 +3,13 @@ package com.jobportal.studentservice.controller;
 import com.jobportal.studentservice.config.LogGrpcInterceptor;
 import com.jobportal.studentservice.service.StudentService;
 import com.jobportal.studentserviceproto.StudentServiceOuterClass;
+import io.grpc.Status;
 import io.grpc.stub.StreamObserver;
 import net.devh.boot.grpc.server.service.GrpcService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.CrossOrigin;
+
+import java.util.Optional;
 
 @GrpcService(interceptors = { LogGrpcInterceptor.class })
 @CrossOrigin(origins = "http://localhost:8080")
@@ -30,7 +33,15 @@ public class GrpcController extends com.jobportal.studentserviceproto.StudentSer
 
     @Override
     public void getStudentById(StudentServiceOuterClass.GetStudentByIdRequest request, StreamObserver<StudentServiceOuterClass.GetStudentByIdResponse> responseObserver) {
-        responseObserver.onNext(studentService.getStudentById(request));
+        Optional<StudentServiceOuterClass.GetStudentByIdResponse> getStudentByIdResponse =
+                studentService.getStudentById(request);
+
+        if(!getStudentByIdResponse.isPresent()) {
+            responseObserver.onError(Status.NOT_FOUND.withDescription("No student exists with given Id!").asRuntimeException());
+        } else {
+            responseObserver.onNext(getStudentByIdResponse.get());
+        }
+        
         responseObserver.onCompleted();
     }
 
