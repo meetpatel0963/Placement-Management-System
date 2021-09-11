@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.CrossOrigin;
 import java.util.Optional;
 
 @GrpcService(interceptors = { LogGrpcInterceptor.class })
-@CrossOrigin(origins = "http://localhost:8080")
+@CrossOrigin
 public class GrpcController extends com.jobportal.studentserviceproto.StudentServiceGrpc.StudentServiceImplBase {
 
     @Autowired

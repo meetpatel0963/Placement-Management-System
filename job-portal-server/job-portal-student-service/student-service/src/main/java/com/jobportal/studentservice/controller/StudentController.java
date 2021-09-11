@@ -28,11 +28,9 @@ public class StudentController {
         Optional<StudentServiceOuterClass.GetStudentContactResponse> getStudentContactResponse =
                 studentService.getStudentContactDetails(getStudentContactRequest);
 
-        if(!getStudentContactResponse.isPresent()) {
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(new ResourceNotFoundException("Student", "id"));
-        }
-
-        return ResponseEntity.ok(getStudentContactResponse.get());
+        return !getStudentContactResponse.isPresent()
+                ? ResponseEntity.status(HttpStatus.NOT_FOUND).body(new ResourceNotFoundException("Student", "id"))
+                : ResponseEntity.ok(getStudentContactResponse.get());
     }
 
     @GetMapping(path = "/{studentId}", produces = MediaType.APPLICATION_JSON_VALUE)
@@ -40,11 +38,9 @@ public class StudentController {
         Optional<StudentServiceOuterClass.GetStudentByIdResponse> getStudentByIdResponse =
                 studentService.getStudentById(studentId, getStudentByIdRequest);
         
-        if(!getStudentByIdResponse.isPresent()) {
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(new ResourceNotFoundException("Student", "id"));
-        }
-        
-        return ResponseEntity.ok(getStudentByIdResponse.get());
+        return !getStudentByIdResponse.isPresent()
+            ? ResponseEntity.status(HttpStatus.NOT_FOUND).body(new ResourceNotFoundException("Student", "id"))
+            : ResponseEntity.ok(getStudentByIdResponse.get());
     }
 
     @PostMapping(produces = MediaType.APPLICATION_JSON_VALUE)
@@ -52,10 +48,9 @@ public class StudentController {
         Optional<StudentServiceOuterClass.SaveStudentResponse> saveStudentResponse =
                 studentService.saveStudent(saveStudentRequest);
 
-        if(!saveStudentResponse.isPresent()) {
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(new ResourceNotFoundException("Student", "id"));
-        }
-        return ResponseEntity.status(HttpStatus.CREATED).body(saveStudentResponse.get());
+        return !saveStudentResponse.isPresent()
+            ? ResponseEntity.status(HttpStatus.NOT_FOUND).body(new ResourceNotFoundException("Student", "id"))
+            : ResponseEntity.status(HttpStatus.CREATED).body(saveStudentResponse.get());
     }
 
     @PutMapping(path = "/{studentId}", produces = MediaType.APPLICATION_JSON_VALUE)
@@ -63,12 +58,10 @@ public class StudentController {
         Optional<StudentServiceOuterClass.UpdateStudentResponse> updateStudentResponse =
                 studentService.updateStudent(studentId, updateStudentRequest);
 
-        if(!updateStudentResponse.isPresent()) {
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
-                    .body(new InternalServerErrorException("Could not update a student! Try again!"));
-        }
-
-        return ResponseEntity.ok(updateStudentResponse.get());
+        return !updateStudentResponse.isPresent()
+            ? ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
+                    .body(new InternalServerErrorException("Could not update a student! Try again!"))
+            : ResponseEntity.ok(updateStudentResponse.get());
     }
 
     @DeleteMapping(path = "/{studentId}", produces = MediaType.APPLICATION_JSON_VALUE)
@@ -77,10 +70,8 @@ public class StudentController {
         Optional<StudentServiceOuterClass.DeleteStudentResponse> deleteStudentResponse =
                 studentService.deleteStudent(studentId, deleteStudentRequest);
 
-        if(!deleteStudentResponse.isPresent()) {
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(new ResourceNotFoundException("Student", "id"));
-        }
-
-        return ResponseEntity.ok(deleteStudentResponse.get());
+        return !deleteStudentResponse.isPresent()
+            ? ResponseEntity.status(HttpStatus.NOT_FOUND).body(new ResourceNotFoundException("Student", "id"))
+            : ResponseEntity.ok(deleteStudentResponse.get());
     }
 }

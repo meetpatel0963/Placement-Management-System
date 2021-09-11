@@ -2,9 +2,9 @@ package com.jobportal.articleservice.config;
 
 import io.grpc.Metadata;
 import io.grpc.ServerCall;
+import io.grpc.ServerCall.Listener;
 import io.grpc.ServerCallHandler;
 import io.grpc.ServerInterceptor;
-import io.grpc.ServerCall.Listener;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 

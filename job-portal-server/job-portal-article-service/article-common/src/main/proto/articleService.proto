@@ -19,9 +19,8 @@ message Article {
   string author = 4;
   string company = 5;
   int32 upvotes = 6;
-  repeated Comment comments = 7;
-  string createdAt = 8;
-  string updatedAt = 9;
+  string createdAt = 7;
+  string updatedAt = 8;
 }
 
 message GetAllArticlesRequest {
@@ -73,7 +72,7 @@ service CommentService {
   rpc saveComment(SaveCommentRequest) returns (SaveCommentResponse) {}
   rpc updateComment(UpdateCommentRequest) returns (UpdateCommentResponse) {}
   rpc deleteComment(DeleteCommentRequest) returns (DeleteCommentResponse) {}
-  rpc getAllCommentsByPostId(GetAllCommentsByArticleIdRequest) returns (GetAllCommentsByArticleIdResponse) {}
+  rpc getAllCommentsByArticleId(GetAllCommentsByArticleIdRequest) returns (GetAllCommentsByArticleIdResponse) {}
 }
 
 message Comment {
@@ -130,6 +129,8 @@ message DeleteCommentResponse {
 
 message GetAllCommentsByArticleIdRequest {
   int64 articleId = 1;
+  int32 page = 2;
+  int32 size = 3;
 }
 
 message GetAllCommentsByArticleIdResponse {

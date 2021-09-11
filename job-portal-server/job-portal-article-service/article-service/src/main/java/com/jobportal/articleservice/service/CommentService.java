@@ -3,27 +3,15 @@ package com.jobportal.articleservice.service;
 import com.jobportal.articleservice.model.Article;
 import com.jobportal.articleservice.repository.ArticleRepository;
 import com.jobportal.articleservice.repository.CommentRepository;
-import com.jobportal.articleserviceproto.ArticleServiceOuterClass.Comment;
-import com.jobportal.articleserviceproto.ArticleServiceOuterClass.DeleteCommentRequest;
-import com.jobportal.articleserviceproto.ArticleServiceOuterClass.DeleteCommentResponse;
-import com.jobportal.articleserviceproto.ArticleServiceOuterClass.GetAllCommentsByArticleIdRequest;
-import com.jobportal.articleserviceproto.ArticleServiceOuterClass.GetAllCommentsByArticleIdResponse;
-import com.jobportal.articleserviceproto.ArticleServiceOuterClass.GetAllCommentsRequest;
-import com.jobportal.articleserviceproto.ArticleServiceOuterClass.GetAllCommentsResponse;
-import com.jobportal.articleserviceproto.ArticleServiceOuterClass.GetCommentByIdRequest;
-import com.jobportal.articleserviceproto.ArticleServiceOuterClass.GetCommentByIdResponse;
-import com.jobportal.articleserviceproto.ArticleServiceOuterClass.SaveCommentRequest;
-import com.jobportal.articleserviceproto.ArticleServiceOuterClass.SaveCommentResponse;
-import com.jobportal.articleserviceproto.ArticleServiceOuterClass.UpdateCommentRequest;
-import com.jobportal.articleserviceproto.ArticleServiceOuterClass.UpdateCommentResponse;
-import java.util.ArrayList;
-import java.util.Iterator;
-import java.util.List;
-import java.util.Optional;
+import com.jobportal.articleserviceproto.ArticleServiceOuterClass.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
+
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Optional;
 
 @Service
 public class CommentService {
@@ -65,7 +53,7 @@ public class CommentService {
                             comment.getUpvotes(),
                             comment.getDownvotes(),
                             comment.getRepliesList(),
-                            (Article)article.get());
+                            article.get());
             return Optional.of(_comment);
         }
     }
@@ -129,9 +117,14 @@ public class CommentService {
         }
     }
 
-    public GetAllCommentsByArticleIdResponse getAllCommentsByArticleId(
+    public Optional<GetAllCommentsByArticleIdResponse> getAllCommentsByArticleId(
             Long articleId,
             GetAllCommentsByArticleIdRequest getAllCommentsByArticleIdRequest, Pageable pageable) {
+        Optional<Article> article = articleRepository.findById(articleId);
+
+        if(!article.isPresent()) {
+            return Optional.empty();
+        }
 
         Page<com.jobportal.articleservice.model.Comment> comments = commentRepository.findByArticleId(articleId, pageable);
         ArrayList<Comment> _comments = new ArrayList();
@@ -140,6 +133,6 @@ public class CommentService {
             _comments.add(getCommentDetailsFromModel(comment));
         }
 
-        return GetAllCommentsByArticleIdResponse.newBuilder().addAllComments(_comments).build();
+        return Optional.of(GetAllCommentsByArticleIdResponse.newBuilder().addAllComments(_comments).build());
     }
 }

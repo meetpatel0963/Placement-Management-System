@@ -1,23 +1,17 @@
 package com.jobportal.articleservice.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import java.util.List;
-import javax.persistence.ElementCollection;
-import javax.persistence.Entity;
-import javax.persistence.FetchType;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
-import javax.persistence.Table;
-
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import org.hibernate.annotations.Fetch;
+import org.hibernate.annotations.FetchMode;
 import org.hibernate.annotations.OnDelete;
 import org.hibernate.annotations.OnDeleteAction;
+
+import javax.persistence.*;
+import java.util.List;
 
 @Entity
 @Table(name = "comments")
@@ -37,6 +31,7 @@ public class Comment extends AuditModel {
     private int downvotes;
 
     @ElementCollection(targetClass = Long.class)
+    @Fetch(FetchMode.JOIN)
     private List<Long> replies;
 
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
