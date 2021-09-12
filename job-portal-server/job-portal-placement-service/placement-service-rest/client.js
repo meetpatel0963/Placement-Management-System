@@ -1,9 +1,9 @@
-const PROTO_PATH = './proto/placementService.proto';
-const dotenv = require('dotenv');
+const PROTO_PATH = "./proto/placementService.proto";
+const dotenv = require("dotenv");
 
-const grpc = require('grpc');
-const protoLoader = require('@grpc/proto-loader');
-dotenv.config({ path: './config/config.env' });
+const grpc = require("grpc");
+const protoLoader = require("@grpc/proto-loader");
+dotenv.config({ path: "./config/config.env" });
 
 var packageDefinition = protoLoader.loadSync(PROTO_PATH, {
   keepCase: true,
@@ -17,11 +17,11 @@ const PlacementService =
 const CompanyService =
   grpc.loadPackageDefinition(packageDefinition).CompanyService;
 const placementService = new PlacementService(
-  'localhost:9090',
+  `localhost:${process.env.GRPC_PORT}`,
   grpc.credentials.createInsecure()
 );
 const companyService = new CompanyService(
-  'localhost:9090',
+  `localhost:${process.env.GRPC_PORT}`,
   grpc.credentials.createInsecure()
 );
 

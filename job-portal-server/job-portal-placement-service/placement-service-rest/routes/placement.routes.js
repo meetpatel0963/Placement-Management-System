@@ -1,12 +1,11 @@
-const express = require('express');
-const { placementService } = require('../client');
+const express = require("express");
+const { placementService } = require("../client");
 
 const router = express();
 
-router.get('/', (_, res) => {
+router.get("/", (_, res) => {
   placementService.getAllPlacementEntries({}, (err, data) => {
     if (!err) {
-      console.log(data);
       res.send(data);
     } else {
       res.status(err.code).send(err.message);
@@ -14,7 +13,7 @@ router.get('/', (_, res) => {
   });
 });
 
-router.get('/:id', (req, res) => {
+router.get("/:id", (req, res) => {
   const id = req.params.id;
   placementService.getPlacementEntryById(
     {
@@ -22,7 +21,6 @@ router.get('/:id', (req, res) => {
     },
     (err, data) => {
       if (!err) {
-        console.log(data);
         res.send(data);
       } else {
         res.status(err.code).send(err.message);
@@ -31,8 +29,8 @@ router.get('/:id', (req, res) => {
   );
 });
 
-router.post('/', (req, res) => {
-  const body = req.body;
+router.post("/", (req, res) => {
+  const body = req.body.placementEntry;
   placementService.savePlacementEntry(
     {
       placementEntry: {
@@ -44,7 +42,6 @@ router.post('/', (req, res) => {
     },
     (err, data) => {
       if (!err) {
-        console.log(data);
         res.send(data);
       } else {
         res.status(err.code).send(err.message);
@@ -53,20 +50,19 @@ router.post('/', (req, res) => {
   );
 });
 
-router.put('/', (req, res) => {
-  const body = req.body;
-  placementService.deletePlacementEntry(
+router.put("/:id", (req, res) => {
+  const body = req.body.placementEntry;
+  placementService.updatePlacementEntry(
     {
       placementEntry: {
-        studentId: body.studentId,
+        studentId: req.params.id,
         companyId: body.companyId,
         year: body.year,
-        LPA: body.year,
+        LPA: body.LPA,
       },
     },
     (err, data) => {
       if (!err) {
-        console.log(data);
         res.send(data);
       } else {
         res.status(err.code).send(err.message);
@@ -75,7 +71,7 @@ router.put('/', (req, res) => {
   );
 });
 
-router.delete('/:id', (req, res) => {
+router.delete("/:id", (req, res) => {
   const id = req.params.id;
   placementService.deletePlacementEntry(
     {
@@ -83,7 +79,6 @@ router.delete('/:id', (req, res) => {
     },
     (err, data) => {
       if (!err) {
-        console.log(data);
         res.send(data);
       } else {
         res.status(err.code).send(err.message);

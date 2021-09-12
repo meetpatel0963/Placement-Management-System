@@ -9,7 +9,7 @@ const getAllPlacementEntries = async (_, callback) => {
     res.forEach((placementEntry) => {
       placementEntry = placementEntry.dataValues;
       const _placementEntry = {
-        stundeId: placementEntry.student_id,
+        studentId: placementEntry.student_id,
         companyId: placementEntry.company_id,
         year: placementEntry.year,
         LPA: placementEntry.LPA,
@@ -73,7 +73,6 @@ const savePlacementEntry = async (call, callback) => {
     const message = await placementController.create(_placementEntry);
     callback(null, { message });
   } catch (err) {
-    console.log(err);
     callback(
       {
         code: 500,

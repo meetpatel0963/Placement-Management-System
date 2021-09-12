@@ -1,12 +1,11 @@
-const express = require('express');
-const { companyService } = require('../client');
+const express = require("express");
+const { companyService } = require("../client");
 
 const router = express();
 
-router.get('/', (_, res) => {
+router.get("/", (_, res) => {
   companyService.getAllCompanies({}, (err, data) => {
     if (!err) {
-      console.log(data);
       res.send(data);
     } else {
       res.status(err.code).send(err.message);
@@ -14,7 +13,7 @@ router.get('/', (_, res) => {
   });
 });
 
-router.get('/:id', (req, res) => {
+router.get("/:id", (req, res) => {
   const id = req.params.id;
   companyService.getCompanyById(
     {
@@ -22,7 +21,6 @@ router.get('/:id', (req, res) => {
     },
     (err, data) => {
       if (!err) {
-        console.log(data);
         res.send(data);
       } else {
         res.status(err.code).send(err.message);
@@ -31,8 +29,8 @@ router.get('/:id', (req, res) => {
   );
 });
 
-router.post('/', (req, res) => {
-  const body = req.body;
+router.post("/", (req, res) => {
+  const body = req.body.company;
   companyService.saveCompany(
     {
       company: {
@@ -42,7 +40,6 @@ router.post('/', (req, res) => {
     },
     (err, data) => {
       if (!err) {
-        console.log(data);
         res.send(data);
       } else {
         res.status(err.code).send(err.message);
@@ -51,18 +48,17 @@ router.post('/', (req, res) => {
   );
 });
 
-router.put('/', (req, res) => {
-  const body = req.body;
+router.put("/:id", (req, res) => {
+  const body = req.body.company;
   companyService.updateCompany(
     {
       company: {
-        companyId: body.companyId,
+        companyId: req.params.id,
         companyName: body.companyName,
       },
     },
     (err, data) => {
       if (!err) {
-        console.log(data);
         res.send(data);
       } else {
         res.status(err.code).send(err.message);
@@ -71,7 +67,7 @@ router.put('/', (req, res) => {
   );
 });
 
-router.delete('/:id', (req, res) => {
+router.delete("/:id", (req, res) => {
   const id = req.params.id;
   companyService.deleteCompany(
     {
@@ -79,7 +75,6 @@ router.delete('/:id', (req, res) => {
     },
     (err, data) => {
       if (!err) {
-        console.log(data);
         res.send(data);
       } else {
         res.status(err.code).send(err.message);
@@ -88,7 +83,7 @@ router.delete('/:id', (req, res) => {
   );
 });
 
-router.get('/placement/:id', (req, res) => {
+router.get("/placement/:id", (req, res) => {
   const id = req.params.id;
   companyService.getPlacementDetails(
     {
@@ -96,7 +91,6 @@ router.get('/placement/:id', (req, res) => {
     },
     (err, data) => {
       if (!err) {
-        console.log(data);
         res.send(data);
       } else {
         res.status(err.code).send(err.message);
