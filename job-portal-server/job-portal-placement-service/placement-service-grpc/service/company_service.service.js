@@ -1,5 +1,5 @@
-const grpc = require("grpc");
-const companyController = require("../controllers/company.controller");
+const grpc = require('grpc');
+const companyController = require('../controllers/company.controller');
 
 const getAllCompanies = async (call, callback) => {
   try {

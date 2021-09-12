@@ -62,6 +62,7 @@ const getPlacementEntryById = async (call, callback) => {
 const savePlacementEntry = async (call, callback) => {
   try {
     const placementEntry = call.request.placementEntry;
+    console.log(placementEntry);
     const _placementEntry = {
       student_id: placementEntry.studentId,
       company_id: placementEntry.companyId,
@@ -72,6 +73,7 @@ const savePlacementEntry = async (call, callback) => {
     const message = await placementController.create(_placementEntry);
     callback(null, { message });
   } catch (err) {
+    console.log(err);
     callback(
       {
         code: 500,
