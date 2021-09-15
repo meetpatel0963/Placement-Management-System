@@ -1,0 +1,6 @@
+venv
+grpc_service/sql_app_temp
+.env
+__pycache__
+grpc_service/tester.py
+grpc_service/rest-server.py
