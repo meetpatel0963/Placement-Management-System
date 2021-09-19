@@ -13,11 +13,18 @@ class CommentBase(BaseModel):
 class CommentCreate(CommentBase):
     pass
 
+class CommentUpdate(CommentBase):
+    id: int
+    upvotes: Optional[int] = 0
+    downvotes: Optional[int] = 0
+    body: Optional[str] = None
+    author: Optional[str] = None
+
 class Comment(CommentBase):
-    upvotes: int
-    downvotes: int
-    creation_date: timestamp
-    updation_date: timestamp
+    upvotes: Optional[int] = 0
+    downvotes: Optional[int] = 0
+    creation_time: Optional[timestamp]
+    updation_time: Optional[timestamp]
     id: int
 
     class Config:
@@ -46,8 +53,8 @@ class Article(ArticleBase):
     upvotes: int
     downvotes: int
     comments: List[Comment] = []
-    creation_time: Optional[timestamp]
-    updation_time: Optional[timestamp]
+    creation_time: timestamp
+    updation_time: timestamp
 
     class Config:
         orm_mode = True

@@ -3,7 +3,8 @@ from protobuf.articleService_pb2 import *
 import grpc
 from google.protobuf.json_format import ParseDict
 from concurrent.futures import ThreadPoolExecutor
-from sql_app import crud, database
+from sql_app import database
+from sql_app.crud import comment as crud
 
 class CommentServiceServicer(articleService_pb2_grpc.CommentServiceServicer):
      def __init__(self):
@@ -11,97 +12,68 @@ class CommentServiceServicer(articleService_pb2_grpc.CommentServiceServicer):
           print("Session Initialized")
           
      def getAllComments(self, request, context):
-          comments = self.fetchAll()
+          comments = crud.get_all_comments(db=self.sess)
           resp = GetAllCommentsResponse()
-          for i in comments:
-               comment = resp.comments.add()
-               for key,value in i.items():
-                   comment.key = value
-          return resp
+          try:
+               for i in comments:
+                    resp.comments.append(ParseDict(i.__dict__, Comment(), ignore_unknown_fields=True))
+          except:
+               pass
+          finally:
+               return resp
      
      def getAllCommentsByArticleId(self, request, context):
-         return self.fetchByArticleId(request.articleId)
+          comments = crud.get_all_comments_by_article(article_id=request.articleId, db=self.sess)
+          resp = GetAllCommentsByArticleIdResponse()
+          try:
+               for i in comments:
+                    resp.comments.append(ParseDict(i.__dict__, Comment(), ignore_unknown_fields=True))
+          except:
+               pass
+          finally:
+               return resp
      
      def getCommentById(self, request, context):
-         return self.fetchByCommentId(request.commentId)
+          comment = crud.get_comment(comment_id=request.commentId, db=self.sess)
+          resp = GetCommentByIdResponse()
+          try:
+               ParseDict(comment.__dict__, resp.comment, ignore_unknown_fields=True)
+          except:
+               pass
+          finally:
+               return resp
+
 
      def saveComment(self, request, context):
           resp = SaveCommentResponse()
           try:
-               msg = self.save(request.article)
+               msg = crud.create_comment(comment=request.comment, db=self.sess)
           except:
                resp.message = "Couldn't save it"
           else:
                resp.message = "Success"
-               resp.commentId = msg.id
+               resp.commentId = msg
           return resp
 
      def deleteComment(self, request, context):
           resp = DeleteCommentResponse()
           try:
-               msg = self.delete(request.commentId)
+               msg = crud.delete_comment(comment_id=request.commentId, db=self.sess)
           except:
                resp.message = "Coudn't delete it"
           else:
-               resp.message = "Success"
+               resp.message = msg
           return resp
 
 
-     def updateArticle(self, request, context):
+     def updateComment(self, request, context):
           resp = UpdateCommentResponse()
           try:
-              msg = self.update(request.comment)
-          except:
-               resp.message = "Countn't save it"
-          else:
-               resp.message = "Success"
-         
-
-class ArticleServiceServicer(articleService_pb2_grpc.ArticleServiceServicer):
-     def getAllArticles(self, request, context):
-          articles = self.fetchAll()
-          resp = GetAllArticlesResponse()
-          for i in articles:
-              article = resp.articles.add()
-              for key,value in i.items():
-                   article.key = value
-          return resp
-     
-     def getAllArticles(self, request, context):
-          article = self.fetchById(request.articleId)
-          return article
-     
-     def saveArticle(self, request, context):
-          resp = SaveArticleResponse()
-          try:
-               msg = self.save(request.article)
+              msg = crud.update_comment(comment=request.comment, db=self.sess)
           except:
                resp.message = "Couldn't save it"
           else:
-               resp.message = "Success"
-               resp.articleId = msg.id
+               resp.message = msg['message']
           return resp
-     
-     def deleteArticle(self, request, context):
-          resp = DeleteArticleResponse()
-          try:
-               msg = self.delete(request.articleId)
-          except:
-               resp.message = "Coudn't delete it"
-          else:
-               resp.message = "Success"
-          return resp
+         
 
-
-     def updateArticle(self, request, context):
-          resp = UpdateArticleResponse()
-          try:
-              msg = self.update(request.article)
-          except:
-               resp.message = "Countn't save it"
-          else:
-               resp.message = "Success"
-     
-
-
-     
