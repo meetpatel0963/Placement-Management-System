@@ -1,0 +1,120 @@
+syntax = "proto3";
+
+package job_service;  
+
+import "google/api/annotations.proto";
+
+option go_package = "./job_service";
+
+service JobService {
+    rpc getAllJobs(GetAllJobsRequest) returns (GetAllJobsResponse) {
+        option (google.api.http) = { get: "/jobs" };
+    }
+    rpc getJobById(GetJobByIdRequest) returns (GetJobByIdResponse) {
+        option (google.api.http) = { get: "/jobs/{jobId}" };
+    }
+    rpc saveJob(SaveJobRequest) returns (SaveJobResponse) {
+        option (google.api.http) = { post: "/jobs" body: "*" };
+    }
+    rpc updateJob(UpdateJobRequest) returns (UpdateJobResponse) {
+        option (google.api.http) = { put: "/jobs/{job.id}" body: "*" };
+     }
+    rpc deleteJob(DeleteJobRequest) returns (DeleteJobResponse) {
+        option (google.api.http) = { delete: "/jobs/{jobId}" };
+    }
+    rpc getJobByCompanyName(GetJobByCompanyNameRequest) returns (GetJobByCompanyNameResponse) {
+        option (google.api.http) = { get: "/jobs/company/{companyName}" };
+    }
+    rpc getJobByStartDate(GetJobByStartDateRequest) returns (GetJobByStartDateResponse) {
+        option (google.api.http) = { get: "/jobs/startdate/{startDate}" };
+    }
+    rpc getJobByEndDate(GetJobByEndDateRequest) returns (GetJobByEndDateResponse) {
+        option (google.api.http) = { get: "/jobs/enddate/{endDate}" };
+    }
+    rpc getJobByStream(GetJobByStreamRequest) returns (GetJobByStreamResponse) {
+        option (google.api.http) = { get: "/jobs/stream/{stream}"  };
+    }
+}
+
+message Job {
+    string id = 1;
+    string companyName = 2;
+    repeated string eligibleStreams = 3;
+    bytes jobDescription = 4;
+    string startDate = 5;
+    string endDate = 6;
+    double lpa = 7;
+    int32 numberOfRegistrations = 8;
+}
+
+message GetAllJobsRequest {
+
+}
+
+message GetAllJobsResponse {
+    repeated Job jobs = 1;
+}
+
+message GetJobByIdRequest {
+    string jobId = 1;
+}
+
+message GetJobByIdResponse {
+    Job job = 1;
+}
+
+message SaveJobRequest {
+    Job job = 1;
+}
+
+message SaveJobResponse {
+    string message = 1;
+}
+
+message UpdateJobRequest {
+    Job job = 1;
+}
+
+message UpdateJobResponse {
+    string message = 1;
+}
+
+message DeleteJobRequest {
+    string jobId = 1;
+}
+
+message DeleteJobResponse {
+    string message = 1;
+}
+
+message GetJobByCompanyNameRequest {
+    string companyName = 1;
+}
+
+message GetJobByCompanyNameResponse {
+    Job job = 1;
+}
+
+message GetJobByStartDateRequest {
+    string startDate = 1;
+}
+
+message GetJobByStartDateResponse {
+    repeated Job jobs = 1;
+}
+
+message GetJobByEndDateRequest {
+    string endDate = 1;
+}
+
+message GetJobByEndDateResponse {
+    repeated Job jobs = 1;
+}
+
+message GetJobByStreamRequest {
+    string stream = 1;
+}
+
+message GetJobByStreamResponse {
+    repeated Job jobs = 1;
+}
