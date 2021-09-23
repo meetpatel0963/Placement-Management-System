@@ -11,23 +11,45 @@ class ArticleServiceServicer(articleService_pb2_grpc.ArticleServiceServicer):
      def __init__(self):
           self.sess = database.SessionLocal()
           print("initialized session")
+     
+     def cast_time(self,ob):
+          ob.creation_time = str(ob.creation_time)
+          ob.updation_time = str(ob.updation_time)
+          return ob
           
      
      def getAllArticles(self, request, context):
           articles = crud.get_all_articles(db=self.sess)
           resp = GetAllArticlesResponse()
+          
           for i in articles:
-               resp.articles.append(ParseDict(i.__dict__,Article(),ignore_unknown_fields=True))
+               k = self.cast_time(i)
+               related = (ParseDict(k.__dict__,Article(),ignore_unknown_fields=True))
+               #print('here')
+               # try:
+               #      print(type(i.__getattribute__('comments')))
+               # except:
+               #      print('error')
+               for j in k.comments:
+                    k = self.cast_time(j)
+                    related.comments.append(ParseDict(k.__dict__,Comment(), ignore_unknown_fields=True)) 
+               resp.articles.append(related)
+          self.sess.close()
           return resp
      
      def getArticleById(self, request, context):
           resp = GetArticleByIdResponse()
           article = crud.get_article(article_id=request.articleId, db=self.sess)
           try:
+               article = self.cast_time(article)
                ParseDict(article.__dict__,resp.article,ignore_unknown_fields=True)
+               for j in article.comments:
+                    k = self.cast_time(j)
+                    resp.article.comments.append(ParseDict(k.__dict__,Comment(), ignore_unknown_fields=True))
           except:
                pass
           finally:
+               self.sess.close()
                return resp
      
      def saveArticle(self, request, context):

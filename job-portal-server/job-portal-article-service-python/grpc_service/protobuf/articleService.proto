@@ -1,7 +1,6 @@
 syntax = "proto3";
 
 // import "google/protobuf/timestamp.proto";
-
 //Comments
 
 message Comment {
@@ -11,8 +10,8 @@ message Comment {
   int32 upvotes = 4;
   int32 downvotes = 5;
   int64 article_id = 6;
-  string createdAt = 7;
-  string updatedAt = 8;
+  string creation_time = 7;
+  string updation_time = 8;
 }
 
 message GetAllCommentsRequest {
@@ -94,8 +93,8 @@ message Article {
   string company = 5;
   int32 upvotes = 6;
   int32 downvotes = 7;
-  string updatedAt = 8;
-  string createdAt = 9;
+  string updation_time = 8;
+  string creation_time = 9;
   repeated Comment comments = 10;
 }
 

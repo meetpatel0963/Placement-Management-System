@@ -10,16 +10,23 @@ class CommentServiceServicer(articleService_pb2_grpc.CommentServiceServicer):
      def __init__(self):
           self.sess = database.SessionLocal()
           print("Session Initialized")
+
+     def cast_time(self,ob):
+          ob.creation_time = str(ob.creation_time)
+          ob.updation_time = str(ob.updation_time)
+          return ob
           
      def getAllComments(self, request, context):
           comments = crud.get_all_comments(db=self.sess)
           resp = GetAllCommentsResponse()
           try:
                for i in comments:
-                    resp.comments.append(ParseDict(i.__dict__, Comment(), ignore_unknown_fields=True))
+                    k = self.cast_time(i)
+                    resp.comments.append(ParseDict(k.__dict__, Comment(), ignore_unknown_fields=True))
           except:
                pass
           finally:
+               self.sess.close()
                return resp
      
      def getAllCommentsByArticleId(self, request, context):
@@ -27,20 +34,24 @@ class CommentServiceServicer(articleService_pb2_grpc.CommentServiceServicer):
           resp = GetAllCommentsByArticleIdResponse()
           try:
                for i in comments:
-                    resp.comments.append(ParseDict(i.__dict__, Comment(), ignore_unknown_fields=True))
+                    k = self.cast_time(i)
+                    resp.comments.append(ParseDict(k.__dict__, Comment(), ignore_unknown_fields=True))
           except:
                pass
           finally:
+               self.sess.close()
                return resp
      
      def getCommentById(self, request, context):
           comment = crud.get_comment(comment_id=request.commentId, db=self.sess)
           resp = GetCommentByIdResponse()
           try:
+               comment = self.cast_time(comment)
                ParseDict(comment.__dict__, resp.comment, ignore_unknown_fields=True)
           except:
                pass
           finally:
+               self.sess.close()
                return resp
 
 

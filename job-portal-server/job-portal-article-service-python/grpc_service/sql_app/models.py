@@ -1,5 +1,5 @@
 from sqlalchemy import Boolean, Column, ForeignKey, Integer, String, DateTime
-from sqlalchemy.orm import relationship
+from sqlalchemy.orm import backref, relationship
 from sqlalchemy.sql.expression import null
 
 from .database import Base
@@ -18,6 +18,9 @@ class Article(Base):
     creation_time = Column(DateTime,default=None)
     updation_time = Column(DateTime,default=None)
     comments = relationship("Comment")
+
+    def __init__(self,comments):
+        self.comments = [comments]
 
 
 class Comment(Base):
