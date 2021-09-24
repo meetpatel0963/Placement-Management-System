@@ -15,12 +15,9 @@ class Article(Base):
     company = Column(String, default=0)
     upvotes = Column(Integer, default=0)
     downvotes = Column(Integer, default=0)
-    creation_time = Column(DateTime,default=None)
-    updation_time = Column(DateTime,default=None)
+    createdAt = Column(DateTime,default=None)
+    updatedAt = Column(DateTime,default=None)
     comments = relationship("Comment")
-
-    def __init__(self,comments):
-        self.comments = [comments]
 
 
 class Comment(Base):
@@ -31,6 +28,6 @@ class Comment(Base):
     author = Column(String)
     upvotes = Column(Integer, default=0)
     downvotes = Column(Integer, default=0)
-    article_id = Column(Integer, ForeignKey("articles.id"))
-    creation_time = Column(DateTime,default=None)
-    updation_time = Column(DateTime,default=None)
+    articleId = Column(Integer, ForeignKey("articles.id", ondelete="CASCADE"))
+    createdAt = Column(DateTime,default=None)
+    updatedAt = Column(DateTime,default=None)

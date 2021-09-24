@@ -8,7 +8,7 @@ from sqlalchemy.sql.expression import update
 class CommentBase(BaseModel):
     author: str
     body: str
-    article_id: int
+    articleId: int
 
 class CommentCreate(CommentBase):
     pass
@@ -23,8 +23,8 @@ class CommentUpdate(CommentBase):
 class Comment(CommentBase):
     upvotes: Optional[int] = 0
     downvotes: Optional[int] = 0
-    creation_time: Optional[timestamp]
-    updation_time: Optional[timestamp]
+    createdAt: Optional[timestamp]
+    updatedAt: Optional[timestamp]
     id: int
 
     class Config:
@@ -53,8 +53,8 @@ class Article(ArticleBase):
     upvotes: int
     downvotes: int
     comments: List[Comment] = []
-    creation_time: timestamp
-    updation_time: timestamp
+    createdAt: timestamp
+    updatedAt: timestamp
 
     class Config:
         orm_mode = True

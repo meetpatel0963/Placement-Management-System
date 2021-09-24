@@ -12,8 +12,8 @@ class CommentServiceServicer(articleService_pb2_grpc.CommentServiceServicer):
           print("Session Initialized")
 
      def cast_time(self,ob):
-          ob.creation_time = str(ob.creation_time)
-          ob.updation_time = str(ob.updation_time)
+          ob.createdAt = str(ob.createdAt)
+          ob.updatedAt = str(ob.updatedAt)
           return ob
           
      def getAllComments(self, request, context):

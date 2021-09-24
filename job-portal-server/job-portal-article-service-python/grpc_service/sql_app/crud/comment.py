@@ -16,9 +16,9 @@ def create_comment(db:Session, comment:schemas.CommentCreate):
     db_comment = models.Comment(
         body = comment.body,
         author = comment.author,
-        article_id = comment.article_id,
-        creation_time = datetime.now(),
-        updation_time = datetime.now()
+        articleId = comment.articleId,
+        createdAt = datetime.now(),
+        updatedAt = datetime.now()
     )
     db.add(db_comment)
     db.commit()
@@ -36,7 +36,7 @@ def update_comment(db:Session, comment:schemas.CommentUpdate):
             models.Comment.body: comment.body if (comment.body != None) else fetched.body,
             models.Comment.author: comment.author if (comment.author != None) else fetched.author,
             
-            models.Comment.updation_time: datetime.now(),
+            models.Comment.updatedAt: datetime.now(),
             models.Comment.upvotes: comment.upvotes if (comment.upvotes != None) else fetched.upvoted,
             models.Comment.downvotes: comment.downvotes if (comment.downvotes != None) else fetched.downvotes
         })
@@ -59,5 +59,5 @@ def delete_comment(comment_id: int, db: Session):
     return "Comment Deleted"
 
 def get_all_comments_by_article(article_id: int, db:Session):
-     db_comments = db.query(models.Comment).filter(models.Comment.article_id == article_id).all()
+     db_comments = db.query(models.Comment).filter(models.Comment.articleId == article_id).all()
      return db_comments

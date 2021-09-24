@@ -45,7 +45,7 @@ def read_comment(comment_id: int, db: Session = Depends(get_db)):
 
 @router.post("/article/{article_id}/comment", response_model=ID)
 def create_comment(article_id:int, comment: schemas.CommentCreate, db: Session = Depends(get_db)):
-    comment.article_id = article_id
+    comment.articleId = article_id
     resp = ID()
     try:
         resp.id =  crud.create_comment(comment=comment, db=db)
@@ -59,7 +59,7 @@ def create_comment(article_id:int, comment: schemas.CommentCreate, db: Session =
 
 @router.put("/article/{article_id}/comment", response_model=ID)
 def update_comment(article_id:int, comment: schemas.CommentUpdate, db: Session = Depends(get_db)):
-    comment.article_id = article_id
+    comment.articleId = article_id
     return crud.update_comment(comment=comment, db=db)
 
 @router.delete("/comment/{comment_id}")

@@ -12,13 +12,15 @@ def get_article(db:Session, article_id:int):
     return db_article.first()
 
 def create_article(db:Session, article:schemas.ArticleCreate):
+    print(article)
+
     db_article = models.Article(
         title = article.title,
         body = article.body,
         author = article.author,
         company = article.company,
-        creation_time = datetime.now(),
-        updation_time = datetime.now()
+        createdAt = datetime.now(),
+        updatedAt = datetime.now()
     )
     
     db.add(db_article)
@@ -37,7 +39,7 @@ def update_article(db:Session, article:schemas.ArticleUpdate):
             models.Article.body: article.body if (article.body != None) else fetched.body,
             models.Article.author: article.author if (article.author != None) else fetched.author,
             models.Article.company: article.company if (article.company != None) else fetched.company,
-            models.Article.updation_time: datetime.now(),
+            models.Article.updatedAt: datetime.now(),
             models.Article.upvotes: article.upvotes if (article.upvotes != None) else fetched.upvoted,
             models.Article.downvotes: article.downvotes if (article.downvotes != None) else fetched.downvotes
         })

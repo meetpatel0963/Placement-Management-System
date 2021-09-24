@@ -2,7 +2,7 @@
 """Client and server classes corresponding to protobuf-defined services."""
 import grpc
 
-from . import articleService_pb2 as articleService__pb2
+from protobuf import articleService_pb2 as protobuf_dot_articleService__pb2
 
 
 class CommentServiceStub(object):
@@ -16,33 +16,33 @@ class CommentServiceStub(object):
         """
         self.getAllComments = channel.unary_unary(
                 '/CommentService/getAllComments',
-                request_serializer=articleService__pb2.GetAllCommentsRequest.SerializeToString,
-                response_deserializer=articleService__pb2.GetAllCommentsResponse.FromString,
+                request_serializer=protobuf_dot_articleService__pb2.GetAllCommentsRequest.SerializeToString,
+                response_deserializer=protobuf_dot_articleService__pb2.GetAllCommentsResponse.FromString,
                 )
         self.getCommentById = channel.unary_unary(
                 '/CommentService/getCommentById',
-                request_serializer=articleService__pb2.GetCommentByIdRequest.SerializeToString,
-                response_deserializer=articleService__pb2.GetCommentByIdResponse.FromString,
+                request_serializer=protobuf_dot_articleService__pb2.GetCommentByIdRequest.SerializeToString,
+                response_deserializer=protobuf_dot_articleService__pb2.GetCommentByIdResponse.FromString,
                 )
         self.saveComment = channel.unary_unary(
                 '/CommentService/saveComment',
-                request_serializer=articleService__pb2.SaveCommentRequest.SerializeToString,
-                response_deserializer=articleService__pb2.SaveCommentResponse.FromString,
+                request_serializer=protobuf_dot_articleService__pb2.SaveCommentRequest.SerializeToString,
+                response_deserializer=protobuf_dot_articleService__pb2.SaveCommentResponse.FromString,
                 )
         self.updateComment = channel.unary_unary(
                 '/CommentService/updateComment',
-                request_serializer=articleService__pb2.UpdateCommentRequest.SerializeToString,
-                response_deserializer=articleService__pb2.UpdateCommentResponse.FromString,
+                request_serializer=protobuf_dot_articleService__pb2.UpdateCommentRequest.SerializeToString,
+                response_deserializer=protobuf_dot_articleService__pb2.UpdateCommentResponse.FromString,
                 )
         self.deleteComment = channel.unary_unary(
                 '/CommentService/deleteComment',
-                request_serializer=articleService__pb2.DeleteCommentRequest.SerializeToString,
-                response_deserializer=articleService__pb2.DeleteCommentResponse.FromString,
+                request_serializer=protobuf_dot_articleService__pb2.DeleteCommentRequest.SerializeToString,
+                response_deserializer=protobuf_dot_articleService__pb2.DeleteCommentResponse.FromString,
                 )
         self.getAllCommentsByArticleId = channel.unary_unary(
                 '/CommentService/getAllCommentsByArticleId',
-                request_serializer=articleService__pb2.GetAllCommentsByArticleIdRequest.SerializeToString,
-                response_deserializer=articleService__pb2.GetAllCommentsByArticleIdResponse.FromString,
+                request_serializer=protobuf_dot_articleService__pb2.GetAllCommentsByArticleIdRequest.SerializeToString,
+                response_deserializer=protobuf_dot_articleService__pb2.GetAllCommentsByArticleIdResponse.FromString,
                 )
 
 
@@ -90,33 +90,33 @@ def add_CommentServiceServicer_to_server(servicer, server):
     rpc_method_handlers = {
             'getAllComments': grpc.unary_unary_rpc_method_handler(
                     servicer.getAllComments,
-                    request_deserializer=articleService__pb2.GetAllCommentsRequest.FromString,
-                    response_serializer=articleService__pb2.GetAllCommentsResponse.SerializeToString,
+                    request_deserializer=protobuf_dot_articleService__pb2.GetAllCommentsRequest.FromString,
+                    response_serializer=protobuf_dot_articleService__pb2.GetAllCommentsResponse.SerializeToString,
             ),
             'getCommentById': grpc.unary_unary_rpc_method_handler(
                     servicer.getCommentById,
-                    request_deserializer=articleService__pb2.GetCommentByIdRequest.FromString,
-                    response_serializer=articleService__pb2.GetCommentByIdResponse.SerializeToString,
+                    request_deserializer=protobuf_dot_articleService__pb2.GetCommentByIdRequest.FromString,
+                    response_serializer=protobuf_dot_articleService__pb2.GetCommentByIdResponse.SerializeToString,
             ),
             'saveComment': grpc.unary_unary_rpc_method_handler(
                     servicer.saveComment,
-                    request_deserializer=articleService__pb2.SaveCommentRequest.FromString,
-                    response_serializer=articleService__pb2.SaveCommentResponse.SerializeToString,
+                    request_deserializer=protobuf_dot_articleService__pb2.SaveCommentRequest.FromString,
+                    response_serializer=protobuf_dot_articleService__pb2.SaveCommentResponse.SerializeToString,
             ),
             'updateComment': grpc.unary_unary_rpc_method_handler(
                     servicer.updateComment,
-                    request_deserializer=articleService__pb2.UpdateCommentRequest.FromString,
-                    response_serializer=articleService__pb2.UpdateCommentResponse.SerializeToString,
+                    request_deserializer=protobuf_dot_articleService__pb2.UpdateCommentRequest.FromString,
+                    response_serializer=protobuf_dot_articleService__pb2.UpdateCommentResponse.SerializeToString,
             ),
             'deleteComment': grpc.unary_unary_rpc_method_handler(
                     servicer.deleteComment,
-                    request_deserializer=articleService__pb2.DeleteCommentRequest.FromString,
-                    response_serializer=articleService__pb2.DeleteCommentResponse.SerializeToString,
+                    request_deserializer=protobuf_dot_articleService__pb2.DeleteCommentRequest.FromString,
+                    response_serializer=protobuf_dot_articleService__pb2.DeleteCommentResponse.SerializeToString,
             ),
             'getAllCommentsByArticleId': grpc.unary_unary_rpc_method_handler(
                     servicer.getAllCommentsByArticleId,
-                    request_deserializer=articleService__pb2.GetAllCommentsByArticleIdRequest.FromString,
-                    response_serializer=articleService__pb2.GetAllCommentsByArticleIdResponse.SerializeToString,
+                    request_deserializer=protobuf_dot_articleService__pb2.GetAllCommentsByArticleIdRequest.FromString,
+                    response_serializer=protobuf_dot_articleService__pb2.GetAllCommentsByArticleIdResponse.SerializeToString,
             ),
     }
     generic_handler = grpc.method_handlers_generic_handler(
@@ -140,8 +140,8 @@ class CommentService(object):
             timeout=None,
             metadata=None):
         return grpc.experimental.unary_unary(request, target, '/CommentService/getAllComments',
-            articleService__pb2.GetAllCommentsRequest.SerializeToString,
-            articleService__pb2.GetAllCommentsResponse.FromString,
+            protobuf_dot_articleService__pb2.GetAllCommentsRequest.SerializeToString,
+            protobuf_dot_articleService__pb2.GetAllCommentsResponse.FromString,
             options, channel_credentials,
             insecure, call_credentials, compression, wait_for_ready, timeout, metadata)
 
@@ -157,8 +157,8 @@ class CommentService(object):
             timeout=None,
             metadata=None):
         return grpc.experimental.unary_unary(request, target, '/CommentService/getCommentById',
-            articleService__pb2.GetCommentByIdRequest.SerializeToString,
-            articleService__pb2.GetCommentByIdResponse.FromString,
+            protobuf_dot_articleService__pb2.GetCommentByIdRequest.SerializeToString,
+            protobuf_dot_articleService__pb2.GetCommentByIdResponse.FromString,
             options, channel_credentials,
             insecure, call_credentials, compression, wait_for_ready, timeout, metadata)
 
@@ -174,8 +174,8 @@ class CommentService(object):
             timeout=None,
             metadata=None):
         return grpc.experimental.unary_unary(request, target, '/CommentService/saveComment',
-            articleService__pb2.SaveCommentRequest.SerializeToString,
-            articleService__pb2.SaveCommentResponse.FromString,
+            protobuf_dot_articleService__pb2.SaveCommentRequest.SerializeToString,
+            protobuf_dot_articleService__pb2.SaveCommentResponse.FromString,
             options, channel_credentials,
             insecure, call_credentials, compression, wait_for_ready, timeout, metadata)
 
@@ -191,8 +191,8 @@ class CommentService(object):
             timeout=None,
             metadata=None):
         return grpc.experimental.unary_unary(request, target, '/CommentService/updateComment',
-            articleService__pb2.UpdateCommentRequest.SerializeToString,
-            articleService__pb2.UpdateCommentResponse.FromString,
+            protobuf_dot_articleService__pb2.UpdateCommentRequest.SerializeToString,
+            protobuf_dot_articleService__pb2.UpdateCommentResponse.FromString,
             options, channel_credentials,
             insecure, call_credentials, compression, wait_for_ready, timeout, metadata)
 
@@ -208,8 +208,8 @@ class CommentService(object):
             timeout=None,
             metadata=None):
         return grpc.experimental.unary_unary(request, target, '/CommentService/deleteComment',
-            articleService__pb2.DeleteCommentRequest.SerializeToString,
-            articleService__pb2.DeleteCommentResponse.FromString,
+            protobuf_dot_articleService__pb2.DeleteCommentRequest.SerializeToString,
+            protobuf_dot_articleService__pb2.DeleteCommentResponse.FromString,
             options, channel_credentials,
             insecure, call_credentials, compression, wait_for_ready, timeout, metadata)
 
@@ -225,8 +225,8 @@ class CommentService(object):
             timeout=None,
             metadata=None):
         return grpc.experimental.unary_unary(request, target, '/CommentService/getAllCommentsByArticleId',
-            articleService__pb2.GetAllCommentsByArticleIdRequest.SerializeToString,
-            articleService__pb2.GetAllCommentsByArticleIdResponse.FromString,
+            protobuf_dot_articleService__pb2.GetAllCommentsByArticleIdRequest.SerializeToString,
+            protobuf_dot_articleService__pb2.GetAllCommentsByArticleIdResponse.FromString,
             options, channel_credentials,
             insecure, call_credentials, compression, wait_for_ready, timeout, metadata)
 
@@ -244,28 +244,28 @@ class ArticleServiceStub(object):
         """
         self.getAllArticles = channel.unary_unary(
                 '/ArticleService/getAllArticles',
-                request_serializer=articleService__pb2.GetAllArticlesRequest.SerializeToString,
-                response_deserializer=articleService__pb2.GetAllArticlesResponse.FromString,
+                request_serializer=protobuf_dot_articleService__pb2.GetAllArticlesRequest.SerializeToString,
+                response_deserializer=protobuf_dot_articleService__pb2.GetAllArticlesResponse.FromString,
                 )
         self.getArticleById = channel.unary_unary(
                 '/ArticleService/getArticleById',
-                request_serializer=articleService__pb2.GetArticleByIdRequest.SerializeToString,
-                response_deserializer=articleService__pb2.GetArticleByIdResponse.FromString,
+                request_serializer=protobuf_dot_articleService__pb2.GetArticleByIdRequest.SerializeToString,
+                response_deserializer=protobuf_dot_articleService__pb2.GetArticleByIdResponse.FromString,
                 )
         self.saveArticle = channel.unary_unary(
                 '/ArticleService/saveArticle',
-                request_serializer=articleService__pb2.SaveArticleRequest.SerializeToString,
-                response_deserializer=articleService__pb2.SaveArticleResponse.FromString,
+                request_serializer=protobuf_dot_articleService__pb2.SaveArticleRequest.SerializeToString,
+                response_deserializer=protobuf_dot_articleService__pb2.SaveArticleResponse.FromString,
                 )
         self.updateArticle = channel.unary_unary(
                 '/ArticleService/updateArticle',
-                request_serializer=articleService__pb2.UpdateArticleRequest.SerializeToString,
-                response_deserializer=articleService__pb2.UpdateArticleResponse.FromString,
+                request_serializer=protobuf_dot_articleService__pb2.UpdateArticleRequest.SerializeToString,
+                response_deserializer=protobuf_dot_articleService__pb2.UpdateArticleResponse.FromString,
                 )
         self.deleteArticle = channel.unary_unary(
                 '/ArticleService/deleteArticle',
-                request_serializer=articleService__pb2.DeleteArticleRequest.SerializeToString,
-                response_deserializer=articleService__pb2.DeleteArticleResponse.FromString,
+                request_serializer=protobuf_dot_articleService__pb2.DeleteArticleRequest.SerializeToString,
+                response_deserializer=protobuf_dot_articleService__pb2.DeleteArticleResponse.FromString,
                 )
 
 
@@ -309,28 +309,28 @@ def add_ArticleServiceServicer_to_server(servicer, server):
     rpc_method_handlers = {
             'getAllArticles': grpc.unary_unary_rpc_method_handler(
                     servicer.getAllArticles,
-                    request_deserializer=articleService__pb2.GetAllArticlesRequest.FromString,
-                    response_serializer=articleService__pb2.GetAllArticlesResponse.SerializeToString,
+                    request_deserializer=protobuf_dot_articleService__pb2.GetAllArticlesRequest.FromString,
+                    response_serializer=protobuf_dot_articleService__pb2.GetAllArticlesResponse.SerializeToString,
             ),
             'getArticleById': grpc.unary_unary_rpc_method_handler(
                     servicer.getArticleById,
-                    request_deserializer=articleService__pb2.GetArticleByIdRequest.FromString,
-                    response_serializer=articleService__pb2.GetArticleByIdResponse.SerializeToString,
+                    request_deserializer=protobuf_dot_articleService__pb2.GetArticleByIdRequest.FromString,
+                    response_serializer=protobuf_dot_articleService__pb2.GetArticleByIdResponse.SerializeToString,
             ),
             'saveArticle': grpc.unary_unary_rpc_method_handler(
                     servicer.saveArticle,
-                    request_deserializer=articleService__pb2.SaveArticleRequest.FromString,
-                    response_serializer=articleService__pb2.SaveArticleResponse.SerializeToString,
+                    request_deserializer=protobuf_dot_articleService__pb2.SaveArticleRequest.FromString,
+                    response_serializer=protobuf_dot_articleService__pb2.SaveArticleResponse.SerializeToString,
             ),
             'updateArticle': grpc.unary_unary_rpc_method_handler(
                     servicer.updateArticle,
-                    request_deserializer=articleService__pb2.UpdateArticleRequest.FromString,
-                    response_serializer=articleService__pb2.UpdateArticleResponse.SerializeToString,
+                    request_deserializer=protobuf_dot_articleService__pb2.UpdateArticleRequest.FromString,
+                    response_serializer=protobuf_dot_articleService__pb2.UpdateArticleResponse.SerializeToString,
             ),
             'deleteArticle': grpc.unary_unary_rpc_method_handler(
                     servicer.deleteArticle,
-                    request_deserializer=articleService__pb2.DeleteArticleRequest.FromString,
-                    response_serializer=articleService__pb2.DeleteArticleResponse.SerializeToString,
+                    request_deserializer=protobuf_dot_articleService__pb2.DeleteArticleRequest.FromString,
+                    response_serializer=protobuf_dot_articleService__pb2.DeleteArticleResponse.SerializeToString,
             ),
     }
     generic_handler = grpc.method_handlers_generic_handler(
@@ -356,8 +356,8 @@ class ArticleService(object):
             timeout=None,
             metadata=None):
         return grpc.experimental.unary_unary(request, target, '/ArticleService/getAllArticles',
-            articleService__pb2.GetAllArticlesRequest.SerializeToString,
-            articleService__pb2.GetAllArticlesResponse.FromString,
+            protobuf_dot_articleService__pb2.GetAllArticlesRequest.SerializeToString,
+            protobuf_dot_articleService__pb2.GetAllArticlesResponse.FromString,
             options, channel_credentials,
             insecure, call_credentials, compression, wait_for_ready, timeout, metadata)
 
@@ -373,8 +373,8 @@ class ArticleService(object):
             timeout=None,
             metadata=None):
         return grpc.experimental.unary_unary(request, target, '/ArticleService/getArticleById',
-            articleService__pb2.GetArticleByIdRequest.SerializeToString,
-            articleService__pb2.GetArticleByIdResponse.FromString,
+            protobuf_dot_articleService__pb2.GetArticleByIdRequest.SerializeToString,
+            protobuf_dot_articleService__pb2.GetArticleByIdResponse.FromString,
             options, channel_credentials,
             insecure, call_credentials, compression, wait_for_ready, timeout, metadata)
 
@@ -390,8 +390,8 @@ class ArticleService(object):
             timeout=None,
             metadata=None):
         return grpc.experimental.unary_unary(request, target, '/ArticleService/saveArticle',
-            articleService__pb2.SaveArticleRequest.SerializeToString,
-            articleService__pb2.SaveArticleResponse.FromString,
+            protobuf_dot_articleService__pb2.SaveArticleRequest.SerializeToString,
+            protobuf_dot_articleService__pb2.SaveArticleResponse.FromString,
             options, channel_credentials,
             insecure, call_credentials, compression, wait_for_ready, timeout, metadata)
 
@@ -407,8 +407,8 @@ class ArticleService(object):
             timeout=None,
             metadata=None):
         return grpc.experimental.unary_unary(request, target, '/ArticleService/updateArticle',
-            articleService__pb2.UpdateArticleRequest.SerializeToString,
-            articleService__pb2.UpdateArticleResponse.FromString,
+            protobuf_dot_articleService__pb2.UpdateArticleRequest.SerializeToString,
+            protobuf_dot_articleService__pb2.UpdateArticleResponse.FromString,
             options, channel_credentials,
             insecure, call_credentials, compression, wait_for_ready, timeout, metadata)
 
@@ -424,7 +424,7 @@ class ArticleService(object):
             timeout=None,
             metadata=None):
         return grpc.experimental.unary_unary(request, target, '/ArticleService/deleteArticle',
-            articleService__pb2.DeleteArticleRequest.SerializeToString,
-            articleService__pb2.DeleteArticleResponse.FromString,
+            protobuf_dot_articleService__pb2.DeleteArticleRequest.SerializeToString,
+            protobuf_dot_articleService__pb2.DeleteArticleResponse.FromString,
             options, channel_credentials,
             insecure, call_credentials, compression, wait_for_ready, timeout, metadata)
