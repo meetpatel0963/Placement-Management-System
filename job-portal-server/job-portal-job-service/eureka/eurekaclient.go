@@ -2,6 +2,7 @@ package eureka
 
 import (
 	"fmt"
+	"job_service/config"
 	"log"
 	"os"
 	"time"
@@ -16,7 +17,7 @@ var (
 )
 
 func Register() {
-	conn = fargo.NewConn("http://localhost:8761/eureka")
+	conn = fargo.NewConn(config.REGISTRY_URL)
 
 	// hostname acts as an InstanceId
 	hostname, err := os.Hostname()
@@ -27,18 +28,18 @@ func Register() {
 
 	instance = fargo.Instance{
 		HostName: hostname,
-		App: "job-service",
-		IPAddr: "127.0.0.1",
-		VipAddress: "job-service",
-		SecureVipAddress: "job-service",
+		App: config.APPLICATION_NAME,
+		IPAddr: config.IP_ADDR,
+		VipAddress: config.APPLICATION_NAME,
+		SecureVipAddress: config.APPLICATION_NAME,
 		Status: fargo.UP,
-		Port: 9090,
+		Port: config.PORT,
 		PortEnabled: true,
 		SecurePort: 443,
 		SecurePortEnabled: true,	
-		HealthCheckUrl: "http://localhost:9090/health",
-		StatusPageUrl: "http://localhost:9090/info",
-		HomePageUrl: "http://localhost:9090",
+		HealthCheckUrl: "http://localhost"+ config.GRPC_PORT + "/health",
+		StatusPageUrl: "http://localhost"+ config.GRPC_PORT + "/info",
+		HomePageUrl: "http://localhost"+ config.GRPC_PORT,
 		DataCenterInfo: fargo.DataCenterInfo{Class: "com.netflix.appinfo.InstanceInfo$DefaultDataCenterInfo",
 											 Name: "MyOwn"},
 	}
@@ -58,7 +59,7 @@ func SendHeartbeats() {
 			if err != nil {
 				log.Fatal(err)
 			}
-			<-time.After(30 * time.Second)
+			<-time.After(config.HEARTBEAT_INTERVAL * time.Second)
 		}
 	}()
 }
