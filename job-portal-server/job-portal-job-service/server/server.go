@@ -6,11 +6,11 @@ import (
 	"net"
 	"net/http"
 
-	"job_service/config"
 	proto "job_service/proto"
 	"job_service/service"
 
 	"github.com/grpc-ecosystem/grpc-gateway/v2/runtime"
+	"github.com/spf13/viper"
 	"google.golang.org/grpc"
 )
 
@@ -21,12 +21,12 @@ func StartServer() {
 	proto.RegisterJobServiceHandlerServer(context.Background(), mux, service.JobServer{})
 
 	go func() {
-		log.Fatalln(http.ListenAndServe("localhost" + config.REST_PORT, mux))
+		log.Fatalln(http.ListenAndServe("localhost" + viper.GetString("rest_port"), mux))
 	}()
 	
 	grpcServer = grpc.NewServer()
 	proto.RegisterJobServiceServer(grpcServer, service.JobServer{})
-	listener, err := net.Listen("tcp", config.GRPC_PORT)
+	listener, err := net.Listen("tcp", viper.GetString("grpc_port"))
 	
 	if err != nil {
 		log.Fatal("Error creating listener: ", err.Error())

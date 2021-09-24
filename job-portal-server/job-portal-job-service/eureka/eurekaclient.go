@@ -8,6 +8,7 @@ import (
 	"time"
 
 	"github.com/hudl/fargo"
+	"github.com/spf13/viper"
 )
 
 
@@ -17,7 +18,7 @@ var (
 )
 
 func Register() {
-	conn = fargo.NewConn(config.REGISTRY_URL)
+	conn = fargo.NewConn(viper.GetString("registry_url"))
 
 	// hostname acts as an InstanceId
 	hostname, err := os.Hostname()
@@ -29,21 +30,25 @@ func Register() {
 	instance = fargo.Instance{
 		HostName: hostname,
 		App: config.APPLICATION_NAME,
-		IPAddr: config.IP_ADDR,
+		IPAddr: viper.GetString("ip_address"),
 		VipAddress: config.APPLICATION_NAME,
 		SecureVipAddress: config.APPLICATION_NAME,
 		Status: fargo.UP,
-		Port: config.PORT,
+		Port: viper.GetInt("server_port"),
 		PortEnabled: true,
 		SecurePort: 443,
 		SecurePortEnabled: true,	
-		HealthCheckUrl: "http://localhost"+ config.GRPC_PORT + "/health",
-		StatusPageUrl: "http://localhost"+ config.GRPC_PORT + "/info",
-		HomePageUrl: "http://localhost"+ config.GRPC_PORT,
+		HealthCheckUrl: "http://localhost"+ viper.GetString("grpc_port") + "/health",
+		StatusPageUrl: "http://localhost"+ viper.GetString("grpc_port") + "/info",
+		HomePageUrl: "http://localhost"+ viper.GetString("grpc_port"),
 		DataCenterInfo: fargo.DataCenterInfo{Class: "com.netflix.appinfo.InstanceInfo$DefaultDataCenterInfo",
 											 Name: "MyOwn"},
+		LeaseInfo: fargo.LeaseInfo{
+			RenewalIntervalInSecs: viper.GetInt32("lease_renewal_interval_in_secs"),
+			DurationInSecs: viper.GetInt32("lease_duration_in_secs"),
+		},
 	}
-
+	
 	conn.RegisterInstance(&instance)
 }
 
@@ -59,7 +64,7 @@ func SendHeartbeats() {
 			if err != nil {
 				log.Fatal(err)
 			}
-			<-time.After(config.HEARTBEAT_INTERVAL * time.Second)
+			<-time.After(time.Duration(viper.GetInt("heartbeat_interval")) * time.Second)
 		}
 	}()
 }

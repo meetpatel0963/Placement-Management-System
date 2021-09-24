@@ -2,13 +2,24 @@ package main
 
 import (
 	"fmt"
+	"job_service/config"
+	"job_service/configclient"
 	"job_service/database"
 	"job_service/eureka"
 	"job_service/server"
 	"os"
 	"os/signal"
 	"syscall"
+
+	"github.com/spf13/viper"
 )
+
+// init function, runs before main()
+func init() {
+	viper.Set("profile", config.PROFILE)
+	viper.Set("configserverurl", config.CONFIG_SERVER_URL)
+	viper.Set("configbranch", config.CONFIG_BRANCH)
+}
 
 func cleanup() {
 	fmt.Println("Closing DB Connection...")
@@ -34,7 +45,13 @@ func main() {
 		cleanup()
         done <- true
 	}()
-	
+
+	configclient.LoadConfigurationFromBranch(
+		viper.GetString("configserverurl"),
+		config.APPLICATION_NAME,
+		viper.GetString("profile"),
+		viper.GetString("configbranch"))
+
 	fmt.Println("Connecting to Cassandra...")
 	database.SetupDBConnection()
 	fmt.Println("Cassandra DB connected.")
