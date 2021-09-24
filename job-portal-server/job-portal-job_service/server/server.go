@@ -1,4 +1,4 @@
-package main
+package server
 
 import (
 	"context"
@@ -7,7 +7,6 @@ import (
 	"net/http"
 
 	"job_service/config"
-	"job_service/database"
 	proto "job_service/proto"
 	"job_service/service"
 
@@ -15,18 +14,17 @@ import (
 	"google.golang.org/grpc"
 )
 
-func main() {
-	database.SetupDBConnection()
+var grpcServer *grpc.Server
+
+func StartServer() {
+	mux := runtime.NewServeMux()
+	proto.RegisterJobServiceHandlerServer(context.Background(), mux, service.JobServer{})
 
 	go func() {
-		mux := runtime.NewServeMux()
-
-		proto.RegisterJobServiceHandlerServer(context.Background(), mux, service.JobServer{})
-
 		log.Fatalln(http.ListenAndServe("localhost" + config.REST_PORT, mux))
 	}()
 	
-	grpcServer := grpc.NewServer()
+	grpcServer = grpc.NewServer()
 	proto.RegisterJobServiceServer(grpcServer, service.JobServer{})
 	listener, err := net.Listen("tcp", config.GRPC_PORT)
 	
@@ -34,5 +32,13 @@ func main() {
 		log.Fatal("Error creating listener: ", err.Error())
 	}
 
-	grpcServer.Serve(listener)
+	go func() {
+		log.Fatalln(grpcServer.Serve(listener))
+	}()
+}
+
+func StopServer() {
+	if grpcServer != nil {
+		grpcServer.GracefulStop()
+	}
 }

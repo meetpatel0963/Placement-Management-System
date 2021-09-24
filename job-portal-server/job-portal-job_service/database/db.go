@@ -22,6 +22,12 @@ func SetupDBConnection() {
 	connection.session, _ = connection.cluster.CreateSession()
 }
 
+func CloseConnection() {
+	if connection.session != nil && !connection.session.Closed() {
+		connection.session.Close()
+	}
+}
+
 func ExecuteQuery(query string, values ...interface{}) (error) {
 	if err := connection.session.Query(query).Bind(values...).Exec(); err!= nil {
 		log.Fatal(err)
