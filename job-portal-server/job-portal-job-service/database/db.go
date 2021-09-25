@@ -3,9 +3,8 @@ package database
 import (
 	"log"
 
-	"job_service/config"
-
 	"github.com/gocql/gocql"
+	"github.com/spf13/viper"
 )
 
 type DBConnection struct {
@@ -16,10 +15,13 @@ type DBConnection struct {
 var connection DBConnection
 
 func SetupDBConnection() {
-	connection.cluster = gocql.NewCluster(config.DB_HOST)
+	connection.cluster = gocql.NewCluster(viper.GetString("db_host"))
 	connection.cluster.Consistency = gocql.Quorum
-	connection.cluster.Keyspace = config.KEYSPACE
+	connection.cluster.Keyspace = viper.GetString("keyspace")
 	connection.session, _ = connection.cluster.CreateSession()
+	if connection.session == nil {
+		log.Fatal("Couldn't connect to Cassandra DB")
+	}
 }
 
 func CloseConnection() {
