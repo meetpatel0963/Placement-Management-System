@@ -67,13 +67,13 @@ func (JobServer) GetAllJobs(ctx context.Context, r *proto.GetAllJobsRequest) (*p
 	for _, job := range jobs {
 		_jobs = append(_jobs, structToProto(job))
 	}
-	
-	return &proto.GetAllJobsResponse{ Jobs: _jobs }, nil
+
+	return &proto.GetAllJobsResponse{Jobs: _jobs}, nil
 }
 
 func (JobServer) GetJobById(ctx context.Context, r *proto.GetJobByIdRequest) (*proto.GetJobByIdResponse, error) {
 	job, err := database.GetJobById(r.GetJobId())
-	
+
 	if err != nil {
 		return nil, status.Error(codes.NotFound, "No job exists with given Id!")
 	}
@@ -83,7 +83,7 @@ func (JobServer) GetJobById(ctx context.Context, r *proto.GetJobByIdRequest) (*p
 
 func (JobServer) GetJobByCompanyName(ctx context.Context, r *proto.GetJobByCompanyNameRequest) (*proto.GetJobByCompanyNameResponse, error) {
 	job, err := database.GetJobByCompanyName(r.GetCompanyName())
-	
+
 	if err != nil {
 		return nil, status.Error(codes.NotFound, "No job exists with given Id!")
 	}
@@ -105,7 +105,7 @@ func (JobServer) UpdateJob(ctx context.Context, r *proto.UpdateJobRequest) (*pro
 
 func (JobServer) DeleteJob(ctx context.Context, r *proto.DeleteJobRequest) (*proto.DeleteJobResponse, error) {
 	err := database.DeleteJob(r.GetJobId())
-	
+
 	fmt.Println(err)
 
 	if err != nil {
@@ -116,17 +116,52 @@ func (JobServer) DeleteJob(ctx context.Context, r *proto.DeleteJobRequest) (*pro
 }
 
 func (JobServer) GetJobByStartDate(ctx context.Context, r *proto.GetJobByStartDateRequest) (*proto.GetJobByStartDateResponse, error) {
-	return &proto.GetJobByStartDateResponse{}, nil
+	jobs, err := database.GetJobByStartDate(r.GetStartDate())
+
+	if err != nil {
+		return nil, status.Error(codes.Internal, "Couldn't fetch the jobs. Try Again!")
+	}
+
+	var _jobs []*proto.Job
+	for _, job := range jobs {
+		_jobs = append(_jobs, structToProto(job))
+	}
+
+	return &proto.GetJobByStartDateResponse{Jobs: _jobs}, nil
 }
 
 func (JobServer) GetJobByEndDate(ctx context.Context, r *proto.GetJobByEndDateRequest) (*proto.GetJobByEndDateResponse, error) {
-	return &proto.GetJobByEndDateResponse{}, nil
+	jobs, err := database.GetJobByEndDate(r.GetEndDate())
+
+	if err != nil {
+		return nil, status.Error(codes.Internal, "Couldn't fetch the jobs. Try Again!")
+	}
+
+	var _jobs []*proto.Job
+	for _, job := range jobs {
+		_jobs = append(_jobs, structToProto(job))
+	}
+
+	return &proto.GetJobByEndDateResponse{Jobs: _jobs}, nil
 }
 
 func (JobServer) GetJobByStream(ctx context.Context, r *proto.GetJobByStreamRequest) (*proto.GetJobByStreamResponse, error) {
-	return &proto.GetJobByStreamResponse{}, nil
+
+	jobs, err := database.GetJobByStream(r.GetStream())
+
+	if err != nil {
+		return nil, status.Error(codes.Internal, "Couldn't fetch the jobs. Try Again!")
+	}
+
+	var _jobs []*proto.Job
+	for _, job := range jobs {
+		_jobs = append(_jobs, structToProto(job))
+	}
+
+	return &proto.GetJobByStreamResponse{Jobs: _jobs}, nil
 }
 
 func (JobServer) GetProjectName(ctx context.Context, r *proto.GetProjectNameRequest) (*proto.GetProjectNameResponse, error) {
 	return &proto.GetProjectNameResponse{ ProjectName: viper.GetString("project.name")}, nil
 }
+

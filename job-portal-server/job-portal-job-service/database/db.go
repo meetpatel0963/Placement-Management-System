@@ -30,8 +30,8 @@ func CloseConnection() {
 	}
 }
 
-func ExecuteQuery(query string, values ...interface{}) (error) {
-	if err := connection.session.Query(query).Bind(values...).Exec(); err!= nil {
+func ExecuteQuery(query string, values ...interface{}) error {
+	if err := connection.session.Query(query).Bind(values...).Exec(); err != nil {
 		log.Fatal(err)
 		return err
 	}
@@ -39,27 +39,27 @@ func ExecuteQuery(query string, values ...interface{}) (error) {
 }
 
 type Job struct {
-    Id         				string	 	`json:"id"`	
-    CompanyName       		string		`json:"companyName"`
-    EligibleStreams			[]string	`json:"eligibleStreams"`
-	JobDescription			[]byte		`json:"jobDescription"`
-	StartDate				string 		`json:"startDate"`
-	EndDate					string 		`json:"endDate"`
-	LPA						float64		`json:"lpa"`
-	NumberOfRegistrations	int32		`json:"numberOfRegistrations"`
+	Id                    string   `json:"id"`
+	CompanyName           string   `json:"companyName"`
+	EligibleStreams       []string `json:"eligibleStreams"`
+	JobDescription        []byte   `json:"jobDescription"`
+	StartDate             string   `json:"startDate"`
+	EndDate               string   `json:"endDate"`
+	LPA                   float64  `json:"lpa"`
+	NumberOfRegistrations int32    `json:"numberOfRegistrations"`
 }
 
-func SaveJob(job Job) (error) {
+func SaveJob(job Job) error {
 	query := `INSERT INTO jobs 
 	(id, company_name, eligible_streams, job_description, 
 		end_date, lpa, num_registrations, start_date) 
 	values (?, ?, ?, ?, ?, ?, ?, ?)`
 
-	err := connection.session.Query(query, gocql.TimeUUID(), job.CompanyName, 
-								job.EligibleStreams, job.JobDescription, 
-								job.EndDate, job.LPA, job.NumberOfRegistrations, 
-								job.StartDate).Exec();
-	
+	err := connection.session.Query(query, gocql.TimeUUID(), job.CompanyName,
+		job.EligibleStreams, job.JobDescription,
+		job.EndDate, job.LPA, job.NumberOfRegistrations,
+		job.StartDate).Exec()
+
 	return err
 }
 
@@ -67,30 +67,30 @@ func GetAllJobs() ([]Job, error) {
 	query := `SELECT * from jobs`
 
 	iter := connection.session.Query(query).Iter()
-	
+
 	var jobs []Job
 	var job Job
-	for iter.Scan(&job.Id, &job.CompanyName, 
-				  &job.EligibleStreams, &job.EndDate, 
-				  &job.JobDescription, &job.LPA, 
-				  &job.NumberOfRegistrations, &job.StartDate) {
+	for iter.Scan(&job.Id, &job.CompanyName,
+		&job.EligibleStreams, &job.EndDate,
+		&job.JobDescription, &job.LPA,
+		&job.NumberOfRegistrations, &job.StartDate) {
 		jobs = append(jobs, job)
 	}
 
 	err := iter.Close()
-	
+
 	return jobs, err
 }
 
 func GetJobById(jobId string) (Job, error) {
 	query := `SELECT * from jobs WHERE id=?`
-	
+
 	var job Job
 	err := connection.session.Query(query, jobId).Consistency(gocql.One).Scan(
-								&job.Id, &job.CompanyName, 
-								&job.EligibleStreams, &job.EndDate, 
-								&job.JobDescription, &job.LPA, 
-								&job.NumberOfRegistrations, &job.StartDate);
+		&job.Id, &job.CompanyName,
+		&job.EligibleStreams, &job.EndDate,
+		&job.JobDescription, &job.LPA,
+		&job.NumberOfRegistrations, &job.StartDate)
 
 	return job, err
 }
@@ -100,15 +100,15 @@ func GetJobByCompanyName(companyName string) (Job, error) {
 
 	var job Job
 	err := connection.session.Query(query, companyName).Consistency(gocql.One).Scan(
-								&job.Id, &job.CompanyName, 
-								&job.EligibleStreams, &job.EndDate, 
-								&job.JobDescription, &job.LPA, 
-								&job.NumberOfRegistrations, &job.StartDate);
-	
+		&job.Id, &job.CompanyName,
+		&job.EligibleStreams, &job.EndDate,
+		&job.JobDescription, &job.LPA,
+		&job.NumberOfRegistrations, &job.StartDate)
+
 	return job, err
 }
 
-func UpdateJob(job Job) (error) {
+func UpdateJob(job Job) error {
 	query := `UPDATE jobs 
 			  SET
 				company_name=?, eligible_streams=?, job_description=?, 
@@ -116,17 +116,74 @@ func UpdateJob(job Job) (error) {
 			  WHERE
 			  	id=?`
 
-	err := ExecuteQuery(query, job.CompanyName, job.EligibleStreams, 
-						job.JobDescription, job.EndDate, job.LPA, 
-						job.NumberOfRegistrations, job.StartDate, job.Id)
-		
+	err := ExecuteQuery(query, job.CompanyName, job.EligibleStreams,
+		job.JobDescription, job.EndDate, job.LPA,
+		job.NumberOfRegistrations, job.StartDate, job.Id)
+
 	return err
 }
 
-func DeleteJob(jobId string) (error) {
+func DeleteJob(jobId string) error {
 	query := `DELETE FROM jobs WHERE id=?`
 
 	err := ExecuteQuery(query, jobId)
 
 	return err
+}
+
+func GetJobByStartDate(startDate string) ([]Job, error) {
+	query := `SELECT * from jobs WHERE start_date <= ? ALLOW FILTERING`
+
+	iter := connection.session.Query(query, startDate).Iter()
+
+	var jobs []Job
+	var job Job
+	for iter.Scan(&job.Id, &job.CompanyName,
+		&job.EligibleStreams, &job.EndDate,
+		&job.JobDescription, &job.LPA,
+		&job.NumberOfRegistrations, &job.StartDate) {
+		jobs = append(jobs, job)
+	}
+
+	err := iter.Close()
+
+	return jobs, err
+}
+
+func GetJobByEndDate(endDate string) ([]Job, error) {
+	query := `SELECT * from jobs WHERE end_date >= ? ALLOW FILTERING`
+
+	iter := connection.session.Query(query, endDate).Iter()
+
+	var jobs []Job
+	var job Job
+	for iter.Scan(&job.Id, &job.CompanyName,
+		&job.EligibleStreams, &job.EndDate,
+		&job.JobDescription, &job.LPA,
+		&job.NumberOfRegistrations, &job.StartDate) {
+		jobs = append(jobs, job)
+	}
+
+	err := iter.Close()
+
+	return jobs, err
+}
+
+func GetJobByStream(streamName string) ([]Job, error) {
+	query := `SELECT * from jobs WHERE eligible_streams CONTAINS ?`
+
+	iter := connection.session.Query(query, streamName).Iter()
+
+	var jobs []Job
+	var job Job
+	for iter.Scan(&job.Id, &job.CompanyName,
+		&job.EligibleStreams, &job.EndDate,
+		&job.JobDescription, &job.LPA,
+		&job.NumberOfRegistrations, &job.StartDate) {
+		jobs = append(jobs, job)
+	}
+
+	err := iter.Close()
+
+	return jobs, err
 }
