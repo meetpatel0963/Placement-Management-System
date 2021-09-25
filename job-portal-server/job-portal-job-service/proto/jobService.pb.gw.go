@@ -475,7 +475,7 @@ func RegisterJobServiceHandlerServer(ctx context.Context, mux *runtime.ServeMux,
 		var stream runtime.ServerTransportStream
 		ctx = grpc.NewContextWithServerTransportStream(ctx, &stream)
 		inboundMarshaler, outboundMarshaler := runtime.MarshalerForRequest(mux, req)
-		rctx, err := runtime.AnnotateIncomingContext(ctx, mux, req, "/job_service.JobService/GetAllJobs", runtime.WithHTTPPathPattern("/jobs"))
+		rctx, err := runtime.AnnotateIncomingContext(ctx, mux, req, "/job_service.JobService/GetAllJobs", runtime.WithHTTPPathPattern("/api/v1/jobs"))
 		if err != nil {
 			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
 			return
@@ -498,7 +498,7 @@ func RegisterJobServiceHandlerServer(ctx context.Context, mux *runtime.ServeMux,
 		var stream runtime.ServerTransportStream
 		ctx = grpc.NewContextWithServerTransportStream(ctx, &stream)
 		inboundMarshaler, outboundMarshaler := runtime.MarshalerForRequest(mux, req)
-		rctx, err := runtime.AnnotateIncomingContext(ctx, mux, req, "/job_service.JobService/GetJobById", runtime.WithHTTPPathPattern("/jobs/{jobId}"))
+		rctx, err := runtime.AnnotateIncomingContext(ctx, mux, req, "/job_service.JobService/GetJobById", runtime.WithHTTPPathPattern("/api/v1/jobs/{jobId}"))
 		if err != nil {
 			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
 			return
@@ -521,7 +521,7 @@ func RegisterJobServiceHandlerServer(ctx context.Context, mux *runtime.ServeMux,
 		var stream runtime.ServerTransportStream
 		ctx = grpc.NewContextWithServerTransportStream(ctx, &stream)
 		inboundMarshaler, outboundMarshaler := runtime.MarshalerForRequest(mux, req)
-		rctx, err := runtime.AnnotateIncomingContext(ctx, mux, req, "/job_service.JobService/SaveJob", runtime.WithHTTPPathPattern("/jobs"))
+		rctx, err := runtime.AnnotateIncomingContext(ctx, mux, req, "/job_service.JobService/SaveJob", runtime.WithHTTPPathPattern("/api/v1/jobs"))
 		if err != nil {
 			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
 			return
@@ -544,7 +544,7 @@ func RegisterJobServiceHandlerServer(ctx context.Context, mux *runtime.ServeMux,
 		var stream runtime.ServerTransportStream
 		ctx = grpc.NewContextWithServerTransportStream(ctx, &stream)
 		inboundMarshaler, outboundMarshaler := runtime.MarshalerForRequest(mux, req)
-		rctx, err := runtime.AnnotateIncomingContext(ctx, mux, req, "/job_service.JobService/UpdateJob", runtime.WithHTTPPathPattern("/jobs/{job.id}"))
+		rctx, err := runtime.AnnotateIncomingContext(ctx, mux, req, "/job_service.JobService/UpdateJob", runtime.WithHTTPPathPattern("/api/v1/jobs/{job.id}"))
 		if err != nil {
 			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
 			return
@@ -567,7 +567,7 @@ func RegisterJobServiceHandlerServer(ctx context.Context, mux *runtime.ServeMux,
 		var stream runtime.ServerTransportStream
 		ctx = grpc.NewContextWithServerTransportStream(ctx, &stream)
 		inboundMarshaler, outboundMarshaler := runtime.MarshalerForRequest(mux, req)
-		rctx, err := runtime.AnnotateIncomingContext(ctx, mux, req, "/job_service.JobService/DeleteJob", runtime.WithHTTPPathPattern("/jobs/{jobId}"))
+		rctx, err := runtime.AnnotateIncomingContext(ctx, mux, req, "/job_service.JobService/DeleteJob", runtime.WithHTTPPathPattern("/api/v1/jobs/{jobId}"))
 		if err != nil {
 			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
 			return
@@ -590,7 +590,7 @@ func RegisterJobServiceHandlerServer(ctx context.Context, mux *runtime.ServeMux,
 		var stream runtime.ServerTransportStream
 		ctx = grpc.NewContextWithServerTransportStream(ctx, &stream)
 		inboundMarshaler, outboundMarshaler := runtime.MarshalerForRequest(mux, req)
-		rctx, err := runtime.AnnotateIncomingContext(ctx, mux, req, "/job_service.JobService/GetJobByCompanyName", runtime.WithHTTPPathPattern("/jobs/company/{companyName}"))
+		rctx, err := runtime.AnnotateIncomingContext(ctx, mux, req, "/job_service.JobService/GetJobByCompanyName", runtime.WithHTTPPathPattern("/api/v1/jobs/company/{companyName}"))
 		if err != nil {
 			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
 			return
@@ -613,7 +613,7 @@ func RegisterJobServiceHandlerServer(ctx context.Context, mux *runtime.ServeMux,
 		var stream runtime.ServerTransportStream
 		ctx = grpc.NewContextWithServerTransportStream(ctx, &stream)
 		inboundMarshaler, outboundMarshaler := runtime.MarshalerForRequest(mux, req)
-		rctx, err := runtime.AnnotateIncomingContext(ctx, mux, req, "/job_service.JobService/GetJobByStartDate", runtime.WithHTTPPathPattern("/jobs/startdate/{startDate}"))
+		rctx, err := runtime.AnnotateIncomingContext(ctx, mux, req, "/job_service.JobService/GetJobByStartDate", runtime.WithHTTPPathPattern("/api/v1/jobs/startdate/{startDate}"))
 		if err != nil {
 			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
 			return
@@ -636,7 +636,7 @@ func RegisterJobServiceHandlerServer(ctx context.Context, mux *runtime.ServeMux,
 		var stream runtime.ServerTransportStream
 		ctx = grpc.NewContextWithServerTransportStream(ctx, &stream)
 		inboundMarshaler, outboundMarshaler := runtime.MarshalerForRequest(mux, req)
-		rctx, err := runtime.AnnotateIncomingContext(ctx, mux, req, "/job_service.JobService/GetJobByEndDate", runtime.WithHTTPPathPattern("/jobs/enddate/{endDate}"))
+		rctx, err := runtime.AnnotateIncomingContext(ctx, mux, req, "/job_service.JobService/GetJobByEndDate", runtime.WithHTTPPathPattern("/api/v1/jobs/enddate/{endDate}"))
 		if err != nil {
 			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
 			return
@@ -659,7 +659,7 @@ func RegisterJobServiceHandlerServer(ctx context.Context, mux *runtime.ServeMux,
 		var stream runtime.ServerTransportStream
 		ctx = grpc.NewContextWithServerTransportStream(ctx, &stream)
 		inboundMarshaler, outboundMarshaler := runtime.MarshalerForRequest(mux, req)
-		rctx, err := runtime.AnnotateIncomingContext(ctx, mux, req, "/job_service.JobService/GetJobByStream", runtime.WithHTTPPathPattern("/jobs/stream/{stream}"))
+		rctx, err := runtime.AnnotateIncomingContext(ctx, mux, req, "/job_service.JobService/GetJobByStream", runtime.WithHTTPPathPattern("/api/v1/jobs/stream/{stream}"))
 		if err != nil {
 			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
 			return
@@ -721,7 +721,7 @@ func RegisterJobServiceHandlerClient(ctx context.Context, mux *runtime.ServeMux,
 		ctx, cancel := context.WithCancel(req.Context())
 		defer cancel()
 		inboundMarshaler, outboundMarshaler := runtime.MarshalerForRequest(mux, req)
-		rctx, err := runtime.AnnotateContext(ctx, mux, req, "/job_service.JobService/GetAllJobs", runtime.WithHTTPPathPattern("/jobs"))
+		rctx, err := runtime.AnnotateContext(ctx, mux, req, "/job_service.JobService/GetAllJobs", runtime.WithHTTPPathPattern("/api/v1/jobs"))
 		if err != nil {
 			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
 			return
@@ -741,7 +741,7 @@ func RegisterJobServiceHandlerClient(ctx context.Context, mux *runtime.ServeMux,
 		ctx, cancel := context.WithCancel(req.Context())
 		defer cancel()
 		inboundMarshaler, outboundMarshaler := runtime.MarshalerForRequest(mux, req)
-		rctx, err := runtime.AnnotateContext(ctx, mux, req, "/job_service.JobService/GetJobById", runtime.WithHTTPPathPattern("/jobs/{jobId}"))
+		rctx, err := runtime.AnnotateContext(ctx, mux, req, "/job_service.JobService/GetJobById", runtime.WithHTTPPathPattern("/api/v1/jobs/{jobId}"))
 		if err != nil {
 			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
 			return
@@ -761,7 +761,7 @@ func RegisterJobServiceHandlerClient(ctx context.Context, mux *runtime.ServeMux,
 		ctx, cancel := context.WithCancel(req.Context())
 		defer cancel()
 		inboundMarshaler, outboundMarshaler := runtime.MarshalerForRequest(mux, req)
-		rctx, err := runtime.AnnotateContext(ctx, mux, req, "/job_service.JobService/SaveJob", runtime.WithHTTPPathPattern("/jobs"))
+		rctx, err := runtime.AnnotateContext(ctx, mux, req, "/job_service.JobService/SaveJob", runtime.WithHTTPPathPattern("/api/v1/jobs"))
 		if err != nil {
 			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
 			return
@@ -781,7 +781,7 @@ func RegisterJobServiceHandlerClient(ctx context.Context, mux *runtime.ServeMux,
 		ctx, cancel := context.WithCancel(req.Context())
 		defer cancel()
 		inboundMarshaler, outboundMarshaler := runtime.MarshalerForRequest(mux, req)
-		rctx, err := runtime.AnnotateContext(ctx, mux, req, "/job_service.JobService/UpdateJob", runtime.WithHTTPPathPattern("/jobs/{job.id}"))
+		rctx, err := runtime.AnnotateContext(ctx, mux, req, "/job_service.JobService/UpdateJob", runtime.WithHTTPPathPattern("/api/v1/jobs/{job.id}"))
 		if err != nil {
 			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
 			return
@@ -801,7 +801,7 @@ func RegisterJobServiceHandlerClient(ctx context.Context, mux *runtime.ServeMux,
 		ctx, cancel := context.WithCancel(req.Context())
 		defer cancel()
 		inboundMarshaler, outboundMarshaler := runtime.MarshalerForRequest(mux, req)
-		rctx, err := runtime.AnnotateContext(ctx, mux, req, "/job_service.JobService/DeleteJob", runtime.WithHTTPPathPattern("/jobs/{jobId}"))
+		rctx, err := runtime.AnnotateContext(ctx, mux, req, "/job_service.JobService/DeleteJob", runtime.WithHTTPPathPattern("/api/v1/jobs/{jobId}"))
 		if err != nil {
 			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
 			return
@@ -821,7 +821,7 @@ func RegisterJobServiceHandlerClient(ctx context.Context, mux *runtime.ServeMux,
 		ctx, cancel := context.WithCancel(req.Context())
 		defer cancel()
 		inboundMarshaler, outboundMarshaler := runtime.MarshalerForRequest(mux, req)
-		rctx, err := runtime.AnnotateContext(ctx, mux, req, "/job_service.JobService/GetJobByCompanyName", runtime.WithHTTPPathPattern("/jobs/company/{companyName}"))
+		rctx, err := runtime.AnnotateContext(ctx, mux, req, "/job_service.JobService/GetJobByCompanyName", runtime.WithHTTPPathPattern("/api/v1/jobs/company/{companyName}"))
 		if err != nil {
 			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
 			return
@@ -841,7 +841,7 @@ func RegisterJobServiceHandlerClient(ctx context.Context, mux *runtime.ServeMux,
 		ctx, cancel := context.WithCancel(req.Context())
 		defer cancel()
 		inboundMarshaler, outboundMarshaler := runtime.MarshalerForRequest(mux, req)
-		rctx, err := runtime.AnnotateContext(ctx, mux, req, "/job_service.JobService/GetJobByStartDate", runtime.WithHTTPPathPattern("/jobs/startdate/{startDate}"))
+		rctx, err := runtime.AnnotateContext(ctx, mux, req, "/job_service.JobService/GetJobByStartDate", runtime.WithHTTPPathPattern("/api/v1/jobs/startdate/{startDate}"))
 		if err != nil {
 			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
 			return
@@ -861,7 +861,7 @@ func RegisterJobServiceHandlerClient(ctx context.Context, mux *runtime.ServeMux,
 		ctx, cancel := context.WithCancel(req.Context())
 		defer cancel()
 		inboundMarshaler, outboundMarshaler := runtime.MarshalerForRequest(mux, req)
-		rctx, err := runtime.AnnotateContext(ctx, mux, req, "/job_service.JobService/GetJobByEndDate", runtime.WithHTTPPathPattern("/jobs/enddate/{endDate}"))
+		rctx, err := runtime.AnnotateContext(ctx, mux, req, "/job_service.JobService/GetJobByEndDate", runtime.WithHTTPPathPattern("/api/v1/jobs/enddate/{endDate}"))
 		if err != nil {
 			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
 			return
@@ -881,7 +881,7 @@ func RegisterJobServiceHandlerClient(ctx context.Context, mux *runtime.ServeMux,
 		ctx, cancel := context.WithCancel(req.Context())
 		defer cancel()
 		inboundMarshaler, outboundMarshaler := runtime.MarshalerForRequest(mux, req)
-		rctx, err := runtime.AnnotateContext(ctx, mux, req, "/job_service.JobService/GetJobByStream", runtime.WithHTTPPathPattern("/jobs/stream/{stream}"))
+		rctx, err := runtime.AnnotateContext(ctx, mux, req, "/job_service.JobService/GetJobByStream", runtime.WithHTTPPathPattern("/api/v1/jobs/stream/{stream}"))
 		if err != nil {
 			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
 			return
@@ -901,23 +901,23 @@ func RegisterJobServiceHandlerClient(ctx context.Context, mux *runtime.ServeMux,
 }
 
 var (
-	pattern_JobService_GetAllJobs_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0}, []string{"jobs"}, ""))
+	pattern_JobService_GetAllJobs_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1, 2, 2}, []string{"api", "v1", "jobs"}, ""))
 
-	pattern_JobService_GetJobById_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 1, 0, 4, 1, 5, 1}, []string{"jobs", "jobId"}, ""))
+	pattern_JobService_GetJobById_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1, 2, 2, 1, 0, 4, 1, 5, 3}, []string{"api", "v1", "jobs", "jobId"}, ""))
 
-	pattern_JobService_SaveJob_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0}, []string{"jobs"}, ""))
+	pattern_JobService_SaveJob_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1, 2, 2}, []string{"api", "v1", "jobs"}, ""))
 
-	pattern_JobService_UpdateJob_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 1, 0, 4, 1, 5, 1}, []string{"jobs", "job.id"}, ""))
+	pattern_JobService_UpdateJob_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1, 2, 2, 1, 0, 4, 1, 5, 3}, []string{"api", "v1", "jobs", "job.id"}, ""))
 
-	pattern_JobService_DeleteJob_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 1, 0, 4, 1, 5, 1}, []string{"jobs", "jobId"}, ""))
+	pattern_JobService_DeleteJob_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1, 2, 2, 1, 0, 4, 1, 5, 3}, []string{"api", "v1", "jobs", "jobId"}, ""))
 
-	pattern_JobService_GetJobByCompanyName_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1, 1, 0, 4, 1, 5, 2}, []string{"jobs", "company", "companyName"}, ""))
+	pattern_JobService_GetJobByCompanyName_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1, 2, 2, 2, 3, 1, 0, 4, 1, 5, 4}, []string{"api", "v1", "jobs", "company", "companyName"}, ""))
 
-	pattern_JobService_GetJobByStartDate_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1, 1, 0, 4, 1, 5, 2}, []string{"jobs", "startdate", "startDate"}, ""))
+	pattern_JobService_GetJobByStartDate_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1, 2, 2, 2, 3, 1, 0, 4, 1, 5, 4}, []string{"api", "v1", "jobs", "startdate", "startDate"}, ""))
 
-	pattern_JobService_GetJobByEndDate_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1, 1, 0, 4, 1, 5, 2}, []string{"jobs", "enddate", "endDate"}, ""))
+	pattern_JobService_GetJobByEndDate_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1, 2, 2, 2, 3, 1, 0, 4, 1, 5, 4}, []string{"api", "v1", "jobs", "enddate", "endDate"}, ""))
 
-	pattern_JobService_GetJobByStream_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1, 1, 0, 4, 1, 5, 1}, []string{"jobs", "stream"}, ""))
+	pattern_JobService_GetJobByStream_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1, 2, 2, 2, 3, 1, 0, 4, 1, 5, 3}, []string{"api", "v1", "jobs", "stream"}, ""))
 )
 
 var (

@@ -8,31 +8,31 @@ option go_package = "./job_service";
 
 service JobService {
     rpc getAllJobs(GetAllJobsRequest) returns (GetAllJobsResponse) {
-        option (google.api.http) = { get: "/jobs" };
+        option (google.api.http) = { get: "/api/v1/jobs" };
     }
     rpc getJobById(GetJobByIdRequest) returns (GetJobByIdResponse) {
-        option (google.api.http) = { get: "/jobs/{jobId}" };
+        option (google.api.http) = { get: "/api/v1/jobs/{jobId}" };
     }
     rpc saveJob(SaveJobRequest) returns (SaveJobResponse) {
-        option (google.api.http) = { post: "/jobs" body: "*" };
+        option (google.api.http) = { post: "/api/v1/jobs" body: "*" };
     }
     rpc updateJob(UpdateJobRequest) returns (UpdateJobResponse) {
-        option (google.api.http) = { put: "/jobs/{job.id}" body: "*" };
+        option (google.api.http) = { put: "/api/v1/jobs/{job.id}" body: "*" };
      }
     rpc deleteJob(DeleteJobRequest) returns (DeleteJobResponse) {
-        option (google.api.http) = { delete: "/jobs/{jobId}" };
+        option (google.api.http) = { delete: "/api/v1/jobs/{jobId}" };
     }
     rpc getJobByCompanyName(GetJobByCompanyNameRequest) returns (GetJobByCompanyNameResponse) {
-        option (google.api.http) = { get: "/jobs/company/{companyName}" };
+        option (google.api.http) = { get: "/api/v1/jobs/company/{companyName}" };
     }
     rpc getJobByStartDate(GetJobByStartDateRequest) returns (GetJobByStartDateResponse) {
-        option (google.api.http) = { get: "/jobs/startdate/{startDate}" };
+        option (google.api.http) = { get: "/api/v1/jobs/startdate/{startDate}" };
     }
     rpc getJobByEndDate(GetJobByEndDateRequest) returns (GetJobByEndDateResponse) {
-        option (google.api.http) = { get: "/jobs/enddate/{endDate}" };
+        option (google.api.http) = { get: "/api/v1/jobs/enddate/{endDate}" };
     }
     rpc getJobByStream(GetJobByStreamRequest) returns (GetJobByStreamResponse) {
-        option (google.api.http) = { get: "/jobs/stream/{stream}"  };
+        option (google.api.http) = { get: "/api/v1/jobs/stream/{stream}"  };
     }
 }
 
