@@ -7,6 +7,7 @@ import (
 	"job_service/database"
 	proto "job_service/proto"
 
+	"github.com/spf13/viper"
 	"google.golang.org/grpc/codes"
 	"google.golang.org/grpc/status"
 )
@@ -124,4 +125,8 @@ func (JobServer) GetJobByEndDate(ctx context.Context, r *proto.GetJobByEndDateRe
 
 func (JobServer) GetJobByStream(ctx context.Context, r *proto.GetJobByStreamRequest) (*proto.GetJobByStreamResponse, error) {
 	return &proto.GetJobByStreamResponse{}, nil
+}
+
+func (JobServer) GetProjectName(ctx context.Context, r *proto.GetProjectNameRequest) (*proto.GetProjectNameResponse, error) {
+	return &proto.GetProjectNameResponse{ ProjectName: viper.GetString("project.name")}, nil
 }

@@ -34,6 +34,9 @@ service JobService {
     rpc getJobByStream(GetJobByStreamRequest) returns (GetJobByStreamResponse) {
         option (google.api.http) = { get: "/api/v1/jobs/stream/{stream}"  };
     }
+    rpc getProjectName(GetProjectNameRequest) returns (GetProjectNameResponse) {
+        option (google.api.http) = { get: "/api/v1/jobs/projectname"  };
+    }
 }
 
 message Job {
@@ -117,4 +120,12 @@ message GetJobByStreamRequest {
 
 message GetJobByStreamResponse {
     repeated Job jobs = 1;
+}
+
+message GetProjectNameRequest {
+
+}
+
+message GetProjectNameResponse {
+    string projectName = 1;
 }

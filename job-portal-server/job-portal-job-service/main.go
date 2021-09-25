@@ -51,6 +51,8 @@ func main() {
 		config.APPLICATION_NAME,
 		viper.GetString("profile"),
 		viper.GetString("configbranch"))
+		
+	go configclient.StartListener(config.APPLICATION_NAME, viper.GetString("amqp_server_url"), viper.GetString("config_event_bus"))
 
 	fmt.Println("Connecting to Cassandra...")
 	database.SetupDBConnection()

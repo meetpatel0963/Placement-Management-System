@@ -27,6 +27,7 @@ type JobServiceClient interface {
 	GetJobByStartDate(ctx context.Context, in *GetJobByStartDateRequest, opts ...grpc.CallOption) (*GetJobByStartDateResponse, error)
 	GetJobByEndDate(ctx context.Context, in *GetJobByEndDateRequest, opts ...grpc.CallOption) (*GetJobByEndDateResponse, error)
 	GetJobByStream(ctx context.Context, in *GetJobByStreamRequest, opts ...grpc.CallOption) (*GetJobByStreamResponse, error)
+	GetProjectName(ctx context.Context, in *GetProjectNameRequest, opts ...grpc.CallOption) (*GetProjectNameResponse, error)
 }
 
 type jobServiceClient struct {
@@ -118,6 +119,15 @@ func (c *jobServiceClient) GetJobByStream(ctx context.Context, in *GetJobByStrea
 	return out, nil
 }
 
+func (c *jobServiceClient) GetProjectName(ctx context.Context, in *GetProjectNameRequest, opts ...grpc.CallOption) (*GetProjectNameResponse, error) {
+	out := new(GetProjectNameResponse)
+	err := c.cc.Invoke(ctx, "/job_service.JobService/getProjectName", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 // JobServiceServer is the server API for JobService service.
 // All implementations must embed UnimplementedJobServiceServer
 // for forward compatibility
@@ -131,6 +141,7 @@ type JobServiceServer interface {
 	GetJobByStartDate(context.Context, *GetJobByStartDateRequest) (*GetJobByStartDateResponse, error)
 	GetJobByEndDate(context.Context, *GetJobByEndDateRequest) (*GetJobByEndDateResponse, error)
 	GetJobByStream(context.Context, *GetJobByStreamRequest) (*GetJobByStreamResponse, error)
+	GetProjectName(context.Context, *GetProjectNameRequest) (*GetProjectNameResponse, error)
 	mustEmbedUnimplementedJobServiceServer()
 }
 
@@ -164,6 +175,9 @@ func (UnimplementedJobServiceServer) GetJobByEndDate(context.Context, *GetJobByE
 }
 func (UnimplementedJobServiceServer) GetJobByStream(context.Context, *GetJobByStreamRequest) (*GetJobByStreamResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method GetJobByStream not implemented")
+}
+func (UnimplementedJobServiceServer) GetProjectName(context.Context, *GetProjectNameRequest) (*GetProjectNameResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method GetProjectName not implemented")
 }
 func (UnimplementedJobServiceServer) mustEmbedUnimplementedJobServiceServer() {}
 
@@ -340,6 +354,24 @@ func _JobService_GetJobByStream_Handler(srv interface{}, ctx context.Context, de
 	return interceptor(ctx, in, info, handler)
 }
 
+func _JobService_GetProjectName_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(GetProjectNameRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(JobServiceServer).GetProjectName(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/job_service.JobService/getProjectName",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(JobServiceServer).GetProjectName(ctx, req.(*GetProjectNameRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 // JobService_ServiceDesc is the grpc.ServiceDesc for JobService service.
 // It's only intended for direct use with grpc.RegisterService,
 // and not to be introspected or modified (even as a copy)
@@ -382,6 +414,10 @@ var JobService_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "getJobByStream",
 			Handler:    _JobService_GetJobByStream_Handler,
+		},
+		{
+			MethodName: "getProjectName",
+			Handler:    _JobService_GetProjectName_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},

@@ -5,6 +5,8 @@ import com.jobportal.studentservice.exception.ResourceNotFoundException;
 import com.jobportal.studentservice.service.StudentService;
 import com.jobportal.studentserviceproto.StudentServiceOuterClass;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.cloud.context.config.annotation.RefreshScope;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
@@ -12,11 +14,20 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.Optional;
 
+@RefreshScope
 @RestController
 @RequestMapping("/api/v1/students")
 public class StudentController {
     @Autowired
     private StudentService studentService;
+
+    @Value("${project.name}")
+    private String projectName;
+
+    @GetMapping("/projectname")
+    public String getProjectName() {
+        return "Project Name : [" + this.projectName + "]";
+    }
 
     @GetMapping(produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<?> getAllStudents(@RequestBody StudentServiceOuterClass.GetAllStudentsRequest getAllStudentsRequest) {
