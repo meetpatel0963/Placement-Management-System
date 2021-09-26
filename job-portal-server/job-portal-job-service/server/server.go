@@ -8,10 +8,13 @@ import (
 
 	proto "job_service/proto"
 	"job_service/service"
+	zipkinclient "job_service/zipkin"
 
 	"github.com/grpc-ecosystem/grpc-gateway/v2/runtime"
 	"github.com/spf13/viper"
 	"google.golang.org/grpc"
+
+	zipkinhttp "github.com/openzipkin/zipkin-go/middleware/http"
 )
 
 var grpcServer *grpc.Server
@@ -20,8 +23,23 @@ func StartServer() {
 	mux := runtime.NewServeMux()
 	proto.RegisterJobServiceHandlerServer(context.Background(), mux, service.JobServer{})
 	
+	tracer, err := zipkinclient.NewTracer()
+    if err != nil {
+      log.Fatal(err)
+    }
+
+	http.DefaultClient.Transport, err = zipkinhttp.NewTransport(
+        tracer,
+        zipkinhttp.TransportTrace(true),
+    )
+    if err != nil {
+      log.Fatal(err)
+    }
+	
+	wrappedMux := zipkinhttp.NewServerMiddleware(tracer, zipkinhttp.SpanName("request"))(mux)
+	
 	go func() {
-		log.Fatalln(http.ListenAndServe("localhost" + viper.GetString("rest_port"), mux))
+		log.Fatalln(http.ListenAndServe("localhost" + viper.GetString("rest_port"), wrappedMux))
 	}()
 	
 	grpcServer = grpc.NewServer()

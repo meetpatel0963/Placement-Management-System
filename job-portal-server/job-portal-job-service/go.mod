@@ -19,15 +19,12 @@ require (
 	github.com/franela/goreq v0.0.0-20171204163338-bcd34c9993f8 // indirect
 	github.com/ghodss/yaml v1.0.0 // indirect
 	github.com/golang/glog v1.0.0 // indirect
-	github.com/golang/groupcache v0.0.0-20210331224755-41bb18bfe9da // indirect
 	github.com/golang/protobuf v1.5.2 // indirect
 	github.com/golang/snappy v0.0.3 // indirect
 	github.com/hailocab/go-hostpool v0.0.0-20160125115350-e80d13ce29ed // indirect
 	github.com/miekg/dns v1.1.43 // indirect
 	github.com/op/go-logging v0.0.0-20160315200505-970db520ece7 // indirect
-	github.com/opentracing-contrib/go-observer v0.0.0-20170622124052-a52f23424492 // indirect
-	github.com/openzipkin/zipkin-go v0.2.5 // indirect
-	go.opencensus.io v0.23.0 // indirect
+	github.com/openzipkin/zipkin-go v0.2.5
 	golang.org/x/net v0.0.0-20210924151903-3ad01bbaa167 // indirect
 	golang.org/x/sys v0.0.0-20210925032602-92d5a993a665 // indirect
 	golang.org/x/text v0.3.7 // indirect
@@ -38,14 +35,11 @@ require (
 )
 
 require (
-	contrib.go.opencensus.io/exporter/zipkin v0.1.2
 	github.com/fsnotify/fsnotify v1.5.1 // indirect
-	github.com/gorilla/mux v1.8.0
+	github.com/gorilla/mux v1.8.0 // indirect
 	github.com/hashicorp/hcl v1.0.0 // indirect
 	github.com/magiconair/properties v1.8.5 // indirect
 	github.com/mitchellh/mapstructure v1.4.2 // indirect
-	github.com/opentracing/opentracing-go v1.2.0
-	github.com/openzipkin-contrib/zipkin-go-opentracing v0.4.5
 	github.com/pelletier/go-toml v1.9.4 // indirect
 	github.com/spf13/afero v1.6.0 // indirect
 	github.com/spf13/cast v1.4.1 // indirect
