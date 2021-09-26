@@ -19,7 +19,7 @@ var grpcServer *grpc.Server
 func StartServer() {
 	mux := runtime.NewServeMux()
 	proto.RegisterJobServiceHandlerServer(context.Background(), mux, service.JobServer{})
-
+	
 	go func() {
 		log.Fatalln(http.ListenAndServe("localhost" + viper.GetString("rest_port"), mux))
 	}()

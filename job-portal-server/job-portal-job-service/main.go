@@ -68,6 +68,6 @@ func main() {
 	fmt.Println("Starting server...")
 	server.StartServer()
 	fmt.Println("Server started.")
-
+	
 	<-done
 }

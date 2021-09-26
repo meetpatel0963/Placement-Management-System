@@ -486,7 +486,7 @@ func local_request_JobService_GetProjectName_0(ctx context.Context, marshaler ru
 // StreamingRPC :currently unsupported pending https://github.com/grpc/grpc-go/issues/906.
 // Note that using this registration option will cause many gRPC library features to stop working. Consider using RegisterJobServiceHandlerFromEndpoint instead.
 func RegisterJobServiceHandlerServer(ctx context.Context, mux *runtime.ServeMux, server JobServiceServer) error {
-
+	
 	mux.Handle("GET", pattern_JobService_GetAllJobs_0, func(w http.ResponseWriter, req *http.Request, pathParams map[string]string) {
 		ctx, cancel := context.WithCancel(req.Context())
 		defer cancel()
