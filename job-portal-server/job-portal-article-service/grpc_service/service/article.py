@@ -5,12 +5,14 @@ import grpc
 from concurrent.futures import ThreadPoolExecutor
 from sql_app import database
 from sql_app.crud import article as crud
+from dynaconf import settings
 
 
 class ArticleServiceServicer(articleService_pb2_grpc.ArticleServiceServicer):
      def __init__(self):
           self.sess = database.SessionLocal()
           print("initialized session")
+          
      
      def cast_time(self,ob):
           ob.createdAt = str(ob.createdAt)

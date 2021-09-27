@@ -1,10 +1,11 @@
 from service import article, comment
 from protobuf import articleService_pb2_grpc
-from dotenv import dotenv_values
+# from dotenv import dotenv_values
 import grpc
 from concurrent.futures import ThreadPoolExecutor
+from dynaconf import settings
 
-config = dict(dotenv_values(".env"))
+# config = dict(dotenv_values(".env"))
 
 def serve():
      server = grpc.server(ThreadPoolExecutor(max_workers=10))
@@ -16,7 +17,7 @@ def serve():
           comment.CommentServiceServicer(),
           server
      )
-     server.add_insecure_port('[::]:{}'.format(config['GRPC_PORT']))
+     server.add_insecure_port('[::]:{}'.format(settings.get_fresh('GRPC_PORT')))
      server.start()
      server.wait_for_termination()
 
