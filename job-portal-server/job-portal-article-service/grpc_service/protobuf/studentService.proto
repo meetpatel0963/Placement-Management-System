@@ -1,0 +1,131 @@
+syntax = "proto3";
+
+service StudentService {
+  rpc getStudentContactDetails(GetStudentContactRequest) returns (GetStudentContactResponse) {}
+  rpc getAllStudents(GetAllStudentsRequest) returns (GetAllStudentsResponse) {}
+  rpc getStudentById(GetStudentByIdRequest) returns (GetStudentByIdResponse) {}
+  rpc saveStudent(SaveStudentRequest) returns (SaveStudentResponse) {}
+  rpc updateStudent(UpdateStudentRequest) returns (UpdateStudentResponse) {}
+  rpc deleteStudent(DeleteStudentRequest) returns (DeleteStudentResponse) {}
+}
+
+message File {
+  string fileName = 1;
+  string fileType = 2;
+  string fileSize = 3;
+  bytes file = 4;
+}
+
+message PersonalDetails {
+  File profilePicture = 1;
+  string firstName = 2;
+  string middleName = 3;
+  string lastName = 4;
+  string fatherName = 5;
+  string gender = 6;
+  string currentAddressLine1 = 7;
+  string currentAddressLine2 = 8;
+  string permanentAddressLine1 = 9;
+  string permanentAddressLine2 = 10;
+  string city = 11;
+  string state = 12;
+  string country = 13;
+  string dob = 14;
+  string nationality = 15;
+  repeated string articles = 16;
+}
+
+message EducationDetails {
+  map<string, string> SSCDetails = 1;
+  map<string, string> HSCDetails = 2;
+  map<string, string> DiplomaDetails = 3;
+  map<string, string> UGDetails = 4;
+  map<string, string> PGDetails = 5;
+}
+
+message ContactDetails {
+  string primaryEmailId = 1;
+  string secondaryEmailId = 2;
+  string phoneNumber = 3;
+  string altPhoneNumber = 4;
+  string altPhoneNumberBelongsTo = 5;
+  string linkedInId = 6;
+  string skypeId = 7;
+}
+
+message JobDetails {
+  repeated string skills = 1;
+  string experienceType = 2;
+  int32 experiencePeriodInYears = 3;
+  int32 experiencePeriodInMonths = 4;
+}
+
+message Student {
+  string id = 1;
+  PersonalDetails personalDetails = 2;
+  EducationDetails educationDetails = 3;
+  ContactDetails contactDetails = 4;
+  JobDetails jobDetails = 5;
+  string date = 6;
+}
+
+message GetAllStudentsRequest {
+
+}
+
+message GetAllStudentsResponse {
+  repeated Student students = 1;
+}
+
+message GetStudentByIdRequest {
+  string studentId = 1;
+}
+
+message GetStudentByIdResponse {
+  Student student = 1;
+}
+
+message SaveStudentRequest {
+  Student student = 1;
+}
+
+message SaveStudentResponse {
+  string message = 1;
+}
+
+message UpdateStudentRequest {
+  Student student = 1;
+}
+
+message UpdateStudentResponse {
+  string message = 1;
+}
+
+message DeleteStudentRequest {
+  string studentId = 1;
+}
+
+message DeleteStudentResponse {
+  string message = 1;
+}
+
+message GetStudentContactRequest {
+  message StudentId {
+    string studentId = 1;
+  }
+
+  repeated StudentId studentIds = 1;
+}
+
+message GetStudentContactResponse {
+  message StudentContactDetails {
+    string firstName = 1;
+    string middleName = 2;
+    string lastName = 3;
+    string primaryEmailId = 4;
+    string phoneNumber = 5;
+    string linkedInId = 6;
+  }
+
+  repeated StudentContactDetails students = 1;
+};
