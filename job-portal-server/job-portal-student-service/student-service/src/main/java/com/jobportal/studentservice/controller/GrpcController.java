@@ -41,7 +41,7 @@ public class GrpcController extends com.jobportal.studentserviceproto.StudentSer
     @Override
     public void getStudentById(StudentServiceOuterClass.GetStudentByIdRequest request, StreamObserver<StudentServiceOuterClass.GetStudentByIdResponse> responseObserver) {
         Optional<StudentServiceOuterClass.GetStudentByIdResponse> getStudentByIdResponse =
-                studentService.getStudentById(request.getStudentId(), request);
+                studentService.getStudentById(request);
 
         if(!getStudentByIdResponse.isPresent()) {
             responseObserver.onError(Status.NOT_FOUND.withDescription("No student exists with given Id!").asRuntimeException());
@@ -81,12 +81,38 @@ public class GrpcController extends com.jobportal.studentserviceproto.StudentSer
     @Override
     public void deleteStudent(StudentServiceOuterClass.DeleteStudentRequest request, StreamObserver<StudentServiceOuterClass.DeleteStudentResponse> responseObserver) {
         Optional<StudentServiceOuterClass.DeleteStudentResponse> deleteStudentResponse =
-                studentService.deleteStudent(request.getStudentId(), request);
+                studentService.deleteStudent(request);
 
         if(!deleteStudentResponse.isPresent()) {
             responseObserver.onError(Status.NOT_FOUND.withDescription("No student exists with given Id!").asRuntimeException());
         } else {
             responseObserver.onNext(deleteStudentResponse.get());
+        }
+        responseObserver.onCompleted();
+    }
+
+    @Override
+    public void registerStudentForJob(StudentServiceOuterClass.RegisterStudentForJobRequest request, StreamObserver<StudentServiceOuterClass.RegisterStudentForJobResponse> responseObserver) {
+        Optional<StudentServiceOuterClass.RegisterStudentForJobResponse> registerStudentForJobResponse =
+                studentService.registerStudentForJob(request);
+
+        if(!registerStudentForJobResponse.isPresent()) {
+            responseObserver.onError(Status.NOT_FOUND.withDescription("Couldn't register the student. Try again!").asRuntimeException());
+        } else {
+            responseObserver.onNext(registerStudentForJobResponse.get());
+        }
+        responseObserver.onCompleted();
+    }
+
+    @Override
+    public void getRegisteredStudentsByJobId(StudentServiceOuterClass.GetRegisteredStudentsByJobIdRequest request, StreamObserver<StudentServiceOuterClass.GetRegisteredStudentsByJobIdResponse> responseObserver) {
+        Optional<StudentServiceOuterClass.GetRegisteredStudentsByJobIdResponse> getRegisteredStudentsByJobIdResponse =
+                studentService.getRegisteredStudentsByJobId(request);
+
+        if(!getRegisteredStudentsByJobIdResponse.isPresent()) {
+            responseObserver.onError(Status.NOT_FOUND.withDescription("Couldn't fetch the registration entries. Try Again!").asRuntimeException());
+        } else {
+            responseObserver.onNext(getRegisteredStudentsByJobIdResponse.get());
         }
         responseObserver.onCompleted();
     }

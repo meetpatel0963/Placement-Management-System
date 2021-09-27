@@ -1,0 +1,29 @@
+syntax = "proto3";
+
+package com.jobportal.jobserviceproto;
+
+service JobService {
+    rpc registerStudentForJob(RegisterStudentForJobRequest) returns (RegisterStudentForJobResponse) {}
+    rpc getRegisteredStudentsByJobId(GetRegisteredStudentsByJobIdRequest) returns (GetRegisteredStudentsByJobIdResponse) {}
+}
+
+message StudentJobEntry {
+    string jobId = 1;
+    string studentId = 2;
+}
+
+message RegisterStudentForJobRequest {
+    StudentJobEntry studentJobEntry = 1;
+}
+
+message RegisterStudentForJobResponse {
+    string message = 1;
+}
+
+message GetRegisteredStudentsByJobIdRequest {
+    string jobId = 1;
+}
+
+message GetRegisteredStudentsByJobIdResponse {
+    repeated StudentJobEntry studentJobEntries = 1;
+}

@@ -1,6 +1,8 @@
 package com.jobportal.studentservice.service;
 
 import com.google.protobuf.ByteString;
+import com.jobportal.jobserviceproto.JobServiceOuterClass;
+import com.jobportal.studentservice.config.JobServiceClientConfig;
 import com.jobportal.studentservice.model.*;
 import com.jobportal.studentservice.repository.StudentRepository;
 import com.jobportal.studentserviceproto.StudentServiceOuterClass;
@@ -19,6 +21,9 @@ public class StudentService {
 
     @Autowired
     private FileService fileService;
+
+    @Autowired
+    JobServiceClientConfig jobServiceClient;
 
     public Optional<StudentServiceOuterClass.Student> getStudentDetailsFromModel(Student student) {
         PersonalDetails personalDetails = student.getPersonalDetails();
@@ -168,6 +173,32 @@ public class StudentService {
         return Optional.ofNullable(studentDetails);
     }
 
+    public JobServiceOuterClass.StudentJobEntry convertStudentServiceJobEntryToJobServiceJobEntry(StudentServiceOuterClass.StudentJobEntry studentJobEntry) {
+        return JobServiceOuterClass.StudentJobEntry.newBuilder()
+                .setJobId(studentJobEntry.getJobId())
+                .setStudentId(studentJobEntry.getStudentId())
+                .build();
+    }
+
+    public StudentServiceOuterClass.StudentJobEntry convertJobServiceJobEntryToStudentServiceJobEntry(JobServiceOuterClass.StudentJobEntry studentJobEntry) {
+        return StudentServiceOuterClass.StudentJobEntry.newBuilder()
+                .setJobId(studentJobEntry.getJobId())
+                .setStudentId(studentJobEntry.getStudentId())
+                .build();
+    }
+
+    public JobServiceOuterClass.RegisterStudentForJobRequest convertStudentServiceRequestToJobServiceReuqest(StudentServiceOuterClass.RegisterStudentForJobRequest request) {
+        return JobServiceOuterClass.RegisterStudentForJobRequest.newBuilder()
+                .setStudentJobEntry(convertStudentServiceJobEntryToJobServiceJobEntry(request.getStudentJobEntry()))
+                .build();
+    }
+
+    public JobServiceOuterClass.GetRegisteredStudentsByJobIdRequest convertStudentServiceRequestToJobServiceReuqest(StudentServiceOuterClass.GetRegisteredStudentsByJobIdRequest request) {
+        return JobServiceOuterClass.GetRegisteredStudentsByJobIdRequest.newBuilder()
+                .setJobId(request.getJobId())
+                .build();
+    }
+
     public Optional<List<Student>> findAllById(List<StudentServiceOuterClass.GetStudentContactRequest.StudentId> studentIds) {
         List<Student> students = new ArrayList<Student>();
         for(StudentServiceOuterClass.GetStudentContactRequest.StudentId studentId : studentIds) {
@@ -231,10 +262,9 @@ public class StudentService {
                 .build());
     }
 
-    public Optional<StudentServiceOuterClass.GetStudentByIdResponse> getStudentById(String studentId,
-                                                                                    StudentServiceOuterClass.GetStudentByIdRequest request) {
+    public Optional<StudentServiceOuterClass.GetStudentByIdResponse> getStudentById(StudentServiceOuterClass.GetStudentByIdRequest request) {
         Optional<Student> student =
-                studentRepository.findById(studentId);
+                studentRepository.findById(request.getStudentId());
 
         if(!student.isPresent()){
             return Optional.empty();
@@ -316,9 +346,8 @@ public class StudentService {
                 .build());
     }
 
-    public Optional<StudentServiceOuterClass.DeleteStudentResponse> deleteStudent(String studentId,
-                                                                                  StudentServiceOuterClass.DeleteStudentRequest request) {
-        Optional<Student> student = studentRepository.findById(studentId);
+    public Optional<StudentServiceOuterClass.DeleteStudentResponse> deleteStudent(StudentServiceOuterClass.DeleteStudentRequest request) {
+        Optional<Student> student = studentRepository.findById(request.getStudentId());
 
         if(!student.isPresent()){
             return Optional.empty();
@@ -330,5 +359,55 @@ public class StudentService {
         return Optional.of(StudentServiceOuterClass.DeleteStudentResponse.newBuilder()
                 .setMessage("Student Deleted Successfully!")
                 .build());
+    }
+
+    public Optional<StudentServiceOuterClass.RegisterStudentForJobResponse> registerStudentForJob(StudentServiceOuterClass.RegisterStudentForJobRequest request) {
+        jobServiceClient.start();
+
+        try {
+            JobServiceOuterClass.RegisterStudentForJobResponse response =
+                    jobServiceClient.getStub().registerStudentForJob(convertStudentServiceRequestToJobServiceReuqest(request));
+
+            return Optional.of(StudentServiceOuterClass.RegisterStudentForJobResponse.newBuilder().setMessage(response.getMessage()).build());
+        } catch(Exception e) {
+            return Optional.empty();
+        } finally {
+            Runtime.getRuntime().addShutdownHook(new Thread(() -> {
+                try {
+                    jobServiceClient.shutdown();
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+            }));
+        }
+    }
+
+    public Optional<StudentServiceOuterClass.GetRegisteredStudentsByJobIdResponse> getRegisteredStudentsByJobId(StudentServiceOuterClass.GetRegisteredStudentsByJobIdRequest request) {
+        jobServiceClient.start();
+
+        try {
+            JobServiceOuterClass.GetRegisteredStudentsByJobIdResponse response =
+                    jobServiceClient.getStub().getRegisteredStudentsByJobId(convertStudentServiceRequestToJobServiceReuqest(request));
+
+            ArrayList<JobServiceOuterClass.StudentJobEntry> entries =
+                    new ArrayList<>(response.getStudentJobEntriesList());
+            ArrayList<StudentServiceOuterClass.StudentJobEntry> _entries =
+                    new ArrayList<StudentServiceOuterClass.StudentJobEntry>();
+            for (JobServiceOuterClass.StudentJobEntry entry : entries) {
+                _entries.add(convertJobServiceJobEntryToStudentServiceJobEntry(entry));
+            }
+
+            return Optional.of(StudentServiceOuterClass.GetRegisteredStudentsByJobIdResponse.newBuilder().addAllStudentJobEntries(_entries).build());
+        } catch(Exception e) {
+            return Optional.empty();
+        } finally {
+            Runtime.getRuntime().addShutdownHook(new Thread(() -> {
+                try {
+                    jobServiceClient.shutdown();
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+            }));
+        }
     }
 }

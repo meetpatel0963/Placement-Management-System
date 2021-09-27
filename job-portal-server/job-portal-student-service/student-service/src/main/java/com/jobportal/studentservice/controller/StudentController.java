@@ -12,6 +12,7 @@ import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import javax.ws.rs.Path;
 import java.util.Optional;
 
 @RefreshScope
@@ -45,9 +46,14 @@ public class StudentController {
     }
 
     @GetMapping(path = "/{studentId}", produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<?> getStudentById(@PathVariable String studentId, @RequestBody StudentServiceOuterClass.GetStudentByIdRequest getStudentByIdRequest) {
+    public ResponseEntity<?> getStudentById(@PathVariable String studentId) {
+        StudentServiceOuterClass.GetStudentByIdRequest getStudentByIdRequest =
+                StudentServiceOuterClass.GetStudentByIdRequest.newBuilder()
+                        .setStudentId(studentId)
+                        .build();
+
         Optional<StudentServiceOuterClass.GetStudentByIdResponse> getStudentByIdResponse =
-                studentService.getStudentById(studentId, getStudentByIdRequest);
+                studentService.getStudentById(getStudentByIdRequest);
         
         return !getStudentByIdResponse.isPresent()
             ? ResponseEntity.status(HttpStatus.NOT_FOUND).body(new ResourceNotFoundException("Student", "id"))
@@ -76,13 +82,42 @@ public class StudentController {
     }
 
     @DeleteMapping(path = "/{studentId}", produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<?> deleteStudent(@PathVariable String studentId,
-                                           @RequestBody StudentServiceOuterClass.DeleteStudentRequest deleteStudentRequest) {
+    public ResponseEntity<?> deleteStudent(@PathVariable String studentId) {
+        StudentServiceOuterClass.DeleteStudentRequest deleteStudentRequest =
+                StudentServiceOuterClass.DeleteStudentRequest.newBuilder()
+                        .setStudentId(studentId)
+                        .build();
+
         Optional<StudentServiceOuterClass.DeleteStudentResponse> deleteStudentResponse =
-                studentService.deleteStudent(studentId, deleteStudentRequest);
+                studentService.deleteStudent(deleteStudentRequest);
 
         return !deleteStudentResponse.isPresent()
             ? ResponseEntity.status(HttpStatus.NOT_FOUND).body(new ResourceNotFoundException("Student", "id"))
             : ResponseEntity.ok(deleteStudentResponse.get());
+    }
+
+    @GetMapping(path = "/register-student", produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<?> registerStudentForJob(@RequestBody StudentServiceOuterClass.RegisterStudentForJobRequest registerStudentForJobRequest) {
+        Optional<StudentServiceOuterClass.RegisterStudentForJobResponse> registerStudentForJobResponse =
+                studentService.registerStudentForJob(registerStudentForJobRequest);
+
+        return !registerStudentForJobResponse.isPresent()
+                ? ResponseEntity.status(HttpStatus.NOT_FOUND).body(new ResourceNotFoundException("Student", "id"))
+                : ResponseEntity.ok(registerStudentForJobResponse.get());
+    }
+
+    @GetMapping(path = "/{jobId}/students", produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<?> getRegisteredStudentsByJobId(@PathVariable String jobId) {
+        StudentServiceOuterClass.GetRegisteredStudentsByJobIdRequest getRegisteredStudentsByJobIdRequest =
+                StudentServiceOuterClass.GetRegisteredStudentsByJobIdRequest.newBuilder()
+                        .setJobId(jobId)
+                        .build();
+
+        Optional<StudentServiceOuterClass.GetRegisteredStudentsByJobIdResponse> getRegisteredStudentsByJobIdResponse =
+                studentService.getRegisteredStudentsByJobId(getRegisteredStudentsByJobIdRequest);
+
+        return !getRegisteredStudentsByJobIdResponse.isPresent()
+                ? ResponseEntity.status(HttpStatus.NOT_FOUND).body(new ResourceNotFoundException("Student", "id"))
+                : ResponseEntity.ok(getRegisteredStudentsByJobIdResponse.get());
     }
 }

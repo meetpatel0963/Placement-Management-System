@@ -579,7 +579,7 @@ func RegisterJobServiceHandlerServer(ctx context.Context, mux *runtime.ServeMux,
 		var stream runtime.ServerTransportStream
 		ctx = grpc.NewContextWithServerTransportStream(ctx, &stream)
 		inboundMarshaler, outboundMarshaler := runtime.MarshalerForRequest(mux, req)
-		rctx, err := runtime.AnnotateIncomingContext(ctx, mux, req, "/job_service.JobService/GetAllJobs", runtime.WithHTTPPathPattern("/api/v1/jobs"))
+		rctx, err := runtime.AnnotateIncomingContext(ctx, mux, req, "/com.jobportal.jobserviceproto.JobService/GetAllJobs", runtime.WithHTTPPathPattern("/api/v1/jobs"))
 		if err != nil {
 			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
 			return
@@ -602,7 +602,7 @@ func RegisterJobServiceHandlerServer(ctx context.Context, mux *runtime.ServeMux,
 		var stream runtime.ServerTransportStream
 		ctx = grpc.NewContextWithServerTransportStream(ctx, &stream)
 		inboundMarshaler, outboundMarshaler := runtime.MarshalerForRequest(mux, req)
-		rctx, err := runtime.AnnotateIncomingContext(ctx, mux, req, "/job_service.JobService/GetJobById", runtime.WithHTTPPathPattern("/api/v1/jobs/{jobId}"))
+		rctx, err := runtime.AnnotateIncomingContext(ctx, mux, req, "/com.jobportal.jobserviceproto.JobService/GetJobById", runtime.WithHTTPPathPattern("/api/v1/jobs/{jobId}"))
 		if err != nil {
 			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
 			return
@@ -625,7 +625,7 @@ func RegisterJobServiceHandlerServer(ctx context.Context, mux *runtime.ServeMux,
 		var stream runtime.ServerTransportStream
 		ctx = grpc.NewContextWithServerTransportStream(ctx, &stream)
 		inboundMarshaler, outboundMarshaler := runtime.MarshalerForRequest(mux, req)
-		rctx, err := runtime.AnnotateIncomingContext(ctx, mux, req, "/job_service.JobService/SaveJob", runtime.WithHTTPPathPattern("/api/v1/jobs"))
+		rctx, err := runtime.AnnotateIncomingContext(ctx, mux, req, "/com.jobportal.jobserviceproto.JobService/SaveJob", runtime.WithHTTPPathPattern("/api/v1/jobs"))
 		if err != nil {
 			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
 			return
@@ -648,7 +648,7 @@ func RegisterJobServiceHandlerServer(ctx context.Context, mux *runtime.ServeMux,
 		var stream runtime.ServerTransportStream
 		ctx = grpc.NewContextWithServerTransportStream(ctx, &stream)
 		inboundMarshaler, outboundMarshaler := runtime.MarshalerForRequest(mux, req)
-		rctx, err := runtime.AnnotateIncomingContext(ctx, mux, req, "/job_service.JobService/UpdateJob", runtime.WithHTTPPathPattern("/api/v1/jobs/{job.id}"))
+		rctx, err := runtime.AnnotateIncomingContext(ctx, mux, req, "/com.jobportal.jobserviceproto.JobService/UpdateJob", runtime.WithHTTPPathPattern("/api/v1/jobs/{job.id}"))
 		if err != nil {
 			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
 			return
@@ -671,7 +671,7 @@ func RegisterJobServiceHandlerServer(ctx context.Context, mux *runtime.ServeMux,
 		var stream runtime.ServerTransportStream
 		ctx = grpc.NewContextWithServerTransportStream(ctx, &stream)
 		inboundMarshaler, outboundMarshaler := runtime.MarshalerForRequest(mux, req)
-		rctx, err := runtime.AnnotateIncomingContext(ctx, mux, req, "/job_service.JobService/DeleteJob", runtime.WithHTTPPathPattern("/api/v1/jobs/{jobId}"))
+		rctx, err := runtime.AnnotateIncomingContext(ctx, mux, req, "/com.jobportal.jobserviceproto.JobService/DeleteJob", runtime.WithHTTPPathPattern("/api/v1/jobs/{jobId}"))
 		if err != nil {
 			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
 			return
@@ -694,7 +694,7 @@ func RegisterJobServiceHandlerServer(ctx context.Context, mux *runtime.ServeMux,
 		var stream runtime.ServerTransportStream
 		ctx = grpc.NewContextWithServerTransportStream(ctx, &stream)
 		inboundMarshaler, outboundMarshaler := runtime.MarshalerForRequest(mux, req)
-		rctx, err := runtime.AnnotateIncomingContext(ctx, mux, req, "/job_service.JobService/GetJobByCompanyName", runtime.WithHTTPPathPattern("/api/v1/jobs/company/{companyName}"))
+		rctx, err := runtime.AnnotateIncomingContext(ctx, mux, req, "/com.jobportal.jobserviceproto.JobService/GetJobByCompanyName", runtime.WithHTTPPathPattern("/api/v1/jobs/company/{companyName}"))
 		if err != nil {
 			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
 			return
@@ -717,7 +717,7 @@ func RegisterJobServiceHandlerServer(ctx context.Context, mux *runtime.ServeMux,
 		var stream runtime.ServerTransportStream
 		ctx = grpc.NewContextWithServerTransportStream(ctx, &stream)
 		inboundMarshaler, outboundMarshaler := runtime.MarshalerForRequest(mux, req)
-		rctx, err := runtime.AnnotateIncomingContext(ctx, mux, req, "/job_service.JobService/GetJobByStartDate", runtime.WithHTTPPathPattern("/api/v1/jobs/startdate/{startDate}"))
+		rctx, err := runtime.AnnotateIncomingContext(ctx, mux, req, "/com.jobportal.jobserviceproto.JobService/GetJobByStartDate", runtime.WithHTTPPathPattern("/api/v1/jobs/startdate/{startDate}"))
 		if err != nil {
 			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
 			return
@@ -740,7 +740,7 @@ func RegisterJobServiceHandlerServer(ctx context.Context, mux *runtime.ServeMux,
 		var stream runtime.ServerTransportStream
 		ctx = grpc.NewContextWithServerTransportStream(ctx, &stream)
 		inboundMarshaler, outboundMarshaler := runtime.MarshalerForRequest(mux, req)
-		rctx, err := runtime.AnnotateIncomingContext(ctx, mux, req, "/job_service.JobService/GetJobByEndDate", runtime.WithHTTPPathPattern("/api/v1/jobs/enddate/{endDate}"))
+		rctx, err := runtime.AnnotateIncomingContext(ctx, mux, req, "/com.jobportal.jobserviceproto.JobService/GetJobByEndDate", runtime.WithHTTPPathPattern("/api/v1/jobs/enddate/{endDate}"))
 		if err != nil {
 			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
 			return
@@ -763,7 +763,7 @@ func RegisterJobServiceHandlerServer(ctx context.Context, mux *runtime.ServeMux,
 		var stream runtime.ServerTransportStream
 		ctx = grpc.NewContextWithServerTransportStream(ctx, &stream)
 		inboundMarshaler, outboundMarshaler := runtime.MarshalerForRequest(mux, req)
-		rctx, err := runtime.AnnotateIncomingContext(ctx, mux, req, "/job_service.JobService/GetJobByStream", runtime.WithHTTPPathPattern("/api/v1/jobs/stream/{stream}"))
+		rctx, err := runtime.AnnotateIncomingContext(ctx, mux, req, "/com.jobportal.jobserviceproto.JobService/GetJobByStream", runtime.WithHTTPPathPattern("/api/v1/jobs/stream/{stream}"))
 		if err != nil {
 			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
 			return
@@ -786,7 +786,7 @@ func RegisterJobServiceHandlerServer(ctx context.Context, mux *runtime.ServeMux,
 		var stream runtime.ServerTransportStream
 		ctx = grpc.NewContextWithServerTransportStream(ctx, &stream)
 		inboundMarshaler, outboundMarshaler := runtime.MarshalerForRequest(mux, req)
-		rctx, err := runtime.AnnotateIncomingContext(ctx, mux, req, "/job_service.JobService/GetProjectName", runtime.WithHTTPPathPattern("/api/v1/jobs/projectname"))
+		rctx, err := runtime.AnnotateIncomingContext(ctx, mux, req, "/com.jobportal.jobserviceproto.JobService/GetProjectName", runtime.WithHTTPPathPattern("/api/v1/jobs/projectname"))
 		if err != nil {
 			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
 			return
@@ -809,7 +809,7 @@ func RegisterJobServiceHandlerServer(ctx context.Context, mux *runtime.ServeMux,
 		var stream runtime.ServerTransportStream
 		ctx = grpc.NewContextWithServerTransportStream(ctx, &stream)
 		inboundMarshaler, outboundMarshaler := runtime.MarshalerForRequest(mux, req)
-		rctx, err := runtime.AnnotateIncomingContext(ctx, mux, req, "/job_service.JobService/RegisterStudentForJob", runtime.WithHTTPPathPattern("/api/v1/jobs/register-student"))
+		rctx, err := runtime.AnnotateIncomingContext(ctx, mux, req, "/com.jobportal.jobserviceproto.JobService/RegisterStudentForJob", runtime.WithHTTPPathPattern("/api/v1/jobs/register-student"))
 		if err != nil {
 			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
 			return
@@ -832,7 +832,7 @@ func RegisterJobServiceHandlerServer(ctx context.Context, mux *runtime.ServeMux,
 		var stream runtime.ServerTransportStream
 		ctx = grpc.NewContextWithServerTransportStream(ctx, &stream)
 		inboundMarshaler, outboundMarshaler := runtime.MarshalerForRequest(mux, req)
-		rctx, err := runtime.AnnotateIncomingContext(ctx, mux, req, "/job_service.JobService/GetRegisteredStudentsByJobId", runtime.WithHTTPPathPattern("/api/v1/jobs/{jobId}/students"))
+		rctx, err := runtime.AnnotateIncomingContext(ctx, mux, req, "/com.jobportal.jobserviceproto.JobService/GetRegisteredStudentsByJobId", runtime.WithHTTPPathPattern("/api/v1/jobs/{jobId}/students"))
 		if err != nil {
 			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
 			return
@@ -894,7 +894,7 @@ func RegisterJobServiceHandlerClient(ctx context.Context, mux *runtime.ServeMux,
 		ctx, cancel := context.WithCancel(req.Context())
 		defer cancel()
 		inboundMarshaler, outboundMarshaler := runtime.MarshalerForRequest(mux, req)
-		rctx, err := runtime.AnnotateContext(ctx, mux, req, "/job_service.JobService/GetAllJobs", runtime.WithHTTPPathPattern("/api/v1/jobs"))
+		rctx, err := runtime.AnnotateContext(ctx, mux, req, "/com.jobportal.jobserviceproto.JobService/GetAllJobs", runtime.WithHTTPPathPattern("/api/v1/jobs"))
 		if err != nil {
 			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
 			return
@@ -914,7 +914,7 @@ func RegisterJobServiceHandlerClient(ctx context.Context, mux *runtime.ServeMux,
 		ctx, cancel := context.WithCancel(req.Context())
 		defer cancel()
 		inboundMarshaler, outboundMarshaler := runtime.MarshalerForRequest(mux, req)
-		rctx, err := runtime.AnnotateContext(ctx, mux, req, "/job_service.JobService/GetJobById", runtime.WithHTTPPathPattern("/api/v1/jobs/{jobId}"))
+		rctx, err := runtime.AnnotateContext(ctx, mux, req, "/com.jobportal.jobserviceproto.JobService/GetJobById", runtime.WithHTTPPathPattern("/api/v1/jobs/{jobId}"))
 		if err != nil {
 			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
 			return
@@ -934,7 +934,7 @@ func RegisterJobServiceHandlerClient(ctx context.Context, mux *runtime.ServeMux,
 		ctx, cancel := context.WithCancel(req.Context())
 		defer cancel()
 		inboundMarshaler, outboundMarshaler := runtime.MarshalerForRequest(mux, req)
-		rctx, err := runtime.AnnotateContext(ctx, mux, req, "/job_service.JobService/SaveJob", runtime.WithHTTPPathPattern("/api/v1/jobs"))
+		rctx, err := runtime.AnnotateContext(ctx, mux, req, "/com.jobportal.jobserviceproto.JobService/SaveJob", runtime.WithHTTPPathPattern("/api/v1/jobs"))
 		if err != nil {
 			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
 			return
@@ -954,7 +954,7 @@ func RegisterJobServiceHandlerClient(ctx context.Context, mux *runtime.ServeMux,
 		ctx, cancel := context.WithCancel(req.Context())
 		defer cancel()
 		inboundMarshaler, outboundMarshaler := runtime.MarshalerForRequest(mux, req)
-		rctx, err := runtime.AnnotateContext(ctx, mux, req, "/job_service.JobService/UpdateJob", runtime.WithHTTPPathPattern("/api/v1/jobs/{job.id}"))
+		rctx, err := runtime.AnnotateContext(ctx, mux, req, "/com.jobportal.jobserviceproto.JobService/UpdateJob", runtime.WithHTTPPathPattern("/api/v1/jobs/{job.id}"))
 		if err != nil {
 			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
 			return
@@ -974,7 +974,7 @@ func RegisterJobServiceHandlerClient(ctx context.Context, mux *runtime.ServeMux,
 		ctx, cancel := context.WithCancel(req.Context())
 		defer cancel()
 		inboundMarshaler, outboundMarshaler := runtime.MarshalerForRequest(mux, req)
-		rctx, err := runtime.AnnotateContext(ctx, mux, req, "/job_service.JobService/DeleteJob", runtime.WithHTTPPathPattern("/api/v1/jobs/{jobId}"))
+		rctx, err := runtime.AnnotateContext(ctx, mux, req, "/com.jobportal.jobserviceproto.JobService/DeleteJob", runtime.WithHTTPPathPattern("/api/v1/jobs/{jobId}"))
 		if err != nil {
 			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
 			return
@@ -994,7 +994,7 @@ func RegisterJobServiceHandlerClient(ctx context.Context, mux *runtime.ServeMux,
 		ctx, cancel := context.WithCancel(req.Context())
 		defer cancel()
 		inboundMarshaler, outboundMarshaler := runtime.MarshalerForRequest(mux, req)
-		rctx, err := runtime.AnnotateContext(ctx, mux, req, "/job_service.JobService/GetJobByCompanyName", runtime.WithHTTPPathPattern("/api/v1/jobs/company/{companyName}"))
+		rctx, err := runtime.AnnotateContext(ctx, mux, req, "/com.jobportal.jobserviceproto.JobService/GetJobByCompanyName", runtime.WithHTTPPathPattern("/api/v1/jobs/company/{companyName}"))
 		if err != nil {
 			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
 			return
@@ -1014,7 +1014,7 @@ func RegisterJobServiceHandlerClient(ctx context.Context, mux *runtime.ServeMux,
 		ctx, cancel := context.WithCancel(req.Context())
 		defer cancel()
 		inboundMarshaler, outboundMarshaler := runtime.MarshalerForRequest(mux, req)
-		rctx, err := runtime.AnnotateContext(ctx, mux, req, "/job_service.JobService/GetJobByStartDate", runtime.WithHTTPPathPattern("/api/v1/jobs/startdate/{startDate}"))
+		rctx, err := runtime.AnnotateContext(ctx, mux, req, "/com.jobportal.jobserviceproto.JobService/GetJobByStartDate", runtime.WithHTTPPathPattern("/api/v1/jobs/startdate/{startDate}"))
 		if err != nil {
 			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
 			return
@@ -1034,7 +1034,7 @@ func RegisterJobServiceHandlerClient(ctx context.Context, mux *runtime.ServeMux,
 		ctx, cancel := context.WithCancel(req.Context())
 		defer cancel()
 		inboundMarshaler, outboundMarshaler := runtime.MarshalerForRequest(mux, req)
-		rctx, err := runtime.AnnotateContext(ctx, mux, req, "/job_service.JobService/GetJobByEndDate", runtime.WithHTTPPathPattern("/api/v1/jobs/enddate/{endDate}"))
+		rctx, err := runtime.AnnotateContext(ctx, mux, req, "/com.jobportal.jobserviceproto.JobService/GetJobByEndDate", runtime.WithHTTPPathPattern("/api/v1/jobs/enddate/{endDate}"))
 		if err != nil {
 			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
 			return
@@ -1054,7 +1054,7 @@ func RegisterJobServiceHandlerClient(ctx context.Context, mux *runtime.ServeMux,
 		ctx, cancel := context.WithCancel(req.Context())
 		defer cancel()
 		inboundMarshaler, outboundMarshaler := runtime.MarshalerForRequest(mux, req)
-		rctx, err := runtime.AnnotateContext(ctx, mux, req, "/job_service.JobService/GetJobByStream", runtime.WithHTTPPathPattern("/api/v1/jobs/stream/{stream}"))
+		rctx, err := runtime.AnnotateContext(ctx, mux, req, "/com.jobportal.jobserviceproto.JobService/GetJobByStream", runtime.WithHTTPPathPattern("/api/v1/jobs/stream/{stream}"))
 		if err != nil {
 			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
 			return
@@ -1074,7 +1074,7 @@ func RegisterJobServiceHandlerClient(ctx context.Context, mux *runtime.ServeMux,
 		ctx, cancel := context.WithCancel(req.Context())
 		defer cancel()
 		inboundMarshaler, outboundMarshaler := runtime.MarshalerForRequest(mux, req)
-		rctx, err := runtime.AnnotateContext(ctx, mux, req, "/job_service.JobService/GetProjectName", runtime.WithHTTPPathPattern("/api/v1/jobs/projectname"))
+		rctx, err := runtime.AnnotateContext(ctx, mux, req, "/com.jobportal.jobserviceproto.JobService/GetProjectName", runtime.WithHTTPPathPattern("/api/v1/jobs/projectname"))
 		if err != nil {
 			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
 			return
@@ -1094,7 +1094,7 @@ func RegisterJobServiceHandlerClient(ctx context.Context, mux *runtime.ServeMux,
 		ctx, cancel := context.WithCancel(req.Context())
 		defer cancel()
 		inboundMarshaler, outboundMarshaler := runtime.MarshalerForRequest(mux, req)
-		rctx, err := runtime.AnnotateContext(ctx, mux, req, "/job_service.JobService/RegisterStudentForJob", runtime.WithHTTPPathPattern("/api/v1/jobs/register-student"))
+		rctx, err := runtime.AnnotateContext(ctx, mux, req, "/com.jobportal.jobserviceproto.JobService/RegisterStudentForJob", runtime.WithHTTPPathPattern("/api/v1/jobs/register-student"))
 		if err != nil {
 			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
 			return
@@ -1114,7 +1114,7 @@ func RegisterJobServiceHandlerClient(ctx context.Context, mux *runtime.ServeMux,
 		ctx, cancel := context.WithCancel(req.Context())
 		defer cancel()
 		inboundMarshaler, outboundMarshaler := runtime.MarshalerForRequest(mux, req)
-		rctx, err := runtime.AnnotateContext(ctx, mux, req, "/job_service.JobService/GetRegisteredStudentsByJobId", runtime.WithHTTPPathPattern("/api/v1/jobs/{jobId}/students"))
+		rctx, err := runtime.AnnotateContext(ctx, mux, req, "/com.jobportal.jobserviceproto.JobService/GetRegisteredStudentsByJobId", runtime.WithHTTPPathPattern("/api/v1/jobs/{jobId}/students"))
 		if err != nil {
 			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
 			return

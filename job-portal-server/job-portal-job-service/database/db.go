@@ -202,11 +202,11 @@ func RegisterStudentForJob(entry StudentJobEntry) (error) {
 		&job.EligibleStreams, &job.EndDate,
 		&job.JobDescription, &job.LPA,
 		&job.NumberOfRegistrations, &job.StartDate)
-
+	
 	if err != nil {
 		return err
 	}
-		
+
 	query = `INSERT INTO student_job_registrations (job_id, student_id) VALUES (?, ?)`
 	err = connection.session.Query(query, entry.JobID, entry.StudentID).Exec()
 	

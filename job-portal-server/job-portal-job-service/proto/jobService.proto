@@ -1,6 +1,6 @@
 syntax = "proto3";
 
-package job_service;  
+package com.jobportal.jobserviceproto;  
 
 import "google/api/annotations.proto";
 

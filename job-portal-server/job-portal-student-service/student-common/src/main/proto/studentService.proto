@@ -9,6 +9,8 @@ service StudentService {
   rpc saveStudent(SaveStudentRequest) returns (SaveStudentResponse) {}
   rpc updateStudent(UpdateStudentRequest) returns (UpdateStudentResponse) {}
   rpc deleteStudent(DeleteStudentRequest) returns (DeleteStudentResponse) {}
+  rpc registerStudentForJob(RegisterStudentForJobRequest) returns (RegisterStudentForJobResponse) {}
+  rpc getRegisteredStudentsByJobId(GetRegisteredStudentsByJobIdRequest) returns (GetRegisteredStudentsByJobIdResponse) {}
 }
 
 message File {
@@ -131,3 +133,25 @@ message GetStudentContactResponse {
 
   repeated StudentContactDetails students = 1;
 };
+
+
+message StudentJobEntry {
+  string jobId = 1;
+  string studentId = 2;
+}
+
+message RegisterStudentForJobRequest {
+  StudentJobEntry studentJobEntry = 1;
+}
+
+message RegisterStudentForJobResponse {
+  string message = 1;
+}
+
+message GetRegisteredStudentsByJobIdRequest {
+  string jobId = 1;
+}
+
+message GetRegisteredStudentsByJobIdResponse {
+  repeated StudentJobEntry studentJobEntries = 1;
+}

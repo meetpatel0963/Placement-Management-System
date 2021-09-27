@@ -42,7 +42,7 @@ func NewJobServiceClient(cc grpc.ClientConnInterface) JobServiceClient {
 
 func (c *jobServiceClient) GetAllJobs(ctx context.Context, in *GetAllJobsRequest, opts ...grpc.CallOption) (*GetAllJobsResponse, error) {
 	out := new(GetAllJobsResponse)
-	err := c.cc.Invoke(ctx, "/job_service.JobService/getAllJobs", in, out, opts...)
+	err := c.cc.Invoke(ctx, "/com.jobportal.jobserviceproto.JobService/getAllJobs", in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
@@ -51,7 +51,7 @@ func (c *jobServiceClient) GetAllJobs(ctx context.Context, in *GetAllJobsRequest
 
 func (c *jobServiceClient) GetJobById(ctx context.Context, in *GetJobByIdRequest, opts ...grpc.CallOption) (*GetJobByIdResponse, error) {
 	out := new(GetJobByIdResponse)
-	err := c.cc.Invoke(ctx, "/job_service.JobService/getJobById", in, out, opts...)
+	err := c.cc.Invoke(ctx, "/com.jobportal.jobserviceproto.JobService/getJobById", in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
@@ -60,7 +60,7 @@ func (c *jobServiceClient) GetJobById(ctx context.Context, in *GetJobByIdRequest
 
 func (c *jobServiceClient) SaveJob(ctx context.Context, in *SaveJobRequest, opts ...grpc.CallOption) (*SaveJobResponse, error) {
 	out := new(SaveJobResponse)
-	err := c.cc.Invoke(ctx, "/job_service.JobService/saveJob", in, out, opts...)
+	err := c.cc.Invoke(ctx, "/com.jobportal.jobserviceproto.JobService/saveJob", in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
@@ -69,7 +69,7 @@ func (c *jobServiceClient) SaveJob(ctx context.Context, in *SaveJobRequest, opts
 
 func (c *jobServiceClient) UpdateJob(ctx context.Context, in *UpdateJobRequest, opts ...grpc.CallOption) (*UpdateJobResponse, error) {
 	out := new(UpdateJobResponse)
-	err := c.cc.Invoke(ctx, "/job_service.JobService/updateJob", in, out, opts...)
+	err := c.cc.Invoke(ctx, "/com.jobportal.jobserviceproto.JobService/updateJob", in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
@@ -78,7 +78,7 @@ func (c *jobServiceClient) UpdateJob(ctx context.Context, in *UpdateJobRequest, 
 
 func (c *jobServiceClient) DeleteJob(ctx context.Context, in *DeleteJobRequest, opts ...grpc.CallOption) (*DeleteJobResponse, error) {
 	out := new(DeleteJobResponse)
-	err := c.cc.Invoke(ctx, "/job_service.JobService/deleteJob", in, out, opts...)
+	err := c.cc.Invoke(ctx, "/com.jobportal.jobserviceproto.JobService/deleteJob", in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
@@ -87,7 +87,7 @@ func (c *jobServiceClient) DeleteJob(ctx context.Context, in *DeleteJobRequest, 
 
 func (c *jobServiceClient) GetJobByCompanyName(ctx context.Context, in *GetJobByCompanyNameRequest, opts ...grpc.CallOption) (*GetJobByCompanyNameResponse, error) {
 	out := new(GetJobByCompanyNameResponse)
-	err := c.cc.Invoke(ctx, "/job_service.JobService/getJobByCompanyName", in, out, opts...)
+	err := c.cc.Invoke(ctx, "/com.jobportal.jobserviceproto.JobService/getJobByCompanyName", in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
@@ -96,7 +96,7 @@ func (c *jobServiceClient) GetJobByCompanyName(ctx context.Context, in *GetJobBy
 
 func (c *jobServiceClient) GetJobByStartDate(ctx context.Context, in *GetJobByStartDateRequest, opts ...grpc.CallOption) (*GetJobByStartDateResponse, error) {
 	out := new(GetJobByStartDateResponse)
-	err := c.cc.Invoke(ctx, "/job_service.JobService/getJobByStartDate", in, out, opts...)
+	err := c.cc.Invoke(ctx, "/com.jobportal.jobserviceproto.JobService/getJobByStartDate", in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
@@ -105,7 +105,7 @@ func (c *jobServiceClient) GetJobByStartDate(ctx context.Context, in *GetJobBySt
 
 func (c *jobServiceClient) GetJobByEndDate(ctx context.Context, in *GetJobByEndDateRequest, opts ...grpc.CallOption) (*GetJobByEndDateResponse, error) {
 	out := new(GetJobByEndDateResponse)
-	err := c.cc.Invoke(ctx, "/job_service.JobService/getJobByEndDate", in, out, opts...)
+	err := c.cc.Invoke(ctx, "/com.jobportal.jobserviceproto.JobService/getJobByEndDate", in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
@@ -114,7 +114,7 @@ func (c *jobServiceClient) GetJobByEndDate(ctx context.Context, in *GetJobByEndD
 
 func (c *jobServiceClient) GetJobByStream(ctx context.Context, in *GetJobByStreamRequest, opts ...grpc.CallOption) (*GetJobByStreamResponse, error) {
 	out := new(GetJobByStreamResponse)
-	err := c.cc.Invoke(ctx, "/job_service.JobService/getJobByStream", in, out, opts...)
+	err := c.cc.Invoke(ctx, "/com.jobportal.jobserviceproto.JobService/getJobByStream", in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
@@ -123,7 +123,7 @@ func (c *jobServiceClient) GetJobByStream(ctx context.Context, in *GetJobByStrea
 
 func (c *jobServiceClient) GetProjectName(ctx context.Context, in *GetProjectNameRequest, opts ...grpc.CallOption) (*GetProjectNameResponse, error) {
 	out := new(GetProjectNameResponse)
-	err := c.cc.Invoke(ctx, "/job_service.JobService/getProjectName", in, out, opts...)
+	err := c.cc.Invoke(ctx, "/com.jobportal.jobserviceproto.JobService/getProjectName", in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
@@ -132,7 +132,7 @@ func (c *jobServiceClient) GetProjectName(ctx context.Context, in *GetProjectNam
 
 func (c *jobServiceClient) RegisterStudentForJob(ctx context.Context, in *RegisterStudentForJobRequest, opts ...grpc.CallOption) (*RegisterStudentForJobResponse, error) {
 	out := new(RegisterStudentForJobResponse)
-	err := c.cc.Invoke(ctx, "/job_service.JobService/registerStudentForJob", in, out, opts...)
+	err := c.cc.Invoke(ctx, "/com.jobportal.jobserviceproto.JobService/registerStudentForJob", in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
@@ -141,7 +141,7 @@ func (c *jobServiceClient) RegisterStudentForJob(ctx context.Context, in *Regist
 
 func (c *jobServiceClient) GetRegisteredStudentsByJobId(ctx context.Context, in *GetRegisteredStudentsByJobIdRequest, opts ...grpc.CallOption) (*GetRegisteredStudentsByJobIdResponse, error) {
 	out := new(GetRegisteredStudentsByJobIdResponse)
-	err := c.cc.Invoke(ctx, "/job_service.JobService/getRegisteredStudentsByJobId", in, out, opts...)
+	err := c.cc.Invoke(ctx, "/com.jobportal.jobserviceproto.JobService/getRegisteredStudentsByJobId", in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
@@ -230,7 +230,7 @@ func _JobService_GetAllJobs_Handler(srv interface{}, ctx context.Context, dec fu
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: "/job_service.JobService/getAllJobs",
+		FullMethod: "/com.jobportal.jobserviceproto.JobService/getAllJobs",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
 		return srv.(JobServiceServer).GetAllJobs(ctx, req.(*GetAllJobsRequest))
@@ -248,7 +248,7 @@ func _JobService_GetJobById_Handler(srv interface{}, ctx context.Context, dec fu
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: "/job_service.JobService/getJobById",
+		FullMethod: "/com.jobportal.jobserviceproto.JobService/getJobById",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
 		return srv.(JobServiceServer).GetJobById(ctx, req.(*GetJobByIdRequest))
@@ -266,7 +266,7 @@ func _JobService_SaveJob_Handler(srv interface{}, ctx context.Context, dec func(
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: "/job_service.JobService/saveJob",
+		FullMethod: "/com.jobportal.jobserviceproto.JobService/saveJob",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
 		return srv.(JobServiceServer).SaveJob(ctx, req.(*SaveJobRequest))
@@ -284,7 +284,7 @@ func _JobService_UpdateJob_Handler(srv interface{}, ctx context.Context, dec fun
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: "/job_service.JobService/updateJob",
+		FullMethod: "/com.jobportal.jobserviceproto.JobService/updateJob",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
 		return srv.(JobServiceServer).UpdateJob(ctx, req.(*UpdateJobRequest))
@@ -302,7 +302,7 @@ func _JobService_DeleteJob_Handler(srv interface{}, ctx context.Context, dec fun
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: "/job_service.JobService/deleteJob",
+		FullMethod: "/com.jobportal.jobserviceproto.JobService/deleteJob",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
 		return srv.(JobServiceServer).DeleteJob(ctx, req.(*DeleteJobRequest))
@@ -320,7 +320,7 @@ func _JobService_GetJobByCompanyName_Handler(srv interface{}, ctx context.Contex
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: "/job_service.JobService/getJobByCompanyName",
+		FullMethod: "/com.jobportal.jobserviceproto.JobService/getJobByCompanyName",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
 		return srv.(JobServiceServer).GetJobByCompanyName(ctx, req.(*GetJobByCompanyNameRequest))
@@ -338,7 +338,7 @@ func _JobService_GetJobByStartDate_Handler(srv interface{}, ctx context.Context,
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: "/job_service.JobService/getJobByStartDate",
+		FullMethod: "/com.jobportal.jobserviceproto.JobService/getJobByStartDate",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
 		return srv.(JobServiceServer).GetJobByStartDate(ctx, req.(*GetJobByStartDateRequest))
@@ -356,7 +356,7 @@ func _JobService_GetJobByEndDate_Handler(srv interface{}, ctx context.Context, d
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: "/job_service.JobService/getJobByEndDate",
+		FullMethod: "/com.jobportal.jobserviceproto.JobService/getJobByEndDate",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
 		return srv.(JobServiceServer).GetJobByEndDate(ctx, req.(*GetJobByEndDateRequest))
@@ -374,7 +374,7 @@ func _JobService_GetJobByStream_Handler(srv interface{}, ctx context.Context, de
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: "/job_service.JobService/getJobByStream",
+		FullMethod: "/com.jobportal.jobserviceproto.JobService/getJobByStream",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
 		return srv.(JobServiceServer).GetJobByStream(ctx, req.(*GetJobByStreamRequest))
@@ -392,7 +392,7 @@ func _JobService_GetProjectName_Handler(srv interface{}, ctx context.Context, de
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: "/job_service.JobService/getProjectName",
+		FullMethod: "/com.jobportal.jobserviceproto.JobService/getProjectName",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
 		return srv.(JobServiceServer).GetProjectName(ctx, req.(*GetProjectNameRequest))
@@ -410,7 +410,7 @@ func _JobService_RegisterStudentForJob_Handler(srv interface{}, ctx context.Cont
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: "/job_service.JobService/registerStudentForJob",
+		FullMethod: "/com.jobportal.jobserviceproto.JobService/registerStudentForJob",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
 		return srv.(JobServiceServer).RegisterStudentForJob(ctx, req.(*RegisterStudentForJobRequest))
@@ -428,7 +428,7 @@ func _JobService_GetRegisteredStudentsByJobId_Handler(srv interface{}, ctx conte
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: "/job_service.JobService/getRegisteredStudentsByJobId",
+		FullMethod: "/com.jobportal.jobserviceproto.JobService/getRegisteredStudentsByJobId",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
 		return srv.(JobServiceServer).GetRegisteredStudentsByJobId(ctx, req.(*GetRegisteredStudentsByJobIdRequest))
@@ -440,7 +440,7 @@ func _JobService_GetRegisteredStudentsByJobId_Handler(srv interface{}, ctx conte
 // It's only intended for direct use with grpc.RegisterService,
 // and not to be introspected or modified (even as a copy)
 var JobService_ServiceDesc = grpc.ServiceDesc{
-	ServiceName: "job_service.JobService",
+	ServiceName: "com.jobportal.jobserviceproto.JobService",
 	HandlerType: (*JobServiceServer)(nil),
 	Methods: []grpc.MethodDesc{
 		{
