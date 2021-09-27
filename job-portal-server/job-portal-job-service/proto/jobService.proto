@@ -37,6 +37,12 @@ service JobService {
     rpc getProjectName(GetProjectNameRequest) returns (GetProjectNameResponse) {
         option (google.api.http) = { get: "/api/v1/jobs/projectname"  };
     }
+    rpc registerStudentForJob(RegisterStudentForJobRequest) returns (RegisterStudentForJobResponse) {
+        option (google.api.http) = { post: "/api/v1/jobs/register-student" body: "*"};
+    }
+    rpc getRegisteredStudentsByJobId(GetRegisteredStudentsByJobIdRequest) returns (GetRegisteredStudentsByJobIdResponse) {
+        option (google.api.http) = { get: "/api/v1/jobs/{jobId}/students" };
+    }
 }
 
 message Job {
@@ -50,8 +56,13 @@ message Job {
     int32 numberOfRegistrations = 8;
 }
 
-message GetAllJobsRequest {
+message StudentJobEntry {
+    string jobId = 1;
+    string studentId = 2;
+}
 
+message GetAllJobsRequest {
+    
 }
 
 message GetAllJobsResponse {
@@ -120,6 +131,22 @@ message GetJobByStreamRequest {
 
 message GetJobByStreamResponse {
     repeated Job jobs = 1;
+}
+
+message RegisterStudentForJobRequest {
+    StudentJobEntry studentJobEntry = 1;
+}
+
+message RegisterStudentForJobResponse {
+    string message = 1;
+}
+
+message GetRegisteredStudentsByJobIdRequest {
+    string jobId = 1;
+}
+
+message GetRegisteredStudentsByJobIdResponse {
+    repeated StudentJobEntry studentJobEntries = 1;
 }
 
 message GetProjectNameRequest {

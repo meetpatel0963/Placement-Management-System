@@ -28,6 +28,8 @@ type JobServiceClient interface {
 	GetJobByEndDate(ctx context.Context, in *GetJobByEndDateRequest, opts ...grpc.CallOption) (*GetJobByEndDateResponse, error)
 	GetJobByStream(ctx context.Context, in *GetJobByStreamRequest, opts ...grpc.CallOption) (*GetJobByStreamResponse, error)
 	GetProjectName(ctx context.Context, in *GetProjectNameRequest, opts ...grpc.CallOption) (*GetProjectNameResponse, error)
+	RegisterStudentForJob(ctx context.Context, in *RegisterStudentForJobRequest, opts ...grpc.CallOption) (*RegisterStudentForJobResponse, error)
+	GetRegisteredStudentsByJobId(ctx context.Context, in *GetRegisteredStudentsByJobIdRequest, opts ...grpc.CallOption) (*GetRegisteredStudentsByJobIdResponse, error)
 }
 
 type jobServiceClient struct {
@@ -128,6 +130,24 @@ func (c *jobServiceClient) GetProjectName(ctx context.Context, in *GetProjectNam
 	return out, nil
 }
 
+func (c *jobServiceClient) RegisterStudentForJob(ctx context.Context, in *RegisterStudentForJobRequest, opts ...grpc.CallOption) (*RegisterStudentForJobResponse, error) {
+	out := new(RegisterStudentForJobResponse)
+	err := c.cc.Invoke(ctx, "/job_service.JobService/registerStudentForJob", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *jobServiceClient) GetRegisteredStudentsByJobId(ctx context.Context, in *GetRegisteredStudentsByJobIdRequest, opts ...grpc.CallOption) (*GetRegisteredStudentsByJobIdResponse, error) {
+	out := new(GetRegisteredStudentsByJobIdResponse)
+	err := c.cc.Invoke(ctx, "/job_service.JobService/getRegisteredStudentsByJobId", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 // JobServiceServer is the server API for JobService service.
 // All implementations must embed UnimplementedJobServiceServer
 // for forward compatibility
@@ -142,6 +162,8 @@ type JobServiceServer interface {
 	GetJobByEndDate(context.Context, *GetJobByEndDateRequest) (*GetJobByEndDateResponse, error)
 	GetJobByStream(context.Context, *GetJobByStreamRequest) (*GetJobByStreamResponse, error)
 	GetProjectName(context.Context, *GetProjectNameRequest) (*GetProjectNameResponse, error)
+	RegisterStudentForJob(context.Context, *RegisterStudentForJobRequest) (*RegisterStudentForJobResponse, error)
+	GetRegisteredStudentsByJobId(context.Context, *GetRegisteredStudentsByJobIdRequest) (*GetRegisteredStudentsByJobIdResponse, error)
 	mustEmbedUnimplementedJobServiceServer()
 }
 
@@ -178,6 +200,12 @@ func (UnimplementedJobServiceServer) GetJobByStream(context.Context, *GetJobBySt
 }
 func (UnimplementedJobServiceServer) GetProjectName(context.Context, *GetProjectNameRequest) (*GetProjectNameResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method GetProjectName not implemented")
+}
+func (UnimplementedJobServiceServer) RegisterStudentForJob(context.Context, *RegisterStudentForJobRequest) (*RegisterStudentForJobResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method RegisterStudentForJob not implemented")
+}
+func (UnimplementedJobServiceServer) GetRegisteredStudentsByJobId(context.Context, *GetRegisteredStudentsByJobIdRequest) (*GetRegisteredStudentsByJobIdResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method GetRegisteredStudentsByJobId not implemented")
 }
 func (UnimplementedJobServiceServer) mustEmbedUnimplementedJobServiceServer() {}
 
@@ -372,6 +400,42 @@ func _JobService_GetProjectName_Handler(srv interface{}, ctx context.Context, de
 	return interceptor(ctx, in, info, handler)
 }
 
+func _JobService_RegisterStudentForJob_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(RegisterStudentForJobRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(JobServiceServer).RegisterStudentForJob(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/job_service.JobService/registerStudentForJob",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(JobServiceServer).RegisterStudentForJob(ctx, req.(*RegisterStudentForJobRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _JobService_GetRegisteredStudentsByJobId_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(GetRegisteredStudentsByJobIdRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(JobServiceServer).GetRegisteredStudentsByJobId(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/job_service.JobService/getRegisteredStudentsByJobId",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(JobServiceServer).GetRegisteredStudentsByJobId(ctx, req.(*GetRegisteredStudentsByJobIdRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 // JobService_ServiceDesc is the grpc.ServiceDesc for JobService service.
 // It's only intended for direct use with grpc.RegisterService,
 // and not to be introspected or modified (even as a copy)
@@ -418,6 +482,14 @@ var JobService_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "getProjectName",
 			Handler:    _JobService_GetProjectName_Handler,
+		},
+		{
+			MethodName: "registerStudentForJob",
+			Handler:    _JobService_RegisterStudentForJob_Handler,
+		},
+		{
+			MethodName: "getRegisteredStudentsByJobId",
+			Handler:    _JobService_GetRegisteredStudentsByJobId_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},

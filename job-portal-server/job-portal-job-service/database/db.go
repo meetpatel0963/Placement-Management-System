@@ -187,3 +187,44 @@ func GetJobByStream(streamName string) ([]Job, error) {
 
 	return jobs, err
 }
+
+type StudentJobEntry struct {
+	JobID    	string `json:"job_id"`
+	StudentID	string `json:"student_id"`
+}
+
+func RegisterStudentForJob(entry StudentJobEntry) (error) {
+	query := `SELECT * from jobs WHERE id = ? LIMIT 1`
+	
+	var job Job
+	err := connection.session.Query(query, entry.JobID).Consistency(gocql.One).Scan(
+		&job.Id, &job.CompanyName,
+		&job.EligibleStreams, &job.EndDate,
+		&job.JobDescription, &job.LPA,
+		&job.NumberOfRegistrations, &job.StartDate)
+
+	if err != nil {
+		return err
+	}
+		
+	query = `INSERT INTO student_job_registrations (job_id, student_id) VALUES (?, ?)`
+	err = connection.session.Query(query, entry.JobID, entry.StudentID).Exec()
+	
+	return err	
+}
+
+func GetRegisteredStudentsByJobId(jobId string) ([]StudentJobEntry, error) {
+	query := `SELECT * from student_job_registrations WHERE job_id = ?`
+
+	var entries []StudentJobEntry
+	iter := connection.session.Query(query, jobId).Iter()
+
+	var entry StudentJobEntry
+	for iter.Scan(&entry.JobID, &entry.StudentID) {
+		entries = append(entries, entry)
+	}
+
+	err := iter.Close()
+
+	return entries, err	
+}

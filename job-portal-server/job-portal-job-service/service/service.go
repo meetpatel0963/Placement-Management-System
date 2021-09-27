@@ -16,7 +16,25 @@ type JobServer struct {
 	proto.UnimplementedJobServiceServer
 }
 
-func protoToStruct(job *proto.Job) database.Job {
+func protoToStructEntry(entry *proto.StudentJobEntry) database.StudentJobEntry {
+	_entry := database.StudentJobEntry{
+		JobID: entry.GetJobId(),
+		StudentID: entry.GetStudentId(),
+	}
+
+	return _entry;
+}
+
+func structToProtoEntry(entry database.StudentJobEntry) *proto.StudentJobEntry {
+	_entry := proto.StudentJobEntry{
+		JobId: entry.JobID,
+		StudentId: entry.StudentID,
+	}
+
+	return &_entry;
+}
+
+func protoToStructJob(job *proto.Job) database.Job {
 	_job := database.Job{
 		CompanyName:           job.GetCompanyName(),
 		EligibleStreams:       job.GetEligibleStreams(),
@@ -30,7 +48,7 @@ func protoToStruct(job *proto.Job) database.Job {
 	return _job
 }
 
-func structToProto(job database.Job) *proto.Job {
+func structToProtoJob(job database.Job) *proto.Job {
 	_job := proto.Job{
 		Id:                    job.Id,
 		CompanyName:           job.CompanyName,
@@ -46,7 +64,7 @@ func structToProto(job database.Job) *proto.Job {
 }
 
 func (JobServer) SaveJob(ctx context.Context, r *proto.SaveJobRequest) (*proto.SaveJobResponse, error) {
-	job := protoToStruct(r.GetJob())
+	job := protoToStructJob(r.GetJob())
 	err := database.SaveJob(job)
 
 	if err != nil {
@@ -65,7 +83,7 @@ func (JobServer) GetAllJobs(ctx context.Context, r *proto.GetAllJobsRequest) (*p
 
 	var _jobs []*proto.Job
 	for _, job := range jobs {
-		_jobs = append(_jobs, structToProto(job))
+		_jobs = append(_jobs, structToProtoJob(job))
 	}
 
 	return &proto.GetAllJobsResponse{Jobs: _jobs}, nil
@@ -78,7 +96,7 @@ func (JobServer) GetJobById(ctx context.Context, r *proto.GetJobByIdRequest) (*p
 		return nil, status.Error(codes.NotFound, "No job exists with given Id!")
 	}
 
-	return &proto.GetJobByIdResponse{Job: structToProto(job)}, nil
+	return &proto.GetJobByIdResponse{Job: structToProtoJob(job)}, nil
 }
 
 func (JobServer) GetJobByCompanyName(ctx context.Context, r *proto.GetJobByCompanyNameRequest) (*proto.GetJobByCompanyNameResponse, error) {
@@ -88,11 +106,11 @@ func (JobServer) GetJobByCompanyName(ctx context.Context, r *proto.GetJobByCompa
 		return nil, status.Error(codes.NotFound, "No job exists with given Id!")
 	}
 
-	return &proto.GetJobByCompanyNameResponse{Job: structToProto(job)}, nil
+	return &proto.GetJobByCompanyNameResponse{Job: structToProtoJob(job)}, nil
 }
 
 func (JobServer) UpdateJob(ctx context.Context, r *proto.UpdateJobRequest) (*proto.UpdateJobResponse, error) {
-	job := protoToStruct(r.GetJob())
+	job := protoToStructJob(r.GetJob())
 	job.Id = r.GetJob().GetId()
 	err := database.UpdateJob(job)
 
@@ -124,7 +142,7 @@ func (JobServer) GetJobByStartDate(ctx context.Context, r *proto.GetJobByStartDa
 
 	var _jobs []*proto.Job
 	for _, job := range jobs {
-		_jobs = append(_jobs, structToProto(job))
+		_jobs = append(_jobs, structToProtoJob(job))
 	}
 
 	return &proto.GetJobByStartDateResponse{Jobs: _jobs}, nil
@@ -139,7 +157,7 @@ func (JobServer) GetJobByEndDate(ctx context.Context, r *proto.GetJobByEndDateRe
 
 	var _jobs []*proto.Job
 	for _, job := range jobs {
-		_jobs = append(_jobs, structToProto(job))
+		_jobs = append(_jobs, structToProtoJob(job))
 	}
 
 	return &proto.GetJobByEndDateResponse{Jobs: _jobs}, nil
@@ -155,10 +173,35 @@ func (JobServer) GetJobByStream(ctx context.Context, r *proto.GetJobByStreamRequ
 
 	var _jobs []*proto.Job
 	for _, job := range jobs {
-		_jobs = append(_jobs, structToProto(job))
+		_jobs = append(_jobs, structToProtoJob(job))
 	}
 
 	return &proto.GetJobByStreamResponse{Jobs: _jobs}, nil
+}
+
+func (JobServer) RegisterStudentForJob(ctx context.Context, r *proto.RegisterStudentForJobRequest) (*proto.RegisterStudentForJobResponse, error) {
+	err := database.RegisterStudentForJob(protoToStructEntry(r.GetStudentJobEntry()))
+
+	if err != nil {
+		return nil, status.Error(codes.Internal, "Couldn't register the student. Try Again!")
+	}
+
+	return &proto.RegisterStudentForJobResponse{ Message: "Student registered successfully!" }, nil
+}
+
+func (JobServer) GetRegisteredStudentsByJobId(ctx context.Context, r *proto.GetRegisteredStudentsByJobIdRequest) (*proto.GetRegisteredStudentsByJobIdResponse, error) {
+	entries, err := database.GetRegisteredStudentsByJobId(r.GetJobId())
+
+	if err != nil {
+		return nil, status.Error(codes.Internal, "Couldn't fetch the registration entries. Try Again!")
+	}
+
+	var _entries []*proto.StudentJobEntry
+	for _, entry := range entries {
+		_entries = append(_entries, structToProtoEntry(entry))
+	}
+	
+	return &proto.GetRegisteredStudentsByJobIdResponse{ StudentJobEntries: _entries }, nil
 }
 
 func (JobServer) GetProjectName(ctx context.Context, r *proto.GetProjectNameRequest) (*proto.GetProjectNameResponse, error) {

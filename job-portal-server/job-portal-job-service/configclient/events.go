@@ -3,10 +3,10 @@ package configclient
 import (
 	"encoding/json"
 	"fmt"
+	"job_service/config"
 	"log"
 	"strings"
 
-	"github.com/spf13/viper"
 	"github.com/streadway/amqp"
 )
 
@@ -151,10 +151,10 @@ func handleRefreshEvent(body []byte, consumerTag string) {
 
 			// Consumertag is same as application name.
 			LoadConfigurationFromBranch(
-				viper.GetString("configServerUrl"),
+				config.CONFIG_SERVER_URL,
 				consumerTag,
-				viper.GetString("profile"),
-				viper.GetString("configBranch"))
+				config.PROFILE,
+				config.CONFIG_BRANCH)
 		}
 	}
 }
