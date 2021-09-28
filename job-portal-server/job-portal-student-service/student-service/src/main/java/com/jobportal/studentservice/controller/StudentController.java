@@ -96,7 +96,7 @@ public class StudentController {
             : ResponseEntity.ok(deleteStudentResponse.get());
     }
 
-    @GetMapping(path = "/register-student", produces = MediaType.APPLICATION_JSON_VALUE)
+    @PostMapping(path = "/register-student", produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<?> registerStudentForJob(@RequestBody StudentServiceOuterClass.RegisterStudentForJobRequest registerStudentForJobRequest) {
         Optional<StudentServiceOuterClass.RegisterStudentForJobResponse> registerStudentForJobResponse =
                 studentService.registerStudentForJob(registerStudentForJobRequest);

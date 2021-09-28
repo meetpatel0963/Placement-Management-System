@@ -14,6 +14,7 @@ import (
 	"github.com/spf13/viper"
 	"google.golang.org/grpc"
 
+	zipkingrpc "github.com/openzipkin/zipkin-go/middleware/grpc"
 	zipkinhttp "github.com/openzipkin/zipkin-go/middleware/http"
 )
 
@@ -36,13 +37,13 @@ func StartServer() {
       log.Fatal(err)
     }
 	
-	wrappedMux := zipkinhttp.NewServerMiddleware(tracer, zipkinhttp.SpanName("request"))(mux)
+	wrappedMux := zipkinhttp.NewServerMiddleware(tracer, zipkinhttp.SpanName("REST"))(mux)
 	
 	go func() {
 		log.Fatalln(http.ListenAndServe("localhost" + viper.GetString("rest_port"), wrappedMux))
 	}()
 	
-	grpcServer = grpc.NewServer()
+	grpcServer = grpc.NewServer(grpc.StatsHandler(zipkingrpc.NewServerHandler(tracer)))
 	proto.RegisterJobServiceServer(grpcServer, service.JobServer{})
 	listener, err := net.Listen("tcp", viper.GetString("grpc_port"))
 	

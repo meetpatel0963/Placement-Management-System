@@ -100,7 +100,7 @@ func (JobServer) GetAllJobs(ctx context.Context, r *proto.GetAllJobsRequest) (*p
 	for _, job := range jobs {
 		_jobs = append(_jobs, structToProtoJob(job))
 	}
-
+	
 	return &proto.GetAllJobsResponse{Jobs: _jobs}, nil
 }
 
