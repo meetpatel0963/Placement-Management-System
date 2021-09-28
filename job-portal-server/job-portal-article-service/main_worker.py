@@ -14,8 +14,7 @@ commands = [
 
 
 def startListening():
-     processes = [Popen(cmd) for cmd in commands]
-     time.sleep(14)
+     
      r=requests.get(settings.get_fresh('CONFIG_SERVER'))
      resp = r.json()
      if(resp.get('status',0) == 404):
@@ -24,15 +23,7 @@ def startListening():
      else:
           resp = resp['propertySources'][0]['source']
           json.dump(resp,open("./env.json","w"))
-          print("terminating")
-          for i in range(len(commands)):
-               #os.killpg(os.getpgid(processes[i].pid), signal.SIGTERM)
-               #processes[i].send_signal(signal.SIGTERM)
-               processes[i].terminate()
-               print("terminated {}".format(i))
-               time.sleep(5)
-               processes[i] = Popen(commands[i])
-               
+         
           return
 
 startListening()
