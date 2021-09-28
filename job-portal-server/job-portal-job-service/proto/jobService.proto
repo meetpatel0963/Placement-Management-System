@@ -22,8 +22,8 @@ service JobService {
     rpc deleteJob(DeleteJobRequest) returns (DeleteJobResponse) {
         option (google.api.http) = { delete: "/api/v1/jobs/{jobId}" };
     }
-    rpc getJobByCompanyName(GetJobByCompanyNameRequest) returns (GetJobByCompanyNameResponse) {
-        option (google.api.http) = { get: "/api/v1/jobs/company/{companyName}" };
+    rpc getJobByCompanyId(GetJobByCompanyIdRequest) returns (GetJobByCompanyIdResponse) {
+        option (google.api.http) = { get: "/api/v1/jobs/company/{companyId}" };
     }
     rpc getJobByStartDate(GetJobByStartDateRequest) returns (GetJobByStartDateResponse) {
         option (google.api.http) = { get: "/api/v1/jobs/startdate/{startDate}" };
@@ -47,7 +47,7 @@ service JobService {
 
 message Job {
     string id = 1;
-    string companyName = 2;
+    int64 companyId = 2;
     repeated string eligibleStreams = 3;
     bytes jobDescription = 4;
     string startDate = 5;
@@ -101,11 +101,11 @@ message DeleteJobResponse {
     string message = 1;
 }
 
-message GetJobByCompanyNameRequest {
-    string companyName = 1;
+message GetJobByCompanyIdRequest {
+    int64 companyId = 1;
 }
 
-message GetJobByCompanyNameResponse {
+message GetJobByCompanyIdResponse {
     Job job = 1;
 }
 

@@ -40,7 +40,7 @@ func ExecuteQuery(query string, values ...interface{}) error {
 
 type Job struct {
 	Id                    string   `json:"id"`
-	CompanyName           string   `json:"companyName"`
+	CompanyId			  int64    `json:"companyId"`
 	EligibleStreams       []string `json:"eligibleStreams"`
 	JobDescription        []byte   `json:"jobDescription"`
 	StartDate             string   `json:"startDate"`
@@ -51,11 +51,11 @@ type Job struct {
 
 func SaveJob(job Job) error {
 	query := `INSERT INTO jobs 
-	(id, company_name, eligible_streams, job_description, 
+	(id, company_id, eligible_streams, job_description, 
 		end_date, lpa, num_registrations, start_date) 
 	values (?, ?, ?, ?, ?, ?, ?, ?)`
 
-	err := connection.session.Query(query, gocql.TimeUUID(), job.CompanyName,
+	err := connection.session.Query(query, gocql.TimeUUID(), job.CompanyId,
 		job.EligibleStreams, job.JobDescription,
 		job.EndDate, job.LPA, job.NumberOfRegistrations,
 		job.StartDate).Exec()
@@ -70,7 +70,7 @@ func GetAllJobs() ([]Job, error) {
 
 	var jobs []Job
 	var job Job
-	for iter.Scan(&job.Id, &job.CompanyName,
+	for iter.Scan(&job.Id, &job.CompanyId,
 		&job.EligibleStreams, &job.EndDate,
 		&job.JobDescription, &job.LPA,
 		&job.NumberOfRegistrations, &job.StartDate) {
@@ -87,7 +87,7 @@ func GetJobById(jobId string) (Job, error) {
 
 	var job Job
 	err := connection.session.Query(query, jobId).Consistency(gocql.One).Scan(
-		&job.Id, &job.CompanyName,
+		&job.Id, &job.CompanyId,
 		&job.EligibleStreams, &job.EndDate,
 		&job.JobDescription, &job.LPA,
 		&job.NumberOfRegistrations, &job.StartDate)
@@ -95,12 +95,12 @@ func GetJobById(jobId string) (Job, error) {
 	return job, err
 }
 
-func GetJobByCompanyName(companyName string) (Job, error) {
-	query := `SELECT * from jobs WHERE company_name=?`
+func GetJobByCompanyId(companyId int64) (Job, error) {
+	query := `SELECT * from jobs WHERE company_id=?`
 
 	var job Job
-	err := connection.session.Query(query, companyName).Consistency(gocql.One).Scan(
-		&job.Id, &job.CompanyName,
+	err := connection.session.Query(query, companyId).Consistency(gocql.One).Scan(
+		&job.Id, &job.CompanyId,
 		&job.EligibleStreams, &job.EndDate,
 		&job.JobDescription, &job.LPA,
 		&job.NumberOfRegistrations, &job.StartDate)
@@ -111,12 +111,12 @@ func GetJobByCompanyName(companyName string) (Job, error) {
 func UpdateJob(job Job) error {
 	query := `UPDATE jobs 
 			  SET
-				company_name=?, eligible_streams=?, job_description=?, 
+				company_id=?, eligible_streams=?, job_description=?, 
 				end_date=?, lpa=?, num_registrations=?, start_date=?
 			  WHERE
 			  	id=?`
 
-	err := ExecuteQuery(query, job.CompanyName, job.EligibleStreams,
+	err := ExecuteQuery(query, job.CompanyId, job.EligibleStreams,
 		job.JobDescription, job.EndDate, job.LPA,
 		job.NumberOfRegistrations, job.StartDate, job.Id)
 
@@ -138,7 +138,7 @@ func GetJobByStartDate(startDate string) ([]Job, error) {
 
 	var jobs []Job
 	var job Job
-	for iter.Scan(&job.Id, &job.CompanyName,
+	for iter.Scan(&job.Id, &job.CompanyId,
 		&job.EligibleStreams, &job.EndDate,
 		&job.JobDescription, &job.LPA,
 		&job.NumberOfRegistrations, &job.StartDate) {
@@ -157,7 +157,7 @@ func GetJobByEndDate(endDate string) ([]Job, error) {
 
 	var jobs []Job
 	var job Job
-	for iter.Scan(&job.Id, &job.CompanyName,
+	for iter.Scan(&job.Id, &job.CompanyId,
 		&job.EligibleStreams, &job.EndDate,
 		&job.JobDescription, &job.LPA,
 		&job.NumberOfRegistrations, &job.StartDate) {
@@ -176,7 +176,7 @@ func GetJobByStream(streamName string) ([]Job, error) {
 
 	var jobs []Job
 	var job Job
-	for iter.Scan(&job.Id, &job.CompanyName,
+	for iter.Scan(&job.Id, &job.CompanyId,
 		&job.EligibleStreams, &job.EndDate,
 		&job.JobDescription, &job.LPA,
 		&job.NumberOfRegistrations, &job.StartDate) {
@@ -198,7 +198,7 @@ func RegisterStudentForJob(entry StudentJobEntry) (error) {
 	
 	var job Job
 	err := connection.session.Query(query, entry.JobID).Consistency(gocql.One).Scan(
-		&job.Id, &job.CompanyName,
+		&job.Id, &job.CompanyId,
 		&job.EligibleStreams, &job.EndDate,
 		&job.JobDescription, &job.LPA,
 		&job.NumberOfRegistrations, &job.StartDate)

@@ -23,7 +23,7 @@ type JobServiceClient interface {
 	SaveJob(ctx context.Context, in *SaveJobRequest, opts ...grpc.CallOption) (*SaveJobResponse, error)
 	UpdateJob(ctx context.Context, in *UpdateJobRequest, opts ...grpc.CallOption) (*UpdateJobResponse, error)
 	DeleteJob(ctx context.Context, in *DeleteJobRequest, opts ...grpc.CallOption) (*DeleteJobResponse, error)
-	GetJobByCompanyName(ctx context.Context, in *GetJobByCompanyNameRequest, opts ...grpc.CallOption) (*GetJobByCompanyNameResponse, error)
+	GetJobByCompanyId(ctx context.Context, in *GetJobByCompanyIdRequest, opts ...grpc.CallOption) (*GetJobByCompanyIdResponse, error)
 	GetJobByStartDate(ctx context.Context, in *GetJobByStartDateRequest, opts ...grpc.CallOption) (*GetJobByStartDateResponse, error)
 	GetJobByEndDate(ctx context.Context, in *GetJobByEndDateRequest, opts ...grpc.CallOption) (*GetJobByEndDateResponse, error)
 	GetJobByStream(ctx context.Context, in *GetJobByStreamRequest, opts ...grpc.CallOption) (*GetJobByStreamResponse, error)
@@ -85,9 +85,9 @@ func (c *jobServiceClient) DeleteJob(ctx context.Context, in *DeleteJobRequest, 
 	return out, nil
 }
 
-func (c *jobServiceClient) GetJobByCompanyName(ctx context.Context, in *GetJobByCompanyNameRequest, opts ...grpc.CallOption) (*GetJobByCompanyNameResponse, error) {
-	out := new(GetJobByCompanyNameResponse)
-	err := c.cc.Invoke(ctx, "/com.jobportal.jobserviceproto.JobService/getJobByCompanyName", in, out, opts...)
+func (c *jobServiceClient) GetJobByCompanyId(ctx context.Context, in *GetJobByCompanyIdRequest, opts ...grpc.CallOption) (*GetJobByCompanyIdResponse, error) {
+	out := new(GetJobByCompanyIdResponse)
+	err := c.cc.Invoke(ctx, "/com.jobportal.jobserviceproto.JobService/getJobByCompanyId", in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
@@ -157,7 +157,7 @@ type JobServiceServer interface {
 	SaveJob(context.Context, *SaveJobRequest) (*SaveJobResponse, error)
 	UpdateJob(context.Context, *UpdateJobRequest) (*UpdateJobResponse, error)
 	DeleteJob(context.Context, *DeleteJobRequest) (*DeleteJobResponse, error)
-	GetJobByCompanyName(context.Context, *GetJobByCompanyNameRequest) (*GetJobByCompanyNameResponse, error)
+	GetJobByCompanyId(context.Context, *GetJobByCompanyIdRequest) (*GetJobByCompanyIdResponse, error)
 	GetJobByStartDate(context.Context, *GetJobByStartDateRequest) (*GetJobByStartDateResponse, error)
 	GetJobByEndDate(context.Context, *GetJobByEndDateRequest) (*GetJobByEndDateResponse, error)
 	GetJobByStream(context.Context, *GetJobByStreamRequest) (*GetJobByStreamResponse, error)
@@ -186,8 +186,8 @@ func (UnimplementedJobServiceServer) UpdateJob(context.Context, *UpdateJobReques
 func (UnimplementedJobServiceServer) DeleteJob(context.Context, *DeleteJobRequest) (*DeleteJobResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method DeleteJob not implemented")
 }
-func (UnimplementedJobServiceServer) GetJobByCompanyName(context.Context, *GetJobByCompanyNameRequest) (*GetJobByCompanyNameResponse, error) {
-	return nil, status.Errorf(codes.Unimplemented, "method GetJobByCompanyName not implemented")
+func (UnimplementedJobServiceServer) GetJobByCompanyId(context.Context, *GetJobByCompanyIdRequest) (*GetJobByCompanyIdResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method GetJobByCompanyId not implemented")
 }
 func (UnimplementedJobServiceServer) GetJobByStartDate(context.Context, *GetJobByStartDateRequest) (*GetJobByStartDateResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method GetJobByStartDate not implemented")
@@ -310,20 +310,20 @@ func _JobService_DeleteJob_Handler(srv interface{}, ctx context.Context, dec fun
 	return interceptor(ctx, in, info, handler)
 }
 
-func _JobService_GetJobByCompanyName_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(GetJobByCompanyNameRequest)
+func _JobService_GetJobByCompanyId_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(GetJobByCompanyIdRequest)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
 	if interceptor == nil {
-		return srv.(JobServiceServer).GetJobByCompanyName(ctx, in)
+		return srv.(JobServiceServer).GetJobByCompanyId(ctx, in)
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: "/com.jobportal.jobserviceproto.JobService/getJobByCompanyName",
+		FullMethod: "/com.jobportal.jobserviceproto.JobService/getJobByCompanyId",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(JobServiceServer).GetJobByCompanyName(ctx, req.(*GetJobByCompanyNameRequest))
+		return srv.(JobServiceServer).GetJobByCompanyId(ctx, req.(*GetJobByCompanyIdRequest))
 	}
 	return interceptor(ctx, in, info, handler)
 }
@@ -464,8 +464,8 @@ var JobService_ServiceDesc = grpc.ServiceDesc{
 			Handler:    _JobService_DeleteJob_Handler,
 		},
 		{
-			MethodName: "getJobByCompanyName",
-			Handler:    _JobService_GetJobByCompanyName_Handler,
+			MethodName: "getJobByCompanyId",
+			Handler:    _JobService_GetJobByCompanyId_Handler,
 		},
 		{
 			MethodName: "getJobByStartDate",

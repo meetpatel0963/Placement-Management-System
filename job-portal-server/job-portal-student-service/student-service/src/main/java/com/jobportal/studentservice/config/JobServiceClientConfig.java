@@ -13,12 +13,6 @@ import java.util.concurrent.TimeUnit;
 @Component
 public class JobServiceClientConfig {
 
-    @Value("${jobservice.server.host}")
-    private String host;
-
-    @Value("${jobservice.server.port}")
-    private int port;
-
     @Value("${jobservice.server.url}")
     private String url;
 
@@ -31,7 +25,7 @@ public class JobServiceClientConfig {
 
         // Get the server stub through the channel
         stub = JobServiceGrpc.newBlockingStub(channel);
-        log.info("gRPC client started, server address: {}:{}", host, port);
+        log.info("gRPC client started, server address: {}", url);
     }
 
     public void shutdown() throws InterruptedException {

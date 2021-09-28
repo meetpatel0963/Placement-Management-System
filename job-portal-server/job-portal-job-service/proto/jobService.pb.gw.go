@@ -255,8 +255,8 @@ func local_request_JobService_DeleteJob_0(ctx context.Context, marshaler runtime
 
 }
 
-func request_JobService_GetJobByCompanyName_0(ctx context.Context, marshaler runtime.Marshaler, client JobServiceClient, req *http.Request, pathParams map[string]string) (proto.Message, runtime.ServerMetadata, error) {
-	var protoReq GetJobByCompanyNameRequest
+func request_JobService_GetJobByCompanyId_0(ctx context.Context, marshaler runtime.Marshaler, client JobServiceClient, req *http.Request, pathParams map[string]string) (proto.Message, runtime.ServerMetadata, error) {
+	var protoReq GetJobByCompanyIdRequest
 	var metadata runtime.ServerMetadata
 
 	var (
@@ -266,23 +266,23 @@ func request_JobService_GetJobByCompanyName_0(ctx context.Context, marshaler run
 		_   = err
 	)
 
-	val, ok = pathParams["companyName"]
+	val, ok = pathParams["companyId"]
 	if !ok {
-		return nil, metadata, status.Errorf(codes.InvalidArgument, "missing parameter %s", "companyName")
+		return nil, metadata, status.Errorf(codes.InvalidArgument, "missing parameter %s", "companyId")
 	}
 
-	protoReq.CompanyName, err = runtime.String(val)
+	protoReq.CompanyId, err = runtime.Int64(val)
 	if err != nil {
-		return nil, metadata, status.Errorf(codes.InvalidArgument, "type mismatch, parameter: %s, error: %v", "companyName", err)
+		return nil, metadata, status.Errorf(codes.InvalidArgument, "type mismatch, parameter: %s, error: %v", "companyId", err)
 	}
 
-	msg, err := client.GetJobByCompanyName(ctx, &protoReq, grpc.Header(&metadata.HeaderMD), grpc.Trailer(&metadata.TrailerMD))
+	msg, err := client.GetJobByCompanyId(ctx, &protoReq, grpc.Header(&metadata.HeaderMD), grpc.Trailer(&metadata.TrailerMD))
 	return msg, metadata, err
 
 }
 
-func local_request_JobService_GetJobByCompanyName_0(ctx context.Context, marshaler runtime.Marshaler, server JobServiceServer, req *http.Request, pathParams map[string]string) (proto.Message, runtime.ServerMetadata, error) {
-	var protoReq GetJobByCompanyNameRequest
+func local_request_JobService_GetJobByCompanyId_0(ctx context.Context, marshaler runtime.Marshaler, server JobServiceServer, req *http.Request, pathParams map[string]string) (proto.Message, runtime.ServerMetadata, error) {
+	var protoReq GetJobByCompanyIdRequest
 	var metadata runtime.ServerMetadata
 
 	var (
@@ -292,17 +292,17 @@ func local_request_JobService_GetJobByCompanyName_0(ctx context.Context, marshal
 		_   = err
 	)
 
-	val, ok = pathParams["companyName"]
+	val, ok = pathParams["companyId"]
 	if !ok {
-		return nil, metadata, status.Errorf(codes.InvalidArgument, "missing parameter %s", "companyName")
+		return nil, metadata, status.Errorf(codes.InvalidArgument, "missing parameter %s", "companyId")
 	}
 
-	protoReq.CompanyName, err = runtime.String(val)
+	protoReq.CompanyId, err = runtime.Int64(val)
 	if err != nil {
-		return nil, metadata, status.Errorf(codes.InvalidArgument, "type mismatch, parameter: %s, error: %v", "companyName", err)
+		return nil, metadata, status.Errorf(codes.InvalidArgument, "type mismatch, parameter: %s, error: %v", "companyId", err)
 	}
 
-	msg, err := server.GetJobByCompanyName(ctx, &protoReq)
+	msg, err := server.GetJobByCompanyId(ctx, &protoReq)
 	return msg, metadata, err
 
 }
@@ -688,18 +688,18 @@ func RegisterJobServiceHandlerServer(ctx context.Context, mux *runtime.ServeMux,
 
 	})
 
-	mux.Handle("GET", pattern_JobService_GetJobByCompanyName_0, func(w http.ResponseWriter, req *http.Request, pathParams map[string]string) {
+	mux.Handle("GET", pattern_JobService_GetJobByCompanyId_0, func(w http.ResponseWriter, req *http.Request, pathParams map[string]string) {
 		ctx, cancel := context.WithCancel(req.Context())
 		defer cancel()
 		var stream runtime.ServerTransportStream
 		ctx = grpc.NewContextWithServerTransportStream(ctx, &stream)
 		inboundMarshaler, outboundMarshaler := runtime.MarshalerForRequest(mux, req)
-		rctx, err := runtime.AnnotateIncomingContext(ctx, mux, req, "/com.jobportal.jobserviceproto.JobService/GetJobByCompanyName", runtime.WithHTTPPathPattern("/api/v1/jobs/company/{companyName}"))
+		rctx, err := runtime.AnnotateIncomingContext(ctx, mux, req, "/com.jobportal.jobserviceproto.JobService/GetJobByCompanyId", runtime.WithHTTPPathPattern("/api/v1/jobs/company/{companyId}"))
 		if err != nil {
 			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
 			return
 		}
-		resp, md, err := local_request_JobService_GetJobByCompanyName_0(rctx, inboundMarshaler, server, req, pathParams)
+		resp, md, err := local_request_JobService_GetJobByCompanyId_0(rctx, inboundMarshaler, server, req, pathParams)
 		md.HeaderMD, md.TrailerMD = metadata.Join(md.HeaderMD, stream.Header()), metadata.Join(md.TrailerMD, stream.Trailer())
 		ctx = runtime.NewServerMetadataContext(ctx, md)
 		if err != nil {
@@ -707,7 +707,7 @@ func RegisterJobServiceHandlerServer(ctx context.Context, mux *runtime.ServeMux,
 			return
 		}
 
-		forward_JobService_GetJobByCompanyName_0(ctx, mux, outboundMarshaler, w, req, resp, mux.GetForwardResponseOptions()...)
+		forward_JobService_GetJobByCompanyId_0(ctx, mux, outboundMarshaler, w, req, resp, mux.GetForwardResponseOptions()...)
 
 	})
 
@@ -990,23 +990,23 @@ func RegisterJobServiceHandlerClient(ctx context.Context, mux *runtime.ServeMux,
 
 	})
 
-	mux.Handle("GET", pattern_JobService_GetJobByCompanyName_0, func(w http.ResponseWriter, req *http.Request, pathParams map[string]string) {
+	mux.Handle("GET", pattern_JobService_GetJobByCompanyId_0, func(w http.ResponseWriter, req *http.Request, pathParams map[string]string) {
 		ctx, cancel := context.WithCancel(req.Context())
 		defer cancel()
 		inboundMarshaler, outboundMarshaler := runtime.MarshalerForRequest(mux, req)
-		rctx, err := runtime.AnnotateContext(ctx, mux, req, "/com.jobportal.jobserviceproto.JobService/GetJobByCompanyName", runtime.WithHTTPPathPattern("/api/v1/jobs/company/{companyName}"))
+		rctx, err := runtime.AnnotateContext(ctx, mux, req, "/com.jobportal.jobserviceproto.JobService/GetJobByCompanyId", runtime.WithHTTPPathPattern("/api/v1/jobs/company/{companyId}"))
 		if err != nil {
 			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
 			return
 		}
-		resp, md, err := request_JobService_GetJobByCompanyName_0(rctx, inboundMarshaler, client, req, pathParams)
+		resp, md, err := request_JobService_GetJobByCompanyId_0(rctx, inboundMarshaler, client, req, pathParams)
 		ctx = runtime.NewServerMetadataContext(ctx, md)
 		if err != nil {
 			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
 			return
 		}
 
-		forward_JobService_GetJobByCompanyName_0(ctx, mux, outboundMarshaler, w, req, resp, mux.GetForwardResponseOptions()...)
+		forward_JobService_GetJobByCompanyId_0(ctx, mux, outboundMarshaler, w, req, resp, mux.GetForwardResponseOptions()...)
 
 	})
 
@@ -1144,7 +1144,7 @@ var (
 
 	pattern_JobService_DeleteJob_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1, 2, 2, 1, 0, 4, 1, 5, 3}, []string{"api", "v1", "jobs", "jobId"}, ""))
 
-	pattern_JobService_GetJobByCompanyName_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1, 2, 2, 2, 3, 1, 0, 4, 1, 5, 4}, []string{"api", "v1", "jobs", "company", "companyName"}, ""))
+	pattern_JobService_GetJobByCompanyId_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1, 2, 2, 2, 3, 1, 0, 4, 1, 5, 4}, []string{"api", "v1", "jobs", "company", "companyId"}, ""))
 
 	pattern_JobService_GetJobByStartDate_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1, 2, 2, 2, 3, 1, 0, 4, 1, 5, 4}, []string{"api", "v1", "jobs", "startdate", "startDate"}, ""))
 
@@ -1170,7 +1170,7 @@ var (
 
 	forward_JobService_DeleteJob_0 = runtime.ForwardResponseMessage
 
-	forward_JobService_GetJobByCompanyName_0 = runtime.ForwardResponseMessage
+	forward_JobService_GetJobByCompanyId_0 = runtime.ForwardResponseMessage
 
 	forward_JobService_GetJobByStartDate_0 = runtime.ForwardResponseMessage
 

@@ -1,24 +1,24 @@
-const dotenv = require('dotenv');
-const grpc = require('grpc');
-const protoLoader = require('@grpc/proto-loader');
+const dotenv = require("dotenv");
+const grpc = require("grpc");
+const protoLoader = require("@grpc/proto-loader");
 
-const db = require('./models');
-const placementService = require('./service/placement_details_service.service');
-const companyService = require('./service/company_service.service');
+const db = require("./models");
+const placementService = require("./service/placement_details_service.service");
+const companyService = require("./service/company_service.service");
 
 // Load config
-dotenv.config({ path: './config/config.env' });
+dotenv.config({ path: "./config/config.env" });
 
 db.sequelize
   .sync()
   .then(() => {
-    console.log('Completed database sync.');
+    console.log("Completed database sync.");
   })
   .catch((err) => {
     console.log("Couldn't sync to the database.");
   });
 
-const PROTO_PATH = './proto/placementService.proto';
+const PROTO_PATH = "./proto/placementService.proto";
 const SERVER_URI = `0.0.0.0:${process.env.GRPC_PORT}`;
 
 var packageDefinition = protoLoader.loadSync(PROTO_PATH, {
@@ -28,7 +28,8 @@ var packageDefinition = protoLoader.loadSync(PROTO_PATH, {
   arrays: true,
 });
 
-var placementServiceProto = grpc.loadPackageDefinition(packageDefinition);
+var placementServiceProto =
+  grpc.loadPackageDefinition(packageDefinition).placementserviceproto;
 
 const server = new grpc.Server();
 

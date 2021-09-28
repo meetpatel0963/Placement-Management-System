@@ -1,0 +1,26 @@
+syntax = "proto3";
+
+package placementserviceproto; 
+
+option go_package = "./placement_service";
+
+// Company 
+
+service CompanyService {
+    rpc getCompanyById(GetCompanyByIdRequest) returns (GetCompanyByIdResponse) {}
+}
+
+message Company {
+    int64 companyId = 1;
+    string companyName = 2;
+    string createdAt = 3;
+    string updatedAt = 4;
+}
+
+message GetCompanyByIdRequest {
+    int64 companyId = 1;
+}
+
+message GetCompanyByIdResponse {
+    Company company = 1;
+}

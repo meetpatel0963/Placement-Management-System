@@ -4,10 +4,13 @@ import (
 	"context"
 	"fmt"
 
+	"job_service/config"
 	"job_service/database"
 	proto "job_service/proto"
+	placement_service "job_service/proto/placement_service"
 
 	"github.com/spf13/viper"
+	"google.golang.org/grpc"
 	"google.golang.org/grpc/codes"
 	"google.golang.org/grpc/status"
 )
@@ -36,7 +39,7 @@ func structToProtoEntry(entry database.StudentJobEntry) *proto.StudentJobEntry {
 
 func protoToStructJob(job *proto.Job) database.Job {
 	_job := database.Job{
-		CompanyName:           job.GetCompanyName(),
+		CompanyId:             job.GetCompanyId(),
 		EligibleStreams:       job.GetEligibleStreams(),
 		JobDescription:        job.GetJobDescription(),
 		StartDate:             job.GetStartDate(),
@@ -51,7 +54,7 @@ func protoToStructJob(job *proto.Job) database.Job {
 func structToProtoJob(job database.Job) *proto.Job {
 	_job := proto.Job{
 		Id:                    job.Id,
-		CompanyName:           job.CompanyName,
+		CompanyId:             job.CompanyId,
 		EligibleStreams:       job.EligibleStreams,
 		JobDescription:        job.JobDescription,
 		StartDate:             job.StartDate,
@@ -64,8 +67,20 @@ func structToProtoJob(job database.Job) *proto.Job {
 }
 
 func (JobServer) SaveJob(ctx context.Context, r *proto.SaveJobRequest) (*proto.SaveJobResponse, error) {
+	conn, err := grpc.Dial(config.PLACEMENT_SERVICE_SERVER_URL, grpc.WithInsecure())
+	if err != nil {
+		return nil, status.Error(codes.Internal, "Couldn't save the job. Try Again!")
+	}
+
+	client := placement_service.NewCompanyServiceClient(conn)
+	_, err = client.GetCompanyById(context.Background(), &placement_service.GetCompanyByIdRequest{ CompanyId: r.GetJob().GetCompanyId() })
+
+	if err != nil {
+		return nil, status.Error(codes.InvalidArgument, "Invalid company Id. Try Again!")
+	}
+	
 	job := protoToStructJob(r.GetJob())
-	err := database.SaveJob(job)
+	err = database.SaveJob(job)
 
 	if err != nil {
 		return nil, status.Error(codes.Internal, "Couldn't save the job. Try Again!")
@@ -99,14 +114,14 @@ func (JobServer) GetJobById(ctx context.Context, r *proto.GetJobByIdRequest) (*p
 	return &proto.GetJobByIdResponse{Job: structToProtoJob(job)}, nil
 }
 
-func (JobServer) GetJobByCompanyName(ctx context.Context, r *proto.GetJobByCompanyNameRequest) (*proto.GetJobByCompanyNameResponse, error) {
-	job, err := database.GetJobByCompanyName(r.GetCompanyName())
+func (JobServer) GetJobByCompanyId(ctx context.Context, r *proto.GetJobByCompanyIdRequest) (*proto.GetJobByCompanyIdResponse, error) {
+	job, err := database.GetJobByCompanyId(r.GetCompanyId())
 
 	if err != nil {
-		return nil, status.Error(codes.NotFound, "No job exists with given Id!")
+		return nil, status.Error(codes.NotFound, "No job exists for given company Id!")
 	}
 
-	return &proto.GetJobByCompanyNameResponse{Job: structToProtoJob(job)}, nil
+	return &proto.GetJobByCompanyIdResponse{Job: structToProtoJob(job)}, nil
 }
 
 func (JobServer) UpdateJob(ctx context.Context, r *proto.UpdateJobRequest) (*proto.UpdateJobResponse, error) {
@@ -195,7 +210,7 @@ func (JobServer) GetRegisteredStudentsByJobId(ctx context.Context, r *proto.GetR
 	if err != nil {
 		return nil, status.Error(codes.Internal, "Couldn't fetch the registration entries. Try Again!")
 	}
-
+	
 	var _entries []*proto.StudentJobEntry
 	for _, entry := range entries {
 		_entries = append(_entries, structToProtoEntry(entry))
