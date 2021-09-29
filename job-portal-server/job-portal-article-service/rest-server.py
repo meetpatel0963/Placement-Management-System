@@ -15,4 +15,4 @@ app.include_router(comment.router,prefix="/api/v1")
 
 @app.get("/")
 def changedName():
-     return {'app_name':settings.get_fresh('APP_NAME')}
+     return {'app_name':settings.get_fresh('APPLICATION_NAME')}
