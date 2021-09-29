@@ -25,6 +25,7 @@ services:
     networks:
       - placement-management-system-network
     depends_on:
+      - cassandra-node
       - config-server
       - naming-server
       - zipkin-server
@@ -80,6 +81,32 @@ services:
     ports:
       - "5672:5672"
       - "15672:15672"
+    networks:
+      - placement-management-system-network
+    restart: on-failure
+
+  cassandra-node:
+    image: cassandra:3.11.11
+    container_name: cassandra-node
+    hostname: cassandra-node
+    mem_limit: 2g  
+    healthcheck:
+        test: ["CMD", "cqlsh", "-e", "describe keyspaces" ]
+        interval: 5s
+        timeout: 5s
+        retries: 60
+    ports:
+      - "9042:9042"  # To expose native binary CQL port for the app
+    volumes:
+      - ./cassandra/data:/var/lib/cassandra  # To persist data for cassandra-node
+      - ./cassandra/config:/etc/cassandra   # Use own config files for full control
+    environment: &environment    
+        CASSANDRA_SEEDS: "cassandra-node"   
+        CASSANDRA_CLUSTER_NAME: SolarSystem
+        CASSANDRA_DC: Mars
+        CASSANDRA_RACK: West
+        CASSANDRA_ENDPOINT_SNITCH: GossipingPropertyFileSnitch
+        CASSANDRA_NUM_TOKENS: 128  
     networks:
       - placement-management-system-network
     restart: on-failure

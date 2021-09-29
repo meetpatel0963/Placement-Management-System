@@ -31,8 +31,8 @@ public class StudentController {
     }
 
     @GetMapping(produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<?> getAllStudents(@RequestBody StudentServiceOuterClass.GetAllStudentsRequest getAllStudentsRequest) {
-        return ResponseEntity.ok(studentService.getAllStudents(getAllStudentsRequest));
+    public ResponseEntity<?> getAllStudents() {
+        return ResponseEntity.ok(studentService.getAllStudents(StudentServiceOuterClass.GetAllStudentsRequest.newBuilder().build()));
     }
 
     @GetMapping(path = "/contact", produces = MediaType.APPLICATION_JSON_VALUE)

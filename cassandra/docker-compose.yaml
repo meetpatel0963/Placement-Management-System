@@ -1,0 +1,28 @@
+version: '3.8' 
+networks:
+  cassandra:  # docker network where all cassandra nodes will be put in
+services:
+  cassandra-node:
+    image: cassandra:3.11.8   # better to use a specific version, if you want to control upgrades
+    container_name: cassandra-node
+    hostname: cassandra-node
+    mem_limit: 2g  # It's not strictly required, but it's better to have some memory limit
+    healthcheck:
+        test: ["CMD", "cqlsh", "-e", "describe keyspaces" ]
+        interval: 5s
+        timeout: 5s
+        retries: 60
+    networks:
+      - cassandra
+    ports:
+      - "9042:9042"  # Expose native binary CQL port for your apps
+    volumes:
+      - ./data:/var/lib/cassandra    # This is the volume that will persist data for cass1 node
+      - ./config:/etc/cassandra   # Use your own config files for full control
+    environment: &environment    
+        CASSANDRA_SEEDS: "cassandra-node"   
+        CASSANDRA_CLUSTER_NAME: SolarSystem
+        CASSANDRA_DC: Mars
+        CASSANDRA_RACK: West
+        CASSANDRA_ENDPOINT_SNITCH: GossipingPropertyFileSnitch
+        CASSANDRA_NUM_TOKENS: 128
