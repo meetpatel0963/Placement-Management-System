@@ -46,7 +46,7 @@ def broker():
 
      channel.queue_bind(exchange='springCloudBus', queue=queue_name, routing_key='#')
 
-     def callback(ch, method, properties, body):
+     def callback(ch, method, properties, body):  
           updated_config = json.loads(body.decode('utf-8'))
           print(updated_config)
           if(updated_config.get('destinationService','xyz').startswith("article")):
