@@ -4,7 +4,6 @@ import (
 	"context"
 	"fmt"
 
-	"job_service/config"
 	"job_service/database"
 	proto "job_service/proto"
 	placement_service "job_service/proto/placement_service"
@@ -67,7 +66,7 @@ func structToProtoJob(job database.Job) *proto.Job {
 }
 
 func (JobServer) SaveJob(ctx context.Context, r *proto.SaveJobRequest) (*proto.SaveJobResponse, error) {
-	conn, err := grpc.Dial(config.PLACEMENT_SERVICE_SERVER_URL, grpc.WithInsecure())
+	conn, err := grpc.Dial(viper.GetString("placement_service_server_url"), grpc.WithInsecure())
 	if err != nil {
 		return nil, status.Error(codes.Internal, "Couldn't save the job. Try Again!")
 	}

@@ -1,0 +1,88 @@
+version: '3.8'
+
+services:
+  student-service:
+    image: meetpatel0963/pms-student-service:latest
+    mem_limit: 700m
+    ports:
+      - "8100:8100"
+      - "8101:8101"
+    networks:
+      - placement-management-system-network
+    depends_on:
+      - config-server
+      - naming-server
+      - zipkin-server
+      - rabbitmq
+    restart: on-failure
+  
+  job-service:
+    image: meetpatel0963/pms-job-service:latest
+    mem_limit: 700m
+    ports:
+      - "8080:8080"
+      - "8081:8081"
+    networks:
+      - placement-management-system-network
+    depends_on:
+      - config-server
+      - naming-server
+      - zipkin-server
+      - rabbitmq
+    restart: on-failure
+
+  api-gateway:
+    image: meetpatel0963/pms-api-gateway:latest
+    mem_limit: 700m
+    ports:
+      - "8765:8765"
+    networks:
+      - placement-management-system-network
+    depends_on:
+      - config-server
+      - naming-server
+      - zipkin-server
+      - rabbitmq
+    restart: on-failure
+
+  config-server:
+    image: meetpatel0963/pms-config-server:latest
+    mem_limit: 700m
+    ports:
+      - "8888:8888"
+    networks:
+      - placement-management-system-network
+    depends_on:
+      - rabbitmq
+    restart: on-failure
+  
+  naming-server:
+    image: meetpatel0963/pms-naming-server:latest
+    mem_limit: 700m
+    ports:
+      - "8761:8761"
+    networks:
+      - placement-management-system-network
+    restart: on-failure
+
+  zipkin-server:
+    image: openzipkin/zipkin:2.23
+    mem_limit: 300m
+    ports:
+      - "9411:9411"
+    networks:
+      - placement-management-system-network
+    restart: on-failure
+  
+  rabbbitmq:
+    image: rabbitmq:3.9.7-management
+    mem_limit: 300m
+    ports:
+      - "5672:5672"
+      - "15672:15672"
+    networks:
+      - placement-management-system-network
+    restart: on-failure
+
+networks:
+  placement-management-system-network: 

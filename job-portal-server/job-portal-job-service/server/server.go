@@ -40,7 +40,7 @@ func StartServer() {
 	wrappedMux := zipkinhttp.NewServerMiddleware(tracer, zipkinhttp.SpanName("REST"))(mux)
 	
 	go func() {
-		log.Fatalln(http.ListenAndServe("localhost" + viper.GetString("rest_port"), wrappedMux))
+		log.Fatalln(http.ListenAndServe(viper.GetString("rest_port"), wrappedMux))
 	}()
 	
 	grpcServer = grpc.NewServer(grpc.StatsHandler(zipkingrpc.NewServerHandler(tracer)))
