@@ -1,6 +1,10 @@
 from sqlalchemy.orm import Session
 from datetime import date, datetime
 from .. import models,schemas
+from grpc_service.service.student import studentServicer
+
+obj = studentServicer["data"]
+studentFinder = studentServicer["method"]
 
 def get_all_comments(db: Session):
     comments =  db.query(models.Comment).all()
@@ -13,9 +17,15 @@ def get_comment(db:Session, comment_id:int):
     return db_comment.first()
 
 def create_comment(db:Session, comment:schemas.CommentCreate):
+    obj.studentId = comment.studentId
+    found = studentFinder(obj)
+    # print(found.error,"here")
+    if(found.student):
+        pass
+    author = found.student.personalDetails.firstName + " " + found.student.personalDetails.lastName
     db_comment = models.Comment(
         body = comment.body,
-        author = comment.author,
+        author = author,
         articleId = comment.articleId,
         createdAt = datetime.now(),
         updatedAt = datetime.now()

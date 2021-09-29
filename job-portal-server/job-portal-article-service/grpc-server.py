@@ -1,5 +1,5 @@
-from service import article, comment
-from protobuf import articleService_pb2_grpc
+from grpc_service.service import article, comment
+from grpc_service.protobuf import articleService_pb2_grpc
 # from dotenv import dotenv_values
 import grpc
 from concurrent.futures import ThreadPoolExecutor
