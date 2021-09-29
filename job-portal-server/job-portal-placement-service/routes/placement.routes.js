@@ -1,9 +1,10 @@
-const express = require("express");
-const { placementService } = require("../client");
+const express = require('express');
+const { placementService } = require('../placementClient');
+const { studentService } = require('../studentClient');
 
 const router = express();
 
-router.get("/", (_, res) => {
+router.get('/', (_, res) => {
   placementService.getAllPlacementEntries({}, (err, data) => {
     if (!err) {
       res.send(data);
@@ -13,7 +14,7 @@ router.get("/", (_, res) => {
   });
 });
 
-router.get("/:id", (req, res) => {
+router.get('/:id', (req, res) => {
   const id = req.params.id;
   placementService.getPlacementEntryById(
     {
@@ -29,28 +30,42 @@ router.get("/:id", (req, res) => {
   );
 });
 
-router.post("/", (req, res) => {
+router.post('/', (req, res) => {
   const body = req.body.placementEntry;
-  placementService.savePlacementEntry(
+  studentService.getStudentById(
     {
-      placementEntry: {
-        studentId: body.studentId,
-        companyId: body.companyId,
-        year: body.year,
-        LPA: body.year,
-      },
+      studentId: body.studentId,
     },
-    (err, data) => {
-      if (!err) {
-        res.send(data);
+    (error, data) => {
+      if (!error) {
+        console.log(data);
+        if (data !== null) {
+          placementService.savePlacementEntry(
+            {
+              placementEntry: {
+                studentId: body.studentId,
+                companyId: body.companyId,
+                year: body.year,
+                LPA: body.year,
+              },
+            },
+            (err, data) => {
+              if (!err) {
+                res.send(data);
+              } else {
+                res.status(500).send("Internal Server Error Try Again!!!");
+              }
+            }
+          );
+        }
       } else {
-        res.status(err.code).send(err.message);
+        res.status(400).send("Couldn't find student with given Id");
       }
     }
   );
 });
 
-router.put("/:id", (req, res) => {
+router.put('/:id', (req, res) => {
   const body = req.body.placementEntry;
   placementService.updatePlacementEntry(
     {
@@ -71,7 +86,7 @@ router.put("/:id", (req, res) => {
   );
 });
 
-router.delete("/:id", (req, res) => {
+router.delete('/:id', (req, res) => {
   const id = req.params.id;
   placementService.deletePlacementEntry(
     {

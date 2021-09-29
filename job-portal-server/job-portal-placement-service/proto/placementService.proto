@@ -1,5 +1,6 @@
 syntax = "proto3";
 
+package com.jobportal.placementserviceproto; 
 
 // PlacementEntry
 
@@ -69,6 +70,7 @@ service CompanyService {
     rpc updateCompany(UpdateCompanyRequest) returns (UpdateCompanyResponse) {}
     rpc deleteCompany(DeleteCompanyRequest) returns (DeleteCompanyResponse) {}
     rpc getPlacementDetails(GetPlacementDetailsRequest) returns (GetPlacementDetailsResponse) {}
+    rpc isCompanyExist(isCompanyExistRequest) returns (isCompanyExistResponse) {}
 }
 
 message Company {
@@ -124,4 +126,12 @@ message GetPlacementDetailsRequest {
 
 message GetPlacementDetailsResponse {
     repeated PlacementEntry placementEntries = 1;
+}
+
+message isCompanyExistRequest {
+    int64 companyId = 1;
+}
+ 
+message isCompanyExistResponse {
+    bool message = 1;
 }
