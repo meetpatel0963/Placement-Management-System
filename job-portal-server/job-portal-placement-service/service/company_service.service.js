@@ -149,6 +149,22 @@ const getPlacementDetails = async (call, callback) => {
   }
 };
 
+const isCompanyExist = async (call, callback) => {
+  try {
+    const message = await companyController.exist(call.request.companyId);
+    callback(null, { message });
+  } catch (err) {
+    callback(
+      {
+        code: 500,
+        message: err.message,
+        status: grpc.status.UNKNOWN,
+      },
+      null
+    );
+  }
+}
+
 module.exports = {
   getAllCompanies,
   getCompanyById,
@@ -156,4 +172,5 @@ module.exports = {
   updateCompany,
   deleteCompany,
   getPlacementDetails,
+  isCompanyExist
 };

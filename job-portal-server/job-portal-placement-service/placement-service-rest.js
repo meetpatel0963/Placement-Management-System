@@ -1,0 +1,65 @@
+const express = require('express');
+const cors = require('cors');
+const bodyParser = require('body-parser');
+const eureka = require('./eurekaClient');
+const axios = require('axios');
+const nconf = require('nconf');
+const childProcess = require('child_process');
+nconf.argv().env().file({ file: '/config/config.json' });
+
+function createChild(scriptPath, callback, config) {
+  var invoked = false;
+  var process = childProcess.fork(scriptPath, [config]);
+
+  process.on('error', function (err) {
+    if (invoked) return;
+    invoked = true;
+    callback(err);
+  });
+
+  process.on('exit', function (code) {
+    if (invoked) return;
+    invoked = true;
+    var err = code === 0 ? null : new Error('exit code ' + code);
+    callback(err);
+  });
+}
+
+axios
+  .get('http://localhost:8888/placement-service/default/master')
+  .then((response) => {
+    nconf.set('config', response.data.propertySources[0].source);
+
+    const placementRoutes = require('./routes/placement.routes');
+    const companyRoutes = require('./routes/company.routes');
+    const { tracer } = require('./zipkin/zipkinClient');
+    const zipkinMiddleware =
+      require('zipkin-instrumentation-express').expressMiddleware;
+
+    const app = express();
+
+    app.use(bodyParser.json());
+    app.use(bodyParser.urlencoded({ extended: false }));
+    app.use(cors());
+    app.use(zipkinMiddleware({ tracer }));
+
+    app.use('/api/v1/placement/', placementRoutes);
+    app.use('/api/v1/company/', companyRoutes);
+
+    const REST_PORT = nconf.get('config').rest_port || 3000;
+    app.listen(REST_PORT, () => {
+      console.log('Server running at port %d 🚀🚀🚀', REST_PORT);
+      eureka.registerWithEureka();
+      createChild(
+        './placement-service-grpc.js',
+        function (err) {
+          if (err) throw err;
+          console.log('finished running some-script.js');
+        },
+        JSON.stringify(nconf.get('config'))
+      );
+    });
+  })
+  .catch((error) => {
+    console.log('error', error);
+  });

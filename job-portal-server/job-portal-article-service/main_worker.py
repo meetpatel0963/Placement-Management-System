@@ -10,7 +10,7 @@ import json
 commands = [
      "uvicorn rest-server:app --port {}".format(settings.get_fresh('REST_PORT')),
      #'uvicorn grpc-server:serve --port 8000 --app-dir ./grpc_service'
-     'py grpc_service/grpc-server.py',
+     'py grpc-server.py',
      'py naming_server.py'
 ]
 

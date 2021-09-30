@@ -2,7 +2,7 @@
 """Client and server classes corresponding to protobuf-defined services."""
 import grpc
 
-from protobuf import articleService_pb2 as protobuf_dot_articleService__pb2
+from . import articleService_pb2 as protobuf_dot_articleService__pb2
 
 
 class CommentServiceStub(object):

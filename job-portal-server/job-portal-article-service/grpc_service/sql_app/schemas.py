@@ -6,7 +6,8 @@ from pydantic import BaseModel
 from sqlalchemy.sql.expression import update
 
 class CommentBase(BaseModel):
-    author: str
+    author: Optional[str]
+    studentId: Optional[str]
     body: str
     articleId: int
 
@@ -33,7 +34,8 @@ class Comment(CommentBase):
 class ArticleBase(BaseModel):
     title: str
     body: str
-    author: str
+    author: Optional[str]
+    studentId: Optional[str]
     company: str
 
 class ArticleCreate(ArticleBase):

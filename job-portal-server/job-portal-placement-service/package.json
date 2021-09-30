@@ -1,0 +1,28 @@
+{
+  "name": "job-portal-placement-service-grpc",
+  "version": "1.0.0",
+  "description": "",
+  "main": "server.js",
+  "scripts": {
+    "dev": "nodemon placement-service-rest.js",
+    "start": "node placement-service-rest.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "@grpc/proto-loader": "^0.6.4",
+    "axios": "^0.21.4",
+    "body-parser": "^1.19.0",
+    "cors": "^2.8.5",
+    "eureka-js-client": "^4.5.0",
+    "express": "^4.17.1",
+    "grpc": "^1.24.11",
+    "mysql2": "^2.3.0",
+    "nconf": "^0.11.3",
+    "sequelize": "^6.6.5",
+    "zipkin-instrumentation-express": "^0.22.0",
+    "zipkin-instrumentation-grpc-client": "^0.22.0",
+    "zipkin-transport-http": "^0.22.0"
+  }
+}

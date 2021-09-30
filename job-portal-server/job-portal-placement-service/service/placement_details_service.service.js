@@ -1,5 +1,5 @@
-const grpc = require("grpc");
-const placementController = require("../controllers/placement_details.controller");
+const grpc = require('grpc');
+const placementController = require('../controllers/placement_details.controller');
 
 const getAllPlacementEntries = async (_, callback) => {
   try {

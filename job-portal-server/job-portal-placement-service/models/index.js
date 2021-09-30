@@ -1,14 +1,15 @@
 const config = require("../config/config.js");
 const { Sequelize, DataTypes, Op } = require("sequelize");
+const nconf = require('nconf');
 
 const sequelize = new Sequelize(
   config.db.DB_NAME,
   config.db.DB_USER,
   config.db.DB_PASS,
   {
-    host: config.db.DB_HOST,
-    dialect: config.db.dialect,
-    port: config.db.MYSQL_PORT,
+    host: nconf.get('config').db_host,
+    dialect: nconf.get('config').dialect,
+    port: nconf.get('config').db_port,
 
     poll: {
       max: config.db.pool.max,

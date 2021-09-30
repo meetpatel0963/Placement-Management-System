@@ -19,7 +19,7 @@ DESCRIPTOR = _descriptor.FileDescriptor(
   syntax='proto3',
   serialized_options=None,
   create_key=_descriptor._internal_create_key,
-  serialized_pb=b'\n\x1dprotobuf/articleService.proto\"\x90\x01\n\x07\x43omment\x12\n\n\x02id\x18\x01 \x01(\x03\x12\x0e\n\x06\x61uthor\x18\x02 \x01(\t\x12\x0c\n\x04\x62ody\x18\x03 \x01(\t\x12\x0f\n\x07upvotes\x18\x04 \x01(\x05\x12\x11\n\tdownvotes\x18\x05 \x01(\x05\x12\x11\n\tarticleId\x18\x06 \x01(\x03\x12\x11\n\tcreatedAt\x18\x07 \x01(\t\x12\x11\n\tupdatedAt\x18\x08 \x01(\t\"\x17\n\x15GetAllCommentsRequest\"4\n\x16GetAllCommentsResponse\x12\x1a\n\x08\x63omments\x18\x01 \x03(\x0b\x32\x08.Comment\"*\n\x15GetCommentByIdRequest\x12\x11\n\tcommentId\x18\x01 \x01(\x03\"3\n\x16GetCommentByIdResponse\x12\x19\n\x07\x63omment\x18\x01 \x01(\x0b\x32\x08.Comment\"/\n\x12SaveCommentRequest\x12\x19\n\x07\x63omment\x18\x01 \x01(\x0b\x32\x08.Comment\"9\n\x13SaveCommentResponse\x12\x11\n\tcommentId\x18\x01 \x01(\x03\x12\x0f\n\x07message\x18\x02 \x01(\t\"1\n\x14UpdateCommentRequest\x12\x19\n\x07\x63omment\x18\x01 \x01(\x0b\x32\x08.Comment\"(\n\x15UpdateCommentResponse\x12\x0f\n\x07message\x18\x01 \x01(\t\")\n\x14\x44\x65leteCommentRequest\x12\x11\n\tcommentId\x18\x01 \x01(\x03\"(\n\x15\x44\x65leteCommentResponse\x12\x0f\n\x07message\x18\x01 \x01(\t\"Q\n GetAllCommentsByArticleIdRequest\x12\x11\n\tarticleId\x18\x01 \x01(\x03\x12\x0c\n\x04page\x18\x02 \x01(\x05\x12\x0c\n\x04size\x18\x03 \x01(\x05\"?\n!GetAllCommentsByArticleIdResponse\x12\x1a\n\x08\x63omments\x18\x01 \x03(\x0b\x32\x08.Comment\"\xb9\x01\n\x07\x41rticle\x12\n\n\x02id\x18\x01 \x01(\x03\x12\r\n\x05title\x18\x02 \x01(\t\x12\x0c\n\x04\x62ody\x18\x03 \x01(\t\x12\x0e\n\x06\x61uthor\x18\x04 \x01(\t\x12\x0f\n\x07\x63ompany\x18\x05 \x01(\t\x12\x0f\n\x07upvotes\x18\x06 \x01(\x05\x12\x11\n\tdownvotes\x18\x07 \x01(\x05\x12\x11\n\tupdatedAt\x18\x08 \x01(\t\x12\x11\n\tcreatedAt\x18\t \x01(\t\x12\x1a\n\x08\x63omments\x18\n \x03(\x0b\x32\x08.Comment\"\x17\n\x15GetAllArticlesRequest\"4\n\x16GetAllArticlesResponse\x12\x1a\n\x08\x61rticles\x18\x01 \x03(\x0b\x32\x08.Article\"*\n\x15GetArticleByIdRequest\x12\x11\n\tarticleId\x18\x01 \x01(\x03\"3\n\x16GetArticleByIdResponse\x12\x19\n\x07\x61rticle\x18\x01 \x01(\x0b\x32\x08.Article\"/\n\x12SaveArticleRequest\x12\x19\n\x07\x61rticle\x18\x01 \x01(\x0b\x32\x08.Article\"L\n\x13SaveArticleResponse\x12\x16\n\tarticleId\x18\x01 \x01(\x03H\x00\x88\x01\x01\x12\x0f\n\x07message\x18\x02 \x01(\tB\x0c\n\n_articleId\"1\n\x14UpdateArticleRequest\x12\x19\n\x07\x61rticle\x18\x01 \x01(\x0b\x32\x08.Article\"(\n\x15UpdateArticleResponse\x12\x0f\n\x07message\x18\x01 \x01(\t\")\n\x14\x44\x65leteArticleRequest\x12\x11\n\tarticleId\x18\x01 \x01(\x03\"(\n\x15\x44\x65leteArticleResponse\x12\x0f\n\x07message\x18\x01 \x01(\t2\xc0\x03\n\x0e\x43ommentService\x12\x43\n\x0egetAllComments\x12\x16.GetAllCommentsRequest\x1a\x17.GetAllCommentsResponse\"\x00\x12\x43\n\x0egetCommentById\x12\x16.GetCommentByIdRequest\x1a\x17.GetCommentByIdResponse\"\x00\x12:\n\x0bsaveComment\x12\x13.SaveCommentRequest\x1a\x14.SaveCommentResponse\"\x00\x12@\n\rupdateComment\x12\x15.UpdateCommentRequest\x1a\x16.UpdateCommentResponse\"\x00\x12@\n\rdeleteComment\x12\x15.DeleteCommentRequest\x1a\x16.DeleteCommentResponse\"\x00\x12\x64\n\x19getAllCommentsByArticleId\x12!.GetAllCommentsByArticleIdRequest\x1a\".GetAllCommentsByArticleIdResponse\"\x00\x32\xda\x02\n\x0e\x41rticleService\x12\x43\n\x0egetAllArticles\x12\x16.GetAllArticlesRequest\x1a\x17.GetAllArticlesResponse\"\x00\x12\x43\n\x0egetArticleById\x12\x16.GetArticleByIdRequest\x1a\x17.GetArticleByIdResponse\"\x00\x12:\n\x0bsaveArticle\x12\x13.SaveArticleRequest\x1a\x14.SaveArticleResponse\"\x00\x12@\n\rupdateArticle\x12\x15.UpdateArticleRequest\x1a\x16.UpdateArticleResponse\"\x00\x12@\n\rdeleteArticle\x12\x15.DeleteArticleRequest\x1a\x16.DeleteArticleResponse\"\x00\x62\x06proto3'
+  serialized_pb=b'\n\x1dprotobuf/articleService.proto\"\xa3\x01\n\x07\x43omment\x12\n\n\x02id\x18\x01 \x01(\x03\x12\x11\n\tstudentId\x18\x02 \x01(\t\x12\x0e\n\x06\x61uthor\x18\t \x01(\t\x12\x0c\n\x04\x62ody\x18\x03 \x01(\t\x12\x0f\n\x07upvotes\x18\x04 \x01(\x05\x12\x11\n\tdownvotes\x18\x05 \x01(\x05\x12\x11\n\tarticleId\x18\x06 \x01(\x03\x12\x11\n\tcreatedAt\x18\x07 \x01(\t\x12\x11\n\tupdatedAt\x18\x08 \x01(\t\"\x17\n\x15GetAllCommentsRequest\"4\n\x16GetAllCommentsResponse\x12\x1a\n\x08\x63omments\x18\x01 \x03(\x0b\x32\x08.Comment\"*\n\x15GetCommentByIdRequest\x12\x11\n\tcommentId\x18\x01 \x01(\x03\"3\n\x16GetCommentByIdResponse\x12\x19\n\x07\x63omment\x18\x01 \x01(\x0b\x32\x08.Comment\"/\n\x12SaveCommentRequest\x12\x19\n\x07\x63omment\x18\x01 \x01(\x0b\x32\x08.Comment\"9\n\x13SaveCommentResponse\x12\x11\n\tcommentId\x18\x01 \x01(\x03\x12\x0f\n\x07message\x18\x02 \x01(\t\"1\n\x14UpdateCommentRequest\x12\x19\n\x07\x63omment\x18\x01 \x01(\x0b\x32\x08.Comment\"(\n\x15UpdateCommentResponse\x12\x0f\n\x07message\x18\x01 \x01(\t\")\n\x14\x44\x65leteCommentRequest\x12\x11\n\tcommentId\x18\x01 \x01(\x03\"(\n\x15\x44\x65leteCommentResponse\x12\x0f\n\x07message\x18\x01 \x01(\t\"Q\n GetAllCommentsByArticleIdRequest\x12\x11\n\tarticleId\x18\x01 \x01(\x03\x12\x0c\n\x04page\x18\x02 \x01(\x05\x12\x0c\n\x04size\x18\x03 \x01(\x05\"?\n!GetAllCommentsByArticleIdResponse\x12\x1a\n\x08\x63omments\x18\x01 \x03(\x0b\x32\x08.Comment\"\xcc\x01\n\x07\x41rticle\x12\n\n\x02id\x18\x01 \x01(\x03\x12\r\n\x05title\x18\x02 \x01(\t\x12\x0c\n\x04\x62ody\x18\x03 \x01(\t\x12\x11\n\tstudentId\x18\x04 \x01(\t\x12\x0e\n\x06\x61uthor\x18\x0b \x01(\t\x12\x0f\n\x07\x63ompany\x18\x05 \x01(\t\x12\x0f\n\x07upvotes\x18\x06 \x01(\x05\x12\x11\n\tdownvotes\x18\x07 \x01(\x05\x12\x11\n\tupdatedAt\x18\x08 \x01(\t\x12\x11\n\tcreatedAt\x18\t \x01(\t\x12\x1a\n\x08\x63omments\x18\n \x03(\x0b\x32\x08.Comment\"\x17\n\x15GetAllArticlesRequest\"4\n\x16GetAllArticlesResponse\x12\x1a\n\x08\x61rticles\x18\x01 \x03(\x0b\x32\x08.Article\"*\n\x15GetArticleByIdRequest\x12\x11\n\tarticleId\x18\x01 \x01(\x03\"3\n\x16GetArticleByIdResponse\x12\x19\n\x07\x61rticle\x18\x01 \x01(\x0b\x32\x08.Article\"/\n\x12SaveArticleRequest\x12\x19\n\x07\x61rticle\x18\x01 \x01(\x0b\x32\x08.Article\"L\n\x13SaveArticleResponse\x12\x16\n\tarticleId\x18\x01 \x01(\x03H\x00\x88\x01\x01\x12\x0f\n\x07message\x18\x02 \x01(\tB\x0c\n\n_articleId\"1\n\x14UpdateArticleRequest\x12\x19\n\x07\x61rticle\x18\x01 \x01(\x0b\x32\x08.Article\"(\n\x15UpdateArticleResponse\x12\x0f\n\x07message\x18\x01 \x01(\t\")\n\x14\x44\x65leteArticleRequest\x12\x11\n\tarticleId\x18\x01 \x01(\x03\"(\n\x15\x44\x65leteArticleResponse\x12\x0f\n\x07message\x18\x01 \x01(\t2\xc0\x03\n\x0e\x43ommentService\x12\x43\n\x0egetAllComments\x12\x16.GetAllCommentsRequest\x1a\x17.GetAllCommentsResponse\"\x00\x12\x43\n\x0egetCommentById\x12\x16.GetCommentByIdRequest\x1a\x17.GetCommentByIdResponse\"\x00\x12:\n\x0bsaveComment\x12\x13.SaveCommentRequest\x1a\x14.SaveCommentResponse\"\x00\x12@\n\rupdateComment\x12\x15.UpdateCommentRequest\x1a\x16.UpdateCommentResponse\"\x00\x12@\n\rdeleteComment\x12\x15.DeleteCommentRequest\x1a\x16.DeleteCommentResponse\"\x00\x12\x64\n\x19getAllCommentsByArticleId\x12!.GetAllCommentsByArticleIdRequest\x1a\".GetAllCommentsByArticleIdResponse\"\x00\x32\xda\x02\n\x0e\x41rticleService\x12\x43\n\x0egetAllArticles\x12\x16.GetAllArticlesRequest\x1a\x17.GetAllArticlesResponse\"\x00\x12\x43\n\x0egetArticleById\x12\x16.GetArticleByIdRequest\x1a\x17.GetArticleByIdResponse\"\x00\x12:\n\x0bsaveArticle\x12\x13.SaveArticleRequest\x1a\x14.SaveArticleResponse\"\x00\x12@\n\rupdateArticle\x12\x15.UpdateArticleRequest\x1a\x16.UpdateArticleResponse\"\x00\x12@\n\rdeleteArticle\x12\x15.DeleteArticleRequest\x1a\x16.DeleteArticleResponse\"\x00\x62\x06proto3'
 )
 
 
@@ -41,49 +41,56 @@ _COMMENT = _descriptor.Descriptor(
       is_extension=False, extension_scope=None,
       serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
     _descriptor.FieldDescriptor(
-      name='author', full_name='Comment.author', index=1,
+      name='studentId', full_name='Comment.studentId', index=1,
       number=2, type=9, cpp_type=9, label=1,
       has_default_value=False, default_value=b"".decode('utf-8'),
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
     _descriptor.FieldDescriptor(
-      name='body', full_name='Comment.body', index=2,
+      name='author', full_name='Comment.author', index=2,
+      number=9, type=9, cpp_type=9, label=1,
+      has_default_value=False, default_value=b"".decode('utf-8'),
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
+    _descriptor.FieldDescriptor(
+      name='body', full_name='Comment.body', index=3,
       number=3, type=9, cpp_type=9, label=1,
       has_default_value=False, default_value=b"".decode('utf-8'),
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
     _descriptor.FieldDescriptor(
-      name='upvotes', full_name='Comment.upvotes', index=3,
+      name='upvotes', full_name='Comment.upvotes', index=4,
       number=4, type=5, cpp_type=1, label=1,
       has_default_value=False, default_value=0,
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
     _descriptor.FieldDescriptor(
-      name='downvotes', full_name='Comment.downvotes', index=4,
+      name='downvotes', full_name='Comment.downvotes', index=5,
       number=5, type=5, cpp_type=1, label=1,
       has_default_value=False, default_value=0,
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
     _descriptor.FieldDescriptor(
-      name='articleId', full_name='Comment.articleId', index=5,
+      name='articleId', full_name='Comment.articleId', index=6,
       number=6, type=3, cpp_type=2, label=1,
       has_default_value=False, default_value=0,
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
     _descriptor.FieldDescriptor(
-      name='createdAt', full_name='Comment.createdAt', index=6,
+      name='createdAt', full_name='Comment.createdAt', index=7,
       number=7, type=9, cpp_type=9, label=1,
       has_default_value=False, default_value=b"".decode('utf-8'),
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
     _descriptor.FieldDescriptor(
-      name='updatedAt', full_name='Comment.updatedAt', index=7,
+      name='updatedAt', full_name='Comment.updatedAt', index=8,
       number=8, type=9, cpp_type=9, label=1,
       has_default_value=False, default_value=b"".decode('utf-8'),
       message_type=None, enum_type=None, containing_type=None,
@@ -102,7 +109,7 @@ _COMMENT = _descriptor.Descriptor(
   oneofs=[
   ],
   serialized_start=34,
-  serialized_end=178,
+  serialized_end=197,
 )
 
 
@@ -126,8 +133,8 @@ _GETALLCOMMENTSREQUEST = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=180,
-  serialized_end=203,
+  serialized_start=199,
+  serialized_end=222,
 )
 
 
@@ -158,8 +165,8 @@ _GETALLCOMMENTSRESPONSE = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=205,
-  serialized_end=257,
+  serialized_start=224,
+  serialized_end=276,
 )
 
 
@@ -190,8 +197,8 @@ _GETCOMMENTBYIDREQUEST = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=259,
-  serialized_end=301,
+  serialized_start=278,
+  serialized_end=320,
 )
 
 
@@ -222,8 +229,8 @@ _GETCOMMENTBYIDRESPONSE = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=303,
-  serialized_end=354,
+  serialized_start=322,
+  serialized_end=373,
 )
 
 
@@ -254,8 +261,8 @@ _SAVECOMMENTREQUEST = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=356,
-  serialized_end=403,
+  serialized_start=375,
+  serialized_end=422,
 )
 
 
@@ -293,8 +300,8 @@ _SAVECOMMENTRESPONSE = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=405,
-  serialized_end=462,
+  serialized_start=424,
+  serialized_end=481,
 )
 
 
@@ -325,8 +332,8 @@ _UPDATECOMMENTREQUEST = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=464,
-  serialized_end=513,
+  serialized_start=483,
+  serialized_end=532,
 )
 
 
@@ -357,8 +364,8 @@ _UPDATECOMMENTRESPONSE = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=515,
-  serialized_end=555,
+  serialized_start=534,
+  serialized_end=574,
 )
 
 
@@ -389,8 +396,8 @@ _DELETECOMMENTREQUEST = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=557,
-  serialized_end=598,
+  serialized_start=576,
+  serialized_end=617,
 )
 
 
@@ -421,8 +428,8 @@ _DELETECOMMENTRESPONSE = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=600,
-  serialized_end=640,
+  serialized_start=619,
+  serialized_end=659,
 )
 
 
@@ -467,8 +474,8 @@ _GETALLCOMMENTSBYARTICLEIDREQUEST = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=642,
-  serialized_end=723,
+  serialized_start=661,
+  serialized_end=742,
 )
 
 
@@ -499,8 +506,8 @@ _GETALLCOMMENTSBYARTICLEIDRESPONSE = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=725,
-  serialized_end=788,
+  serialized_start=744,
+  serialized_end=807,
 )
 
 
@@ -534,49 +541,56 @@ _ARTICLE = _descriptor.Descriptor(
       is_extension=False, extension_scope=None,
       serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
     _descriptor.FieldDescriptor(
-      name='author', full_name='Article.author', index=3,
+      name='studentId', full_name='Article.studentId', index=3,
       number=4, type=9, cpp_type=9, label=1,
       has_default_value=False, default_value=b"".decode('utf-8'),
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
     _descriptor.FieldDescriptor(
-      name='company', full_name='Article.company', index=4,
+      name='author', full_name='Article.author', index=4,
+      number=11, type=9, cpp_type=9, label=1,
+      has_default_value=False, default_value=b"".decode('utf-8'),
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
+    _descriptor.FieldDescriptor(
+      name='company', full_name='Article.company', index=5,
       number=5, type=9, cpp_type=9, label=1,
       has_default_value=False, default_value=b"".decode('utf-8'),
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
     _descriptor.FieldDescriptor(
-      name='upvotes', full_name='Article.upvotes', index=5,
+      name='upvotes', full_name='Article.upvotes', index=6,
       number=6, type=5, cpp_type=1, label=1,
       has_default_value=False, default_value=0,
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
     _descriptor.FieldDescriptor(
-      name='downvotes', full_name='Article.downvotes', index=6,
+      name='downvotes', full_name='Article.downvotes', index=7,
       number=7, type=5, cpp_type=1, label=1,
       has_default_value=False, default_value=0,
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
     _descriptor.FieldDescriptor(
-      name='updatedAt', full_name='Article.updatedAt', index=7,
+      name='updatedAt', full_name='Article.updatedAt', index=8,
       number=8, type=9, cpp_type=9, label=1,
       has_default_value=False, default_value=b"".decode('utf-8'),
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
     _descriptor.FieldDescriptor(
-      name='createdAt', full_name='Article.createdAt', index=8,
+      name='createdAt', full_name='Article.createdAt', index=9,
       number=9, type=9, cpp_type=9, label=1,
       has_default_value=False, default_value=b"".decode('utf-8'),
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
     _descriptor.FieldDescriptor(
-      name='comments', full_name='Article.comments', index=9,
+      name='comments', full_name='Article.comments', index=10,
       number=10, type=11, cpp_type=10, label=3,
       has_default_value=False, default_value=[],
       message_type=None, enum_type=None, containing_type=None,
@@ -594,8 +608,8 @@ _ARTICLE = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=791,
-  serialized_end=976,
+  serialized_start=810,
+  serialized_end=1014,
 )
 
 
@@ -619,8 +633,8 @@ _GETALLARTICLESREQUEST = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=978,
-  serialized_end=1001,
+  serialized_start=1016,
+  serialized_end=1039,
 )
 
 
@@ -651,8 +665,8 @@ _GETALLARTICLESRESPONSE = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=1003,
-  serialized_end=1055,
+  serialized_start=1041,
+  serialized_end=1093,
 )
 
 
@@ -683,8 +697,8 @@ _GETARTICLEBYIDREQUEST = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=1057,
-  serialized_end=1099,
+  serialized_start=1095,
+  serialized_end=1137,
 )
 
 
@@ -715,8 +729,8 @@ _GETARTICLEBYIDRESPONSE = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=1101,
-  serialized_end=1152,
+  serialized_start=1139,
+  serialized_end=1190,
 )
 
 
@@ -747,8 +761,8 @@ _SAVEARTICLEREQUEST = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=1154,
-  serialized_end=1201,
+  serialized_start=1192,
+  serialized_end=1239,
 )
 
 
@@ -791,8 +805,8 @@ _SAVEARTICLERESPONSE = _descriptor.Descriptor(
       create_key=_descriptor._internal_create_key,
     fields=[]),
   ],
-  serialized_start=1203,
-  serialized_end=1279,
+  serialized_start=1241,
+  serialized_end=1317,
 )
 
 
@@ -823,8 +837,8 @@ _UPDATEARTICLEREQUEST = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=1281,
-  serialized_end=1330,
+  serialized_start=1319,
+  serialized_end=1368,
 )
 
 
@@ -855,8 +869,8 @@ _UPDATEARTICLERESPONSE = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=1332,
-  serialized_end=1372,
+  serialized_start=1370,
+  serialized_end=1410,
 )
 
 
@@ -887,8 +901,8 @@ _DELETEARTICLEREQUEST = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=1374,
-  serialized_end=1415,
+  serialized_start=1412,
+  serialized_end=1453,
 )
 
 
@@ -919,8 +933,8 @@ _DELETEARTICLERESPONSE = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=1417,
-  serialized_end=1457,
+  serialized_start=1455,
+  serialized_end=1495,
 )
 
 _GETALLCOMMENTSRESPONSE.fields_by_name['comments'].message_type = _COMMENT
@@ -1139,8 +1153,8 @@ _COMMENTSERVICE = _descriptor.ServiceDescriptor(
   index=0,
   serialized_options=None,
   create_key=_descriptor._internal_create_key,
-  serialized_start=1460,
-  serialized_end=1908,
+  serialized_start=1498,
+  serialized_end=1946,
   methods=[
   _descriptor.MethodDescriptor(
     name='getAllComments',
@@ -1215,8 +1229,8 @@ _ARTICLESERVICE = _descriptor.ServiceDescriptor(
   index=1,
   serialized_options=None,
   create_key=_descriptor._internal_create_key,
-  serialized_start=1911,
-  serialized_end=2257,
+  serialized_start=1949,
+  serialized_end=2295,
   methods=[
   _descriptor.MethodDescriptor(
     name='getAllArticles',

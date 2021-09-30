@@ -2,7 +2,7 @@
 """Client and server classes corresponding to protobuf-defined services."""
 import grpc
 
-from protobuf import studentService_pb2 as protobuf_dot_studentService__pb2
+from grpc_service.protobuf import studentService_pb2 as grpc__service_dot_protobuf_dot_studentService__pb2
 
 
 class StudentServiceStub(object):
@@ -15,34 +15,44 @@ class StudentServiceStub(object):
             channel: A grpc.Channel.
         """
         self.getStudentContactDetails = channel.unary_unary(
-                '/StudentService/getStudentContactDetails',
-                request_serializer=protobuf_dot_studentService__pb2.GetStudentContactRequest.SerializeToString,
-                response_deserializer=protobuf_dot_studentService__pb2.GetStudentContactResponse.FromString,
+                '/com.jobportal.studentserviceproto.StudentService/getStudentContactDetails',
+                request_serializer=grpc__service_dot_protobuf_dot_studentService__pb2.GetStudentContactRequest.SerializeToString,
+                response_deserializer=grpc__service_dot_protobuf_dot_studentService__pb2.GetStudentContactResponse.FromString,
                 )
         self.getAllStudents = channel.unary_unary(
-                '/StudentService/getAllStudents',
-                request_serializer=protobuf_dot_studentService__pb2.GetAllStudentsRequest.SerializeToString,
-                response_deserializer=protobuf_dot_studentService__pb2.GetAllStudentsResponse.FromString,
+                '/com.jobportal.studentserviceproto.StudentService/getAllStudents',
+                request_serializer=grpc__service_dot_protobuf_dot_studentService__pb2.GetAllStudentsRequest.SerializeToString,
+                response_deserializer=grpc__service_dot_protobuf_dot_studentService__pb2.GetAllStudentsResponse.FromString,
                 )
         self.getStudentById = channel.unary_unary(
-                '/StudentService/getStudentById',
-                request_serializer=protobuf_dot_studentService__pb2.GetStudentByIdRequest.SerializeToString,
-                response_deserializer=protobuf_dot_studentService__pb2.GetStudentByIdResponse.FromString,
+                '/com.jobportal.studentserviceproto.StudentService/getStudentById',
+                request_serializer=grpc__service_dot_protobuf_dot_studentService__pb2.GetStudentByIdRequest.SerializeToString,
+                response_deserializer=grpc__service_dot_protobuf_dot_studentService__pb2.GetStudentByIdResponse.FromString,
                 )
         self.saveStudent = channel.unary_unary(
-                '/StudentService/saveStudent',
-                request_serializer=protobuf_dot_studentService__pb2.SaveStudentRequest.SerializeToString,
-                response_deserializer=protobuf_dot_studentService__pb2.SaveStudentResponse.FromString,
+                '/com.jobportal.studentserviceproto.StudentService/saveStudent',
+                request_serializer=grpc__service_dot_protobuf_dot_studentService__pb2.SaveStudentRequest.SerializeToString,
+                response_deserializer=grpc__service_dot_protobuf_dot_studentService__pb2.SaveStudentResponse.FromString,
                 )
         self.updateStudent = channel.unary_unary(
-                '/StudentService/updateStudent',
-                request_serializer=protobuf_dot_studentService__pb2.UpdateStudentRequest.SerializeToString,
-                response_deserializer=protobuf_dot_studentService__pb2.UpdateStudentResponse.FromString,
+                '/com.jobportal.studentserviceproto.StudentService/updateStudent',
+                request_serializer=grpc__service_dot_protobuf_dot_studentService__pb2.UpdateStudentRequest.SerializeToString,
+                response_deserializer=grpc__service_dot_protobuf_dot_studentService__pb2.UpdateStudentResponse.FromString,
                 )
         self.deleteStudent = channel.unary_unary(
-                '/StudentService/deleteStudent',
-                request_serializer=protobuf_dot_studentService__pb2.DeleteStudentRequest.SerializeToString,
-                response_deserializer=protobuf_dot_studentService__pb2.DeleteStudentResponse.FromString,
+                '/com.jobportal.studentserviceproto.StudentService/deleteStudent',
+                request_serializer=grpc__service_dot_protobuf_dot_studentService__pb2.DeleteStudentRequest.SerializeToString,
+                response_deserializer=grpc__service_dot_protobuf_dot_studentService__pb2.DeleteStudentResponse.FromString,
+                )
+        self.registerStudentForJob = channel.unary_unary(
+                '/com.jobportal.studentserviceproto.StudentService/registerStudentForJob',
+                request_serializer=grpc__service_dot_protobuf_dot_studentService__pb2.RegisterStudentForJobRequest.SerializeToString,
+                response_deserializer=grpc__service_dot_protobuf_dot_studentService__pb2.RegisterStudentForJobResponse.FromString,
+                )
+        self.getRegisteredStudentsByJobId = channel.unary_unary(
+                '/com.jobportal.studentserviceproto.StudentService/getRegisteredStudentsByJobId',
+                request_serializer=grpc__service_dot_protobuf_dot_studentService__pb2.GetRegisteredStudentsByJobIdRequest.SerializeToString,
+                response_deserializer=grpc__service_dot_protobuf_dot_studentService__pb2.GetRegisteredStudentsByJobIdResponse.FromString,
                 )
 
 
@@ -85,42 +95,64 @@ class StudentServiceServicer(object):
         context.set_details('Method not implemented!')
         raise NotImplementedError('Method not implemented!')
 
+    def registerStudentForJob(self, request, context):
+        """Missing associated documentation comment in .proto file."""
+        context.set_code(grpc.StatusCode.UNIMPLEMENTED)
+        context.set_details('Method not implemented!')
+        raise NotImplementedError('Method not implemented!')
+
+    def getRegisteredStudentsByJobId(self, request, context):
+        """Missing associated documentation comment in .proto file."""
+        context.set_code(grpc.StatusCode.UNIMPLEMENTED)
+        context.set_details('Method not implemented!')
+        raise NotImplementedError('Method not implemented!')
+
 
 def add_StudentServiceServicer_to_server(servicer, server):
     rpc_method_handlers = {
             'getStudentContactDetails': grpc.unary_unary_rpc_method_handler(
                     servicer.getStudentContactDetails,
-                    request_deserializer=protobuf_dot_studentService__pb2.GetStudentContactRequest.FromString,
-                    response_serializer=protobuf_dot_studentService__pb2.GetStudentContactResponse.SerializeToString,
+                    request_deserializer=grpc__service_dot_protobuf_dot_studentService__pb2.GetStudentContactRequest.FromString,
+                    response_serializer=grpc__service_dot_protobuf_dot_studentService__pb2.GetStudentContactResponse.SerializeToString,
             ),
             'getAllStudents': grpc.unary_unary_rpc_method_handler(
                     servicer.getAllStudents,
-                    request_deserializer=protobuf_dot_studentService__pb2.GetAllStudentsRequest.FromString,
-                    response_serializer=protobuf_dot_studentService__pb2.GetAllStudentsResponse.SerializeToString,
+                    request_deserializer=grpc__service_dot_protobuf_dot_studentService__pb2.GetAllStudentsRequest.FromString,
+                    response_serializer=grpc__service_dot_protobuf_dot_studentService__pb2.GetAllStudentsResponse.SerializeToString,
             ),
             'getStudentById': grpc.unary_unary_rpc_method_handler(
                     servicer.getStudentById,
-                    request_deserializer=protobuf_dot_studentService__pb2.GetStudentByIdRequest.FromString,
-                    response_serializer=protobuf_dot_studentService__pb2.GetStudentByIdResponse.SerializeToString,
+                    request_deserializer=grpc__service_dot_protobuf_dot_studentService__pb2.GetStudentByIdRequest.FromString,
+                    response_serializer=grpc__service_dot_protobuf_dot_studentService__pb2.GetStudentByIdResponse.SerializeToString,
             ),
             'saveStudent': grpc.unary_unary_rpc_method_handler(
                     servicer.saveStudent,
-                    request_deserializer=protobuf_dot_studentService__pb2.SaveStudentRequest.FromString,
-                    response_serializer=protobuf_dot_studentService__pb2.SaveStudentResponse.SerializeToString,
+                    request_deserializer=grpc__service_dot_protobuf_dot_studentService__pb2.SaveStudentRequest.FromString,
+                    response_serializer=grpc__service_dot_protobuf_dot_studentService__pb2.SaveStudentResponse.SerializeToString,
             ),
             'updateStudent': grpc.unary_unary_rpc_method_handler(
                     servicer.updateStudent,
-                    request_deserializer=protobuf_dot_studentService__pb2.UpdateStudentRequest.FromString,
-                    response_serializer=protobuf_dot_studentService__pb2.UpdateStudentResponse.SerializeToString,
+                    request_deserializer=grpc__service_dot_protobuf_dot_studentService__pb2.UpdateStudentRequest.FromString,
+                    response_serializer=grpc__service_dot_protobuf_dot_studentService__pb2.UpdateStudentResponse.SerializeToString,
             ),
             'deleteStudent': grpc.unary_unary_rpc_method_handler(
                     servicer.deleteStudent,
-                    request_deserializer=protobuf_dot_studentService__pb2.DeleteStudentRequest.FromString,
-                    response_serializer=protobuf_dot_studentService__pb2.DeleteStudentResponse.SerializeToString,
+                    request_deserializer=grpc__service_dot_protobuf_dot_studentService__pb2.DeleteStudentRequest.FromString,
+                    response_serializer=grpc__service_dot_protobuf_dot_studentService__pb2.DeleteStudentResponse.SerializeToString,
+            ),
+            'registerStudentForJob': grpc.unary_unary_rpc_method_handler(
+                    servicer.registerStudentForJob,
+                    request_deserializer=grpc__service_dot_protobuf_dot_studentService__pb2.RegisterStudentForJobRequest.FromString,
+                    response_serializer=grpc__service_dot_protobuf_dot_studentService__pb2.RegisterStudentForJobResponse.SerializeToString,
+            ),
+            'getRegisteredStudentsByJobId': grpc.unary_unary_rpc_method_handler(
+                    servicer.getRegisteredStudentsByJobId,
+                    request_deserializer=grpc__service_dot_protobuf_dot_studentService__pb2.GetRegisteredStudentsByJobIdRequest.FromString,
+                    response_serializer=grpc__service_dot_protobuf_dot_studentService__pb2.GetRegisteredStudentsByJobIdResponse.SerializeToString,
             ),
     }
     generic_handler = grpc.method_handlers_generic_handler(
-            'StudentService', rpc_method_handlers)
+            'com.jobportal.studentserviceproto.StudentService', rpc_method_handlers)
     server.add_generic_rpc_handlers((generic_handler,))
 
 
@@ -139,9 +171,9 @@ class StudentService(object):
             wait_for_ready=None,
             timeout=None,
             metadata=None):
-        return grpc.experimental.unary_unary(request, target, '/StudentService/getStudentContactDetails',
-            protobuf_dot_studentService__pb2.GetStudentContactRequest.SerializeToString,
-            protobuf_dot_studentService__pb2.GetStudentContactResponse.FromString,
+        return grpc.experimental.unary_unary(request, target, '/com.jobportal.studentserviceproto.StudentService/getStudentContactDetails',
+            grpc__service_dot_protobuf_dot_studentService__pb2.GetStudentContactRequest.SerializeToString,
+            grpc__service_dot_protobuf_dot_studentService__pb2.GetStudentContactResponse.FromString,
             options, channel_credentials,
             insecure, call_credentials, compression, wait_for_ready, timeout, metadata)
 
@@ -156,9 +188,9 @@ class StudentService(object):
             wait_for_ready=None,
             timeout=None,
             metadata=None):
-        return grpc.experimental.unary_unary(request, target, '/StudentService/getAllStudents',
-            protobuf_dot_studentService__pb2.GetAllStudentsRequest.SerializeToString,
-            protobuf_dot_studentService__pb2.GetAllStudentsResponse.FromString,
+        return grpc.experimental.unary_unary(request, target, '/com.jobportal.studentserviceproto.StudentService/getAllStudents',
+            grpc__service_dot_protobuf_dot_studentService__pb2.GetAllStudentsRequest.SerializeToString,
+            grpc__service_dot_protobuf_dot_studentService__pb2.GetAllStudentsResponse.FromString,
             options, channel_credentials,
             insecure, call_credentials, compression, wait_for_ready, timeout, metadata)
 
@@ -173,9 +205,9 @@ class StudentService(object):
             wait_for_ready=None,
             timeout=None,
             metadata=None):
-        return grpc.experimental.unary_unary(request, target, '/StudentService/getStudentById',
-            protobuf_dot_studentService__pb2.GetStudentByIdRequest.SerializeToString,
-            protobuf_dot_studentService__pb2.GetStudentByIdResponse.FromString,
+        return grpc.experimental.unary_unary(request, target, '/com.jobportal.studentserviceproto.StudentService/getStudentById',
+            grpc__service_dot_protobuf_dot_studentService__pb2.GetStudentByIdRequest.SerializeToString,
+            grpc__service_dot_protobuf_dot_studentService__pb2.GetStudentByIdResponse.FromString,
             options, channel_credentials,
             insecure, call_credentials, compression, wait_for_ready, timeout, metadata)
 
@@ -190,9 +222,9 @@ class StudentService(object):
             wait_for_ready=None,
             timeout=None,
             metadata=None):
-        return grpc.experimental.unary_unary(request, target, '/StudentService/saveStudent',
-            protobuf_dot_studentService__pb2.SaveStudentRequest.SerializeToString,
-            protobuf_dot_studentService__pb2.SaveStudentResponse.FromString,
+        return grpc.experimental.unary_unary(request, target, '/com.jobportal.studentserviceproto.StudentService/saveStudent',
+            grpc__service_dot_protobuf_dot_studentService__pb2.SaveStudentRequest.SerializeToString,
+            grpc__service_dot_protobuf_dot_studentService__pb2.SaveStudentResponse.FromString,
             options, channel_credentials,
             insecure, call_credentials, compression, wait_for_ready, timeout, metadata)
 
@@ -207,9 +239,9 @@ class StudentService(object):
             wait_for_ready=None,
             timeout=None,
             metadata=None):
-        return grpc.experimental.unary_unary(request, target, '/StudentService/updateStudent',
-            protobuf_dot_studentService__pb2.UpdateStudentRequest.SerializeToString,
-            protobuf_dot_studentService__pb2.UpdateStudentResponse.FromString,
+        return grpc.experimental.unary_unary(request, target, '/com.jobportal.studentserviceproto.StudentService/updateStudent',
+            grpc__service_dot_protobuf_dot_studentService__pb2.UpdateStudentRequest.SerializeToString,
+            grpc__service_dot_protobuf_dot_studentService__pb2.UpdateStudentResponse.FromString,
             options, channel_credentials,
             insecure, call_credentials, compression, wait_for_ready, timeout, metadata)
 
@@ -224,8 +256,42 @@ class StudentService(object):
             wait_for_ready=None,
             timeout=None,
             metadata=None):
-        return grpc.experimental.unary_unary(request, target, '/StudentService/deleteStudent',
-            protobuf_dot_studentService__pb2.DeleteStudentRequest.SerializeToString,
-            protobuf_dot_studentService__pb2.DeleteStudentResponse.FromString,
+        return grpc.experimental.unary_unary(request, target, '/com.jobportal.studentserviceproto.StudentService/deleteStudent',
+            grpc__service_dot_protobuf_dot_studentService__pb2.DeleteStudentRequest.SerializeToString,
+            grpc__service_dot_protobuf_dot_studentService__pb2.DeleteStudentResponse.FromString,
+            options, channel_credentials,
+            insecure, call_credentials, compression, wait_for_ready, timeout, metadata)
+
+    @staticmethod
+    def registerStudentForJob(request,
+            target,
+            options=(),
+            channel_credentials=None,
+            call_credentials=None,
+            insecure=False,
+            compression=None,
+            wait_for_ready=None,
+            timeout=None,
+            metadata=None):
+        return grpc.experimental.unary_unary(request, target, '/com.jobportal.studentserviceproto.StudentService/registerStudentForJob',
+            grpc__service_dot_protobuf_dot_studentService__pb2.RegisterStudentForJobRequest.SerializeToString,
+            grpc__service_dot_protobuf_dot_studentService__pb2.RegisterStudentForJobResponse.FromString,
+            options, channel_credentials,
+            insecure, call_credentials, compression, wait_for_ready, timeout, metadata)
+
+    @staticmethod
+    def getRegisteredStudentsByJobId(request,
+            target,
+            options=(),
+            channel_credentials=None,
+            call_credentials=None,
+            insecure=False,
+            compression=None,
+            wait_for_ready=None,
+            timeout=None,
+            metadata=None):
+        return grpc.experimental.unary_unary(request, target, '/com.jobportal.studentserviceproto.StudentService/getRegisteredStudentsByJobId',
+            grpc__service_dot_protobuf_dot_studentService__pb2.GetRegisteredStudentsByJobIdRequest.SerializeToString,
+            grpc__service_dot_protobuf_dot_studentService__pb2.GetRegisteredStudentsByJobIdResponse.FromString,
             options, channel_credentials,
             insecure, call_credentials, compression, wait_for_ready, timeout, metadata)

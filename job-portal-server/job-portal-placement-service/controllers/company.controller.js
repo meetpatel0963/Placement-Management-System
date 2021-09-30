@@ -115,3 +115,22 @@ exports.getPlacementDetails = (companyId) => {
       });
   });
 };
+
+exports.exist = (companyId) => {
+  const id = companyId;
+  return new Promise((resolve, reject) => {
+    company
+      .findAll({
+        where: {
+          id: id
+        }
+      })
+      .then((_companies) => {
+        if (_companies.length > 0) resolve(true);
+        else resolve(false);
+      })
+      .catch((err) => {
+        reject(err.message);
+      });
+  });
+}

@@ -1,10 +1,10 @@
-from protobuf import articleService_pb2_grpc
-from protobuf.articleService_pb2 import *
+from grpc_service.protobuf import articleService_pb2_grpc
+from grpc_service.protobuf.articleService_pb2 import *
 from google.protobuf.json_format import ParseDict
 import grpc
 from concurrent.futures import ThreadPoolExecutor
-from sql_app import database
-from sql_app.crud import article as crud
+from grpc_service.sql_app import database
+from grpc_service.sql_app.crud import article as crud
 from dynaconf import settings
 from py_zipkin.zipkin import zipkin_span, create_http_headers_for_new_span, ZipkinAttrs, Kind, zipkin_client_span
 from py_zipkin.request_helpers import create_http_headers
