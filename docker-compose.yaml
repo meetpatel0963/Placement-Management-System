@@ -100,7 +100,11 @@ services:
     volumes:
       - ./cassandra/data:/var/lib/cassandra  # To persist data for cassandra-node
       - ./cassandra/config:/etc/cassandra   # Use own config files for full control
+      - ./cassandra/cassandra-init-db.cql:/cassandra-init-db.cql
+      - ./cassandra/cassandra-init.sh:/cassandra-init.sh
+    entrypoint: sh -c /cassandra-init.sh
     environment: &environment    
+        CASSANDRA_KEYSPACE: pms_job_service
         CASSANDRA_SEEDS: "cassandra-node"   
         CASSANDRA_CLUSTER_NAME: SolarSystem
         CASSANDRA_DC: Mars
