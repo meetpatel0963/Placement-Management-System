@@ -75,7 +75,7 @@ services:
       - placement-management-system-network
     restart: on-failure
   
-  rabbbitmq:
+  rabbitmq:
     image: rabbitmq:3.9.7-management
     mem_limit: 300m
     ports:
