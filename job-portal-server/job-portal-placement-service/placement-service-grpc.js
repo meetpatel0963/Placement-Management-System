@@ -2,6 +2,10 @@ const grpc = require('grpc');
 const protoLoader = require('@grpc/proto-loader');
 const nconf = require('nconf');
 
+process.on('message', function(msg) {
+  nconf.set('config', msg.config);  
+});
+
 nconf.argv().env().file({ file: '/config/config.json' });
 nconf.set('config', JSON.parse(process.argv[2]));
 

@@ -28,6 +28,7 @@ exports.registerWithEureka = function () {
       registryFetchInterval: nconf.get('config').registry_fetch_interval,
     },
   });
+  client.logger.level('debug');
 
   client.start((error) => {
     console.log(error || 'user service registered');

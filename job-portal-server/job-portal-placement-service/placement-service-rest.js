@@ -2,7 +2,6 @@ const express = require('express');
 const cors = require('cors');
 const bodyParser = require('body-parser');
 const eureka = require('./eurekaClient');
-const axios = require('axios');
 const nconf = require('nconf');
 const childProcess = require('child_process');
 nconf.argv().env().file({ file: '/config/config.json' });
@@ -23,13 +22,17 @@ function createChild(scriptPath, callback, config) {
     var err = code === 0 ? null : new Error('exit code ' + code);
     callback(err);
   });
+  return process;
 }
 
-axios
-  .get('http://localhost:8888/placement-service/default/master')
+const { configServerReq } = require('./configServerReq');
+
+configServerReq()
   .then((response) => {
     nconf.set('config', response.data.propertySources[0].source);
 
+    console.log(nconf.get('config'));
+    
     const placementRoutes = require('./routes/placement.routes');
     const companyRoutes = require('./routes/company.routes');
     const { tracer } = require('./zipkin/zipkinClient');
@@ -50,7 +53,7 @@ axios
     app.listen(REST_PORT, () => {
       console.log('Server running at port %d 🚀🚀🚀', REST_PORT);
       eureka.registerWithEureka();
-      createChild(
+      const child = createChild(
         './placement-service-grpc.js',
         function (err) {
           if (err) throw err;
@@ -58,8 +61,12 @@ axios
         },
         JSON.stringify(nconf.get('config'))
       );
+      console.log('here');
+      const { amqpConnect } = require('./amqp/amqp');
+      amqpConnect(child);
     });
   })
-  .catch((error) => {
-    console.log('error', error);
+  .catch((err) => {
+    if (err.message) throw err;
+    throw new Error(err);
   });

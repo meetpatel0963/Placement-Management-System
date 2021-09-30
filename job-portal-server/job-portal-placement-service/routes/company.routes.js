@@ -9,12 +9,14 @@ router.get('/', (_, res) => {
     if (!err) {
       res.send(data);
     } else {
-      console.log(err);
       res.status(err.code).send(err.message);
     }
   });
 });
 
+router.get('/projectName', (_, res) => {
+  res.send(nconf.get('config')['project.name']);
+});
 
 router.post('/', (req, res) => {
   const body = req.body.company;
@@ -85,6 +87,5 @@ router.get('/placement/:id', (req, res) => {
     }
   );
 });
-
 
 module.exports = router;
