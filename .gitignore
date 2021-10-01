@@ -1,1 +1,4 @@
-/cassandra/data
+/cassandra/data/commitlog
+/cassandra/data/data
+/cassandra/data/hints
+/cassandra/data/saved_caches
