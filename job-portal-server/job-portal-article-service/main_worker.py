@@ -27,6 +27,7 @@ def updateConfigEnv():
           return
 
 def startListening():
+     updateConfigEnv()
      process = [Popen(cmd, shell=True) for cmd in commands]
 
      time.sleep(14)
@@ -34,7 +35,7 @@ def startListening():
      #      process[i].terminate()
      #      time.sleep(15)
      #      process[i] = Popen(commands[i])
-     updateConfigEnv()
+     
      broker()
 
 #startListening()
