@@ -1,5 +1,4 @@
 venv
-vvenv
 grpc_service/sql_app_temp
 .env
 env.json

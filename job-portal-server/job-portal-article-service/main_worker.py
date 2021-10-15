@@ -8,11 +8,10 @@ import pika, sys, os
 import json
 
 commands = [
-     "uvicorn rest-server:app --port {} --host 0.0.0.0".format(settings.get_fresh('REST_PORT')),
+     "uvicorn rest-server:app --port {}".format(settings.get_fresh('REST_PORT')),
      #'uvicorn grpc-server:serve --port 8000 --app-dir ./grpc_service'
-     
-     'python ./grpc-server.py',
-     'python ./naming_server.py'
+     'py grpc-server.py',
+     'py naming_server.py'
 ]
 
 def updateConfigEnv():
@@ -24,6 +23,7 @@ def updateConfigEnv():
      else:
           resp = resp['propertySources'][0]['source']
           json.dump(resp,open("./env.json","w"))
+          broker()
           return
 
 def startListening():
@@ -40,12 +40,7 @@ def startListening():
 
 #startListening()
 def broker():
-     connection = pika.BlockingConnection(
-          pika.ConnectionParameters(
-               host=settings.get_fresh('AMQP_HOST'),
-               port=int(settings.get_fresh('AMQP_PORT')),
-               credentials=pika.PlainCredentials(settings.get_fresh('AMQP_USER'),settings.get_fresh('AMQP_USER')), 
-               virtual_host='/'))
+     connection = pika.BlockingConnection(pika.ConnectionParameters(host=settings.get_fresh('AMQP_HOST')))
      channel = connection.channel()
      
      result = channel.queue_declare(queue=settings.get_fresh('APP_NAME'), exclusive=True)
@@ -55,8 +50,9 @@ def broker():
 
      def callback(ch, method, properties, body):  
           updated_config = json.loads(body.decode('utf-8'))
-          #print(updated_config)
-          updateConfigEnv()
+          print(updated_config)
+          if(updated_config.get('destinationService','xyz').startswith("article")):
+               updateConfigEnv()
 
      channel.basic_consume(queue=queue_name, on_message_callback=callback, auto_ack=True)
 

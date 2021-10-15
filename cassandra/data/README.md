@@ -1,1 +1,0 @@
-# Persistent Storage for Cassandra
