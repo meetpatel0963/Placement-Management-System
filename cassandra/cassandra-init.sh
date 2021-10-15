@@ -9,7 +9,7 @@
 if [[ ! -z "$CASSANDRA_KEYSPACE" ]]; then
 	until cqlsh -f /cassandra-init-db.cql; do
 		echo "cqlsh: Cassandra is unavailable - retry later"
-		sleep 2
+		sleep 5
 	done &
 fi
 
