@@ -2,7 +2,11 @@ const grpc = require('grpc');
 const protoLoader = require('@grpc/proto-loader');
 const nconf = require('nconf');
 
-nconf.argv().env().file({ file: '/config/config.json' });
+process.on('message', function(msg) {
+  nconf.set('config', msg.config);  
+});
+
+nconf.argv().env().file({ file: './config/config.json' });
 nconf.set('config', JSON.parse(process.argv[2]));
 
 const db = require('./models');
@@ -16,6 +20,7 @@ db.sequelize
   })
   .catch((err) => {
     console.log("Couldn't sync to the database.");
+    throw err;
   });
 
 const PROTO_PATH = './proto/placementService.proto';

@@ -32,6 +32,22 @@ services:
       - rabbitmq
     restart: on-failure
 
+  placement-service:
+    image: apreciar/pms-placement-service:latest
+    mem_limit: 700m
+    ports:
+      - "8180:8180"
+      - "8181:8181"
+    env_file: ./.env
+    environment:
+      MYSQL_ROOT_PASSWORD: $MYSQL_ROOT_PASSWORD
+      MYSQL_DATABASE: $MYSQL_DATABASE
+    depends_on:
+      - mysqldb
+    networks:
+      - placement-management-system-network
+    restart: on-failure
+
   article-service:
     image: poojan4004/placement-management-service:article-service-v1.2.0
     mem_limit: 700m
@@ -147,6 +163,19 @@ services:
       - placement-management-system-network
     restart: on-failure
 
+  mysqldb:
+    image: mysql
+    environment:
+      MYSQL_ROOT_PASSWORD: root
+      MYSQL_DATABASE: placement
+    ports:
+      - "3309:3306"
+    volumes: 
+      - ./mysql/backup/files/:/data_backup/data
+      - ./mysql/data:/var/lib/mysql
+    networks:
+      - placement-management-system-network
+    restart: on-failure
 
 volumes:
   article-service-data:

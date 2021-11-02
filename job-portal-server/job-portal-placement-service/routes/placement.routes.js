@@ -38,7 +38,6 @@ router.post('/', (req, res) => {
     },
     (error, data) => {
       if (!error) {
-        console.log(data);
         if (data !== null) {
           placementService.savePlacementEntry(
             {

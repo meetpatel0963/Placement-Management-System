@@ -15,7 +15,7 @@ const StudentService =
   grpc.loadPackageDefinition(packageDefinition).com.jobportal.studentserviceproto.StudentService;
 
 const studentService = new StudentService(
-  `localhost:${nconf.get('config').student_service_port}`,
+  nconf.get('config').student_service_server_url,
   grpc.credentials.createInsecure()
 );
 

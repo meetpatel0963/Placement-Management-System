@@ -1,12 +1,14 @@
 const Eureka = require('eureka-js-client').Eureka;
 const config = require('./config/config');
 const nconf = require('nconf');
+var os = require("os");
+var hostname = os.hostname();
 
 exports.registerWithEureka = function () {
   const client = new Eureka({
     instance: {
       app: config.APP_NAME,
-      hostName: nconf.get('config').host_name,
+      hostName: hostname,
       ipAddr: nconf.get('config').ip_address,
       port: {
         $: nconf.get('config').rest_port,
@@ -18,7 +20,7 @@ exports.registerWithEureka = function () {
         name: 'MyOwn',
       },
     },
-    //retry 10 time for 3 minute 20 seconds.
+   
     eureka: {
       host: nconf.get('config').eureka_host,
       port: nconf.get('config').eureka_port,
@@ -28,6 +30,7 @@ exports.registerWithEureka = function () {
       registryFetchInterval: nconf.get('config').registry_fetch_interval,
     },
   });
+  client.logger.level('debug');
 
   client.start((error) => {
     console.log(error || 'user service registered');

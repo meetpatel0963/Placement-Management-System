@@ -1,0 +1,35 @@
+version: '3.8'
+
+services: 
+  mysqldb:
+    image: mysql
+    restart: on-failure
+    env_file: ./.env
+    environment:
+      MYSQL_ROOT_PASSWORD: root
+      MYSQL_DATABASE: placement
+    ports:
+      - $MYSQL_LOCAL_PORT:$MYSQL_DOCKER_PORT
+    volumes: 
+      - ./db/backup/files/:/data_backup/data
+    networks:
+      - placement-service
+
+  app:
+    build:
+      context: .
+      dockerfile: ./Dockerfile
+    image: node-mysql-app
+    environment:
+      MYSQL_ROOT_PASSWORD: $MYSQL_ROOT_PASSWORD
+      MYSQL_DATABASE: $MYSQL_DATABASE
+    depends_on:
+      - mysqldb
+    stdin_open: true
+    tty: true
+    networks:
+      - placement-service
+    restart: on-failure
+
+networks:
+  placement-service:

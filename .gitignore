@@ -2,3 +2,6 @@
 /cassandra/data/data
 /cassandra/data/hints
 /cassandra/data/saved_caches
+
+/mysql
+.env
